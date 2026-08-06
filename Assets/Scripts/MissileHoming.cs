@@ -1,120 +1,133 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-/// <summary>
-/// Missile à tête chercheuse : suit une cible mobile avec un taux de virage
-/// plus élevé et plus direct que le vol des oiseaux (moins de "grande
-/// courbe WWI", juste une légère inertie de rotation). Le hit final est
-/// garanti par une distance de détonation : dès que le missile entre dans
-/// cette zone autour de la cible, il explose directement — indépendamment
-/// d'une vraie collision physique, ce qui évite les ratés si la vitesse
-/// relative est trop grande pour que la physique détecte le contact.
-/// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class MissileHoming : MonoBehaviour
 {
-    [Header("Cible")]
+    [Header("Target")]
     public Transform target;
 
-    [Header("Propulsion")]
-    public float thrust = 40f;
-    public float maxSpeed = 25f;
+    [Header("Movement")]
+    public float speed = 30f;
+    public float acceleration = 80f;
 
-    [Header("Guidage")]
-    [Tooltip("Vitesse de rotation du cap vers la cible, en degrés/seconde. Plus haut = trajectoire plus directe, moins de courbe.")]
-    public float turnRateDegPerSec = 120f;
+    [Header("Guidance")]
+    public float turnRate = 720f;
+    public float closeTurnMultiplier = 2f;
 
-    [Tooltip("Vitesse à laquelle la rotation visuelle rattrape la vélocité réelle")]
-    public float rotationFollowSpeed = 12f;
+    [Tooltip("Temps max d'anticipation.")]
+    public float maxPredictionTime = 1.2f;
 
-    [Header("Détonation")]
-    [Tooltip("Distance à la cible en dessous de laquelle le missile explose automatiquement, même sans collision physique")]
+    [Header("Explosion")]
     public float detonationDistance = 2f;
 
-    [Tooltip("Déclenché à l'explosion : branche ici tes effets (VFX, dégâts, son...)")]
     public UnityEvent onImpact;
 
-    private Rigidbody rb;
-    private Vector3 heading;
-    private bool hasExploded = false;
+    public Pool myPoolExplosion;
+
+    Rigidbody rb;
+    Rigidbody targetRb;
+
+    bool exploded;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
         rb.useGravity = false;
-        rb.linearDamping = thrust / Mathf.Max(maxSpeed, 0.01f);
+        rb.linearDamping = 0f;
+        rb.angularDamping = 0f;
 
-        heading = transform.forward;
+        if (target != null)
+            targetRb = target.GetComponent<Rigidbody>();
 
-        if (target == null)
-        {
-            Debug.LogWarning("MissileHoming: aucune target assignée.");
-        }
+        rb.linearVelocity = transform.forward * speed;
     }
 
     void FixedUpdate()
     {
-        if (hasExploded || target == null) return;
+        if (exploded || target == null)
+            return;
 
-        if (IsCloseEnoughToDetonate())
+        Vector3 targetVelocity = Vector3.zero;
+
+        if (targetRb != null)
+            targetVelocity = targetRb.linearVelocity;
+
+        float distance = Vector3.Distance(transform.position, target.position);
+
+        if (distance <= detonationDistance)
         {
             Explode();
             return;
         }
 
-        UpdateHeading();
-        ApplyThrust();
-        UpdateVisualRotation();
+        //-------------------------------------
+        // LEAD PURSUIT
+        //-------------------------------------
+
+        float prediction = Mathf.Clamp(distance / speed, 0f, maxPredictionTime);
+
+        Vector3 predictedPosition =
+            target.position +
+            targetVelocity * prediction;
+
+        Vector3 desiredDirection =
+            (predictedPosition - transform.position).normalized;
+
+        //-------------------------------------
+        // TURN RATE
+        //-------------------------------------
+
+        float multiplier = Mathf.Lerp(
+            closeTurnMultiplier,
+            1f,
+            Mathf.Clamp01(distance / 30f));
+
+        Quaternion desiredRotation =
+            Quaternion.LookRotation(desiredDirection);
+
+        rb.MoveRotation(
+            Quaternion.RotateTowards(
+                rb.rotation,
+                desiredRotation,
+                turnRate * multiplier * Time.fixedDeltaTime));
+
+        //-------------------------------------
+        // SPEED
+        //-------------------------------------
+
+        float currentSpeed = rb.linearVelocity.magnitude;
+
+        currentSpeed = Mathf.MoveTowards(
+            currentSpeed,
+            speed,
+            acceleration * Time.fixedDeltaTime);
+
+        rb.linearVelocity = rb.rotation * Vector3.forward * currentSpeed;
     }
 
-    bool IsCloseEnoughToDetonate()
-    {
-        return Vector3.Distance(transform.position, target.position) <= detonationDistance;
-    }
-
-    /// <summary>Courbe le cap vers la cible à vitesse angulaire plafonnée.</summary>
-    void UpdateHeading()
-    {
-        Vector3 dirToTarget = (target.position - transform.position).normalized;
-        heading = Vector3.RotateTowards(
-            heading,
-            dirToTarget,
-            turnRateDegPerSec * Mathf.Deg2Rad * Time.fixedDeltaTime,
-            0f
-        ).normalized;
-    }
-
-    void ApplyThrust()
-    {
-        rb.AddForce(heading * thrust, ForceMode.Acceleration);
-    }
-
-    /// <summary>La rotation affichée suit la vélocité réelle, comme sur les oiseaux.</summary>
-    void UpdateVisualRotation()
-    {
-        Vector3 velocity = rb.linearVelocity;
-        if (velocity.sqrMagnitude < 0.05f) return;
-
-        Quaternion lookRotation = Quaternion.LookRotation(velocity.normalized, Vector3.up);
-        rb.MoveRotation(Quaternion.Slerp(rb.rotation, lookRotation, Time.fixedDeltaTime * rotationFollowSpeed));
-    }
-
-    public GameObject explosion;
-    /// <summary>Explosion "manuelle", déclenchée par la proximité de la cible.</summary>
-    void Explode()
-    {
-        if (hasExploded) return;
-        hasExploded = true;
-
-        Instantiate(explosion, transform.position, transform.rotation);
-
-        onImpact?.Invoke();
-        Destroy(gameObject);
-    }
-
-    /// <summary>Explosion par vraie collision physique (au cas où ça touche avant la distance de détonation).</summary>
     void OnCollisionEnter(Collision collision)
     {
         Explode();
+    }
+
+    void Explode()
+    {
+        if (exploded)
+            return;
+
+        exploded = true;
+
+        GameObject explosion = myPoolExplosion.GetPoolObject();
+
+        explosion.transform.position = transform.position;
+        explosion.transform.rotation = transform.rotation;
+
+        onImpact?.Invoke();
+
+        PoolMissile.instance.ReturnPool(gameObject);
+
+        exploded = false;
     }
 }

@@ -12,7 +12,7 @@ public class WeaponShip : Weapon
     public LayerMask InvaderAndPlanetLayer;
     bool isCreatingShip = false;
 
-    private IObjectPool<GameObject> pool;
+    public Pool myPool;
 
     Transform _groupShip;
 
@@ -91,8 +91,13 @@ public class WeaponShip : Weapon
 
     public void Attack(Transform ship, Transform target)
     {
-        GameObject newAttack = Instantiate(shipSO.tiers[currentTier].attack, ship.transform.position, ship.transform.rotation);
-        newAttack.GetComponent<MissileHoming>().target = target;
+        GameObject missile = myPool.GetPoolObject();
+        missile.transform.position = ship.transform.position;
+        missile.transform.rotation = ship.transform.rotation;
+        missile.GetComponent<MissileHoming>().target = target;
+
+        //GameObject newAttack = Instantiate(shipSO.tiers[currentTier].attack, ship.transform.position, ship.transform.rotation);
+        //newAttack.GetComponent<MissileHoming>().target = target;
     }
 
     public void SpawnUnits()

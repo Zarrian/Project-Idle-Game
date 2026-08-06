@@ -784,15 +784,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MissileHoming
   target: {fileID: 0}
-  thrust: 250
-  maxSpeed: 400
-  turnRateDegPerSec: 250
-  rotationFollowSpeed: 12
+  thrust: 200
+  maxSpeed: 1000
+  navigationConstant: 6
+  maxTurnRate: 120
+  rotationFollowSpeed: 24
   detonationDistance: 35
   onImpact:
     m_PersistentCalls:
       m_Calls: []
-  explosion: {fileID: 1976690394817304826, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+  myPoolExplosion: {fileID: 0}
 --- !u!4 &3024291007294094630 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a1c2d82487ce7e447b32860b07cd042a, type: 3}

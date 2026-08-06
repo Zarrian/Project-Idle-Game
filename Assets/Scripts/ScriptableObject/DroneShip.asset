@@ -23,3 +23,13 @@ MonoBehaviour:
     rangeAttack: 10000
     damage: 1
     pv: 1
+  - tierName: Drone1
+    unitsList: []
+    ship: {fileID: 5860862257747030917, guid: 3c8523b7770bea54f9c671ccea3bfe32, type: 3}
+    attack: {fileID: 2500518179870893980, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
+    maxUnits: 100
+    cdSpawnUnits: 0.1
+    cdAttack: 3
+    rangeAttack: 10000
+    damage: 1
+    pv: 1
