@@ -24,11 +24,14 @@ public class MissileHoming : MonoBehaviour
     public UnityEvent onImpact;
 
     public Pool myPoolExplosion;
+    public Pool myPool;
 
     Rigidbody rb;
     Rigidbody targetRb;
 
     bool exploded;
+
+    public int damage = 1;
 
     void Start()
     {
@@ -107,10 +110,6 @@ public class MissileHoming : MonoBehaviour
         rb.linearVelocity = rb.rotation * Vector3.forward * currentSpeed;
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        Explode();
-    }
 
     void Explode()
     {
@@ -121,12 +120,18 @@ public class MissileHoming : MonoBehaviour
 
         GameObject explosion = myPoolExplosion.GetPoolObject();
 
+        //Check if close to the enemy
+        float distance = Vector3.Distance(transform.position, target.position);
+        if (distance <= detonationDistance+1)
+            target.GetComponent<Ship>().TakeDamage(damage);
+
+        //VFX
         explosion.transform.position = transform.position;
         explosion.transform.rotation = transform.rotation;
 
         onImpact?.Invoke();
 
-        PoolMissile.instance.ReturnPool(gameObject);
+        myPool.ReturnPool(gameObject);
 
         exploded = false;
     }

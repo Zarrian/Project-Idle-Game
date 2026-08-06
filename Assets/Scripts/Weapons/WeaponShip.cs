@@ -9,13 +9,12 @@ public class WeaponShip : Weapon
     public UnitTierSet shipSO;
     public LayerMask invaderLayer;
     public LayerMask InvaderAndPlanetLayer;
-    bool isCreatingShip = false;
+    public bool isCreatingShip = false;
 
     public Pool myPoolMissile;
     public Pool myPoolShips;
 
-
-    float currentTimeAttack;
+    public float currentTimeAttack;
     private void Start()
     {
         //Save and disociate groupGameObject
@@ -43,14 +42,14 @@ public class WeaponShip : Weapon
     {
         //Choisis un vaisseaux joueurs random
         GameObject randomShip = unitsList[Random.Range(0, unitsList.Count)];
-
         //CheckEnemyInrange
         List<GameObject> unitInRange = new List<GameObject>();
-        Collider[] invader = Physics.OverlapSphere(randomShip.transform.position, shipSO.tiers[currentTier].rangeAttack, invaderLayer);
+        Collider[] EnemyShip = Physics.OverlapSphere(randomShip.transform.position, shipSO.tiers[currentTier].rangeAttack, invaderLayer);
 
-        if (invader.Length > 0)
+        if (EnemyShip.Length > 0)
         {
-            GameObject target = ChoseEnemy(invader);
+            print(randomShip.name);
+            GameObject target = ChoseEnemy(EnemyShip);
 
             Vector3 direction = (target.transform.position - randomShip.transform.position).normalized;
             float distance = Vector3.Distance(randomShip.transform.position, target.transform.position);

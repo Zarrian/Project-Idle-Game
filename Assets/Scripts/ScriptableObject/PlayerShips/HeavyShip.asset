@@ -24,8 +24,8 @@ MonoBehaviour:
     sphereCenter: {fileID: 0}
     orbitRadiusMin: 500
     orbitRadiusMax: 1000
-    thrust: 100
-    maxSpeed: 12
+    thrust: 15
+    maxSpeed: 50
     maxTurnRateDegPerSec: 5
     maxBankAngle: 45
     bankLerpSpeed: 2
@@ -45,7 +45,7 @@ MonoBehaviour:
   - tierName: Drone1
     ship: {fileID: 2715899796734009256, guid: 3e832266b19db264e9efd4561b77677a, type: 3}
     maxUnits: 100
-    cdSpawnUnits: 10
+    cdSpawnUnits: 0.1
     pv: 100
     damage: 20
     cdAttack: 15
@@ -53,8 +53,8 @@ MonoBehaviour:
     sphereCenter: {fileID: 0}
     orbitRadiusMin: 500
     orbitRadiusMax: 1000
-    thrust: 100
-    maxSpeed: 12
+    thrust: 10
+    maxSpeed: 50
     maxTurnRateDegPerSec: 5
     maxBankAngle: 45
     bankLerpSpeed: 2
