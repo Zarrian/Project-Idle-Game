@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 8132357973312963386}
   - component: {fileID: 4264567685786947243}
   - component: {fileID: 38152161429906249}
+  - component: {fileID: 214174392577156896}
   m_Layer: 6
   m_Name: SpaceShip V3
   m_TagString: Untagged
@@ -308,6 +309,26 @@ MonoBehaviour:
     m_Bits: 0
   shipDetectionRadius: 0
   avoidanceForce: 1000
+--- !u!114 &214174392577156896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2715899796734009256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e26cacd78e1cd4a44a7d8a2f459e4ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ships
+  manager: {fileID: 0}
+  shipSO: {fileID: 11400000, guid: f24cf421f5e32bf45a506b9df10f6415, type: 2}
+  movement: {fileID: 0}
+  damage: 0
+  pv: 0
+  cdAttack: 0
+  rangeAttack: 0
+  target: {fileID: 0}
 --- !u!1 &4633921242159867083
 GameObject:
   m_ObjectHideFlags: 0

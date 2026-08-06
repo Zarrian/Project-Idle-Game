@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class WeaponShip : Weapon
 {
@@ -12,15 +11,14 @@ public class WeaponShip : Weapon
     public LayerMask InvaderAndPlanetLayer;
     bool isCreatingShip = false;
 
-    public Pool myPool;
+    public Pool myPoolMissile;
+    public Pool myPoolShips;
 
-    Transform _groupShip;
 
     float currentTimeAttack;
     private void Start()
     {
         //Save and disociate groupGameObject
-        _groupShip = transform.GetChild(0);
         transform.GetChild(0).parent = null;
     }
 
@@ -32,7 +30,7 @@ public class WeaponShip : Weapon
         if (unitsList.Count > 0)
         {
             currentTimeAttack += Time.fixedDeltaTime;
-            if (currentTimeAttack >= shipSO.tiers[0].cdAttack / unitsList.Count)
+            if (currentTimeAttack >= shipSO.tiers[currentTier].cdAttack / unitsList.Count)
             {
                 CheckAttack();
                 currentTimeAttack = 0;
@@ -40,64 +38,61 @@ public class WeaponShip : Weapon
         }
     }
 
+
     public void CheckAttack()
     {
+        //Choisis un vaisseaux joueurs random
+        GameObject randomShip = unitsList[Random.Range(0, unitsList.Count)];
+
+        //CheckEnemyInrange
         List<GameObject> unitInRange = new List<GameObject>();
-        foreach (GameObject unit in unitsList)
+        Collider[] invader = Physics.OverlapSphere(randomShip.transform.position, shipSO.tiers[currentTier].rangeAttack, invaderLayer);
+
+        if (invader.Length > 0)
         {
-            Collider[] invader = Physics.OverlapSphere(unit.transform.position, shipSO.tiers[currentTier].rangeAttack, invaderLayer);
-            if (invader.Length > 0)
+            GameObject target = ChoseEnemy(invader);
+
+            Vector3 direction = (target.transform.position - randomShip.transform.position).normalized;
+            float distance = Vector3.Distance(randomShip.transform.position, target.transform.position);
+            if (Physics.Raycast(randomShip.transform.position, direction, out RaycastHit hit, distance, InvaderAndPlanetLayer))
             {
-                unitInRange.Add(unit);
+                Attack(randomShip.transform, target.transform);
             }
+            else // recommance
+                CheckAttack();
         }
+    }
 
-        //Shuffle list
-        for (int i = unitInRange.Count - 1; i > 0; i--)
-        {
-            int randomIndex = Random.Range(0, i + 1);
-            (unitInRange[i], unitInRange[randomIndex]) = (unitInRange[randomIndex], unitInRange[i]);
-        }
+    [SerializeField, Range(0, 100)]
+    private float targetPriority = 75f; // 100 = proche, 0 = loin
+    GameObject ChoseEnemy(Collider[] invaders)
+    {
+        if (invaders == null || invaders.Length == 0)
+            return null;
 
-        bool attackSucess = false;
-        foreach (GameObject unit in unitInRange)
-        {
-            Collider[] invader = Physics.OverlapSphere(unit.transform.position, shipSO.tiers[currentTier].rangeAttack, invaderLayer);
+        // Cas extrêmes
+        if (targetPriority <= 0)
+            return invaders[invaders.Length - 1].gameObject;
 
-            foreach (Collider target in invader)
-            {
-                Vector3 direction = (target.transform.position - unit.transform.position).normalized;
-                float distance = Vector3.Distance(unit.transform.position, target.transform.position);
+        if (targetPriority >= 100)
+            return invaders[0].gameObject;
 
-                if (Physics.Raycast(unit.transform.position, direction, out RaycastHit hit, distance, InvaderAndPlanetLayer))
-                {
-                    if (hit.collider != null)
-                    {
-                        if (hit.collider.gameObject == target.gameObject)
-                        {
-                            Debug.Log("Attack success " + hit.collider.name);
-                            Attack(unit.transform, target.transform);
-                            attackSucess = true;
-                            break;
-                        }
-                    }
-                }
-            }
+        float t = targetPriority / 100f;
 
-            if (attackSucess == true)
-                break;
-        }
+        // Plus t est grand, plus on favorise les petits indices.
+        float random = Mathf.Pow(Random.value, Mathf.Lerp(3f, 0.35f, t));
+
+        int index = Mathf.RoundToInt(random * (invaders.Length - 1));
+
+        return invaders[index].gameObject;
     }
 
     public void Attack(Transform ship, Transform target)
     {
-        GameObject missile = myPool.GetPoolObject();
+        GameObject missile = myPoolMissile.GetPoolObject();
         missile.transform.position = ship.transform.position;
         missile.transform.rotation = ship.transform.rotation;
         missile.GetComponent<MissileHoming>().target = target;
-
-        //GameObject newAttack = Instantiate(shipSO.tiers[currentTier].attack, ship.transform.position, ship.transform.rotation);
-        //newAttack.GetComponent<MissileHoming>().target = target;
     }
 
     public void SpawnUnits()
@@ -119,8 +114,11 @@ public class WeaponShip : Weapon
     public void CreateShip()
     {
         //Faire une pool
-        GameObject newShips = Instantiate(shipSO.tiers[currentTier].ship, transform.position, transform.rotation, _groupShip);
-        unitsList.Add(newShips);
+        //GameObject newShips = Instantiate(shipSO.tiers[currentTier].ship, transform.position, transform.rotation, _groupShip);
+        GameObject newShip = myPoolShips.GetPoolObject();
+        newShip.transform.position = transform.position;
+        newShip.transform.rotation = transform.rotation;
+        unitsList.Add(newShip);
         isCreatingShip = false;
     }
 }
