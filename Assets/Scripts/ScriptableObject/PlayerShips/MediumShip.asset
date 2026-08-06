@@ -15,15 +15,15 @@ MonoBehaviour:
   tiers:
   - tierName: Drone1
     ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
-    maxUnits: 3
+    maxUnits: 5
     cdSpawnUnits: 3
-    pv: 10
+    pv: 15
     damage: 3
-    cdAttack: 5
+    cdAttack: 2
     rangeAttack: 10000
     sphereCenter: {fileID: 0}
     orbitRadiusMin: 250
-    orbitRadiusMax: 1000
+    orbitRadiusMax: 800
     thrust: 100
     maxSpeed: 500
     maxTurnRateDegPerSec: 30
@@ -44,7 +44,7 @@ MonoBehaviour:
     avoidanceForce: 1000
   - tierName: Drone1
     ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
-    maxUnits: 100
+    maxUnits: 50
     cdSpawnUnits: 0.1
     pv: 10
     damage: 3

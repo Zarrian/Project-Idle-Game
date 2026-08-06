@@ -15,15 +15,44 @@ MonoBehaviour:
   tiers:
   - tierName: InvaderBasics
     ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
-    maxUnits: 6
-    cdSpawnUnits: 0.1
+    maxUnits: 15
+    cdSpawnUnits: 0.5
+    pv: 3
+    damage: 1
+    cdAttack: 20
+    rangeAttack: 10000
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 500
+    orbitRadiusMax: 1200
+    thrust: 500
+    maxSpeed: 600
+    maxTurnRateDegPerSec: 70
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 50
+    maxTimeOnTarget: 20
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    planetDetectionDistance: 100
+    planetCastRadius: 8
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 320
+    shipDetectionRadius: 50
+    avoidanceForce: 1000
+  - tierName: InvaderBasics
+    ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
+    maxUnits: 100
+    cdSpawnUnits: 0.01
     pv: 10
     damage: 1
     cdAttack: 8
     rangeAttack: 10000
     sphereCenter: {fileID: 0}
     orbitRadiusMin: 500
-    orbitRadiusMax: 2000
+    orbitRadiusMax: 1200
     thrust: 500
     maxSpeed: 600
     maxTurnRateDegPerSec: 70

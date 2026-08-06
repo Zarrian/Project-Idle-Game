@@ -177,20 +177,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPool
       value: 
-      objectReference: {fileID: 1743484595}
+      objectReference: {fileID: 519538999}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPoolExplosion
       value: 
-      objectReference: {fileID: 821037108}
+      objectReference: {fileID: 685931076}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: maxPredictionTime
       value: 0.1
@@ -403,7 +403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPool
@@ -411,7 +411,7 @@ PrefabInstance:
       objectReference: {fileID: 1743484595}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPoolExplosion
@@ -731,7 +731,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPool
@@ -739,7 +739,7 @@ PrefabInstance:
       objectReference: {fileID: 1743484595}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPoolExplosion
@@ -2025,20 +2025,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPool
       value: 
-      objectReference: {fileID: 1743484595}
+      objectReference: {fileID: 519538999}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPoolExplosion
       value: 
-      objectReference: {fileID: 821037108}
+      objectReference: {fileID: 685931076}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: maxPredictionTime
       value: 0.1
@@ -2319,7 +2319,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 5000
+  far clip plane: 10000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -2637,6 +2637,18 @@ PrefabInstance:
     - target: {fileID: 7480828198531376489, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.17515129
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.2116405
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.9056604
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3246,20 +3258,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPool
       value: 
-      objectReference: {fileID: 1743484595}
+      objectReference: {fileID: 519538999}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPoolExplosion
       value: 
-      objectReference: {fileID: 821037108}
+      objectReference: {fileID: 685931076}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: maxPredictionTime
       value: 0.1
@@ -3612,20 +3624,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPool
       value: 
-      objectReference: {fileID: 1743484595}
+      objectReference: {fileID: 519538999}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPoolExplosion
       value: 
-      objectReference: {fileID: 821037108}
+      objectReference: {fileID: 685931076}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: maxPredictionTime
       value: 0.1
@@ -3757,20 +3769,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPool
       value: 
-      objectReference: {fileID: 1743484595}
+      objectReference: {fileID: 519538999}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPoolExplosion
       value: 
-      objectReference: {fileID: 821037108}
+      objectReference: {fileID: 685931076}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: maxPredictionTime
       value: 0.1
@@ -3844,6 +3856,18 @@ PrefabInstance:
     - target: {fileID: 7480828198531376489, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.17515129
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.2116405
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.9056604
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4104,7 +4128,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPool
@@ -4112,7 +4136,7 @@ PrefabInstance:
       objectReference: {fileID: 1743484595}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPoolExplosion
@@ -4750,6 +4774,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.17515129
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.2116405
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.9056604
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5163,6 +5199,18 @@ PrefabInstance:
     - target: {fileID: 7480828198531376489, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.17515129
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.2116405
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.9056604
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6063,7 +6111,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPool
@@ -6071,7 +6119,7 @@ PrefabInstance:
       objectReference: {fileID: 1743484595}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPoolExplosion
@@ -6897,7 +6945,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPool
@@ -6905,7 +6953,7 @@ PrefabInstance:
       objectReference: {fileID: 1743484595}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPoolExplosion
@@ -6983,20 +7031,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPool
       value: 
-      objectReference: {fileID: 1743484595}
+      objectReference: {fileID: 519538999}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPoolExplosion
       value: 
-      objectReference: {fileID: 821037108}
+      objectReference: {fileID: 685931076}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: maxPredictionTime
       value: 0.1
@@ -7411,7 +7459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPool
@@ -7419,7 +7467,7 @@ PrefabInstance:
       objectReference: {fileID: 1743484595}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPoolExplosion
@@ -7787,6 +7835,18 @@ PrefabInstance:
     - target: {fileID: 7480828198531376489, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.17515129
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.2116405
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.9056604
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9301,7 +9361,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPool
@@ -9309,7 +9369,7 @@ PrefabInstance:
       objectReference: {fileID: 1743484595}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPoolExplosion
@@ -9453,20 +9513,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPool
       value: 
-      objectReference: {fileID: 1743484595}
+      objectReference: {fileID: 519538999}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPoolExplosion
       value: 
-      objectReference: {fileID: 821037108}
+      objectReference: {fileID: 685931076}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: maxPredictionTime
       value: 0.1
@@ -9671,7 +9731,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPool
@@ -9679,7 +9739,7 @@ PrefabInstance:
       objectReference: {fileID: 1743484595}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPoolExplosion
@@ -9758,6 +9818,18 @@ PrefabInstance:
     - target: {fileID: 7480828198531376489, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.17515129
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.2116405
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.9056604
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10614,7 +10686,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPool
@@ -10622,7 +10694,7 @@ PrefabInstance:
       objectReference: {fileID: 1743484595}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPoolExplosion
@@ -10701,6 +10773,18 @@ PrefabInstance:
     - target: {fileID: 7480828198531376489, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.17515129
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.2116405
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.9056604
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10961,20 +11045,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPool
       value: 
-      objectReference: {fileID: 1743484595}
+      objectReference: {fileID: 519538999}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPoolExplosion
       value: 
-      objectReference: {fileID: 821037108}
+      objectReference: {fileID: 685931076}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: maxPredictionTime
       value: 0.1
@@ -11462,7 +11546,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPool
@@ -11470,7 +11554,7 @@ PrefabInstance:
       objectReference: {fileID: 1743484595}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPoolExplosion
@@ -11549,6 +11633,18 @@ PrefabInstance:
     - target: {fileID: 7480828198531376489, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.17515129
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.2116405
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.9056604
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11762,20 +11858,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPool
       value: 
-      objectReference: {fileID: 1743484595}
+      objectReference: {fileID: 519538999}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPoolExplosion
       value: 
-      objectReference: {fileID: 821037108}
+      objectReference: {fileID: 685931076}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: maxPredictionTime
       value: 0.1
@@ -12080,6 +12176,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.17515129
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.2116405
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.9056604
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12349,20 +12457,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPool
       value: 
-      objectReference: {fileID: 1743484595}
+      objectReference: {fileID: 519538999}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPoolExplosion
       value: 
-      objectReference: {fileID: 821037108}
+      objectReference: {fileID: 685931076}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: maxPredictionTime
       value: 0.1
@@ -12435,7 +12543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPool
@@ -12443,7 +12551,7 @@ PrefabInstance:
       objectReference: {fileID: 1743484595}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 29a036f7b20d8bc479d86ba70ce4409a, type: 3}
       propertyPath: myPoolExplosion
@@ -12740,6 +12848,18 @@ PrefabInstance:
     - target: {fileID: 7480828198531376489, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.17515129
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.2116405
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.9056604
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13156,20 +13276,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: speed
-      value: 500
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPool
       value: 
-      objectReference: {fileID: 1743484595}
+      objectReference: {fileID: 519538999}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: acceleration
-      value: 1000
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: myPoolExplosion
       value: 
-      objectReference: {fileID: 821037108}
+      objectReference: {fileID: 685931076}
     - target: {fileID: 4622046863304803128, guid: 91ba946a35f390e4db2326258b38f8dd, type: 3}
       propertyPath: maxPredictionTime
       value: 0.1
@@ -13309,6 +13429,18 @@ PrefabInstance:
     - target: {fileID: 7480828198531376489, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.17515129
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.2116405
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519513716680338651, guid: 6cf96ed808260f04c880c0c716ae0ad8, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.9056604
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

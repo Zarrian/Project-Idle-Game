@@ -15,11 +15,11 @@ MonoBehaviour:
   tiers:
   - tierName: Drone1
     ship: {fileID: 5860862257747030917, guid: 3c8523b7770bea54f9c671ccea3bfe32, type: 3}
-    maxUnits: 8
+    maxUnits: 15
     cdSpawnUnits: 0.1
     pv: 1
     damage: 1
-    cdAttack: 3
+    cdAttack: 5
     rangeAttack: 10000
     sphereCenter: {fileID: 0}
     orbitRadiusMin: 200
