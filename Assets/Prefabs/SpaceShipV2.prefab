@@ -285,10 +285,11 @@ GameObject:
   - component: {fileID: 3796234048902536341}
   - component: {fileID: 8000184262546818573}
   - component: {fileID: 8168753961690231928}
-  - component: {fileID: 2102695647967370571}
   - component: {fileID: 571075810965898589}
   - component: {fileID: 5405979196977334750}
   - component: {fileID: 1558292636490142758}
+  - component: {fileID: 4161462274884937997}
+  - component: {fileID: 7900500258682368707}
   m_Layer: 6
   m_Name: SpaceShipV2
   m_TagString: Untagged
@@ -304,7 +305,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5860862257747030917}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
@@ -369,28 +370,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2102695647967370571
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5860862257747030917}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 7838846977475806811, guid: 8c968ac718a44a14ebba3b5a1cc9de70, type: 3}
 --- !u!54 &571075810965898589
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -463,14 +442,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26cacd78e1cd4a44a7d8a2f459e4ef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ships
-  manager: {fileID: 0}
+  managerUnit: {fileID: 0}
   shipSO: {fileID: 11400000, guid: 142bcdd742c8e18458778a7e9dd1aa38, type: 2}
   movement: {fileID: 0}
   damage: 0
   pv: 0
   cdAttack: 0
   rangeAttack: 0
+  nbAttack: 0
   target: {fileID: 0}
+  myPool: {fileID: 0}
+  OnTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &4161462274884937997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860862257747030917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cecf8ea9a67b7594d84273910e34758d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FeedbackShip
+  ship: {fileID: 1558292636490142758}
+  poolExplosionDamage: {fileID: 0}
+  poolExplosionDeath: {fileID: 0}
+  scaleExplosion: 30
+--- !u!135 &7900500258682368707
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860862257747030917}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 13.516353
+  m_Center: {x: 0, y: 1.6895425, z: -1.0731539}
 --- !u!1 &6291129977176456957
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ public class Ship : MonoBehaviour
     public float pv;
     public float cdAttack;
     public float rangeAttack;
+    public float nbAttack;
     public GameObject target;
 
     public Pool myPool;
@@ -55,11 +56,17 @@ public class Ship : MonoBehaviour
         pv = shipSO.tiers[managerUnit.currentTier].damage;
         cdAttack = shipSO.tiers[managerUnit.currentTier].cdAttack;
         rangeAttack = shipSO.tiers[managerUnit.currentTier].rangeAttack;
+        nbAttack = shipSO.tiers[managerUnit.currentTier].nbAttack;
     }
 
     public UnityEvent OnTakeDamage;
     public void TakeDamage(float damage)
     {
+        if (gameObject.activeSelf == false)
+            return;
+
+        OnTakeDamage?.Invoke();
+
         pv -= damage;
 
         if (pv <= 0)
@@ -67,7 +74,6 @@ public class Ship : MonoBehaviour
             Death();
         }
 
-        OnTakeDamage?.Invoke();
     }
 
     public UnityEvent OnDeath;
@@ -78,4 +84,5 @@ public class Ship : MonoBehaviour
         managerUnit.unitsList.Remove(gameObject);
         myPool.ReturnPool(gameObject);
     }
+
 }

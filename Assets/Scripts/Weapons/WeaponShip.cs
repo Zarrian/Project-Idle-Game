@@ -15,13 +15,13 @@ public class WeaponShip : Weapon
     public Pool myPoolShips;
 
     public float currentTimeAttack;
-    private void Start()
+    public virtual void Start()
     {
         //Save and disociate groupGameObject
         transform.GetChild(0).parent = null;
     }
 
-    private void FixedUpdate()
+    public virtual void FixedUpdate()
     {
         SpawnUnits();
 
@@ -38,55 +38,64 @@ public class WeaponShip : Weapon
     }
 
 
-    public void CheckAttack()
+    public virtual void CheckAttack()
     {
-        //Choisis un vaisseaux joueurs random
-        GameObject randomShip = unitsList[Random.Range(0, unitsList.Count)];
-        //CheckEnemyInrange
-        List<GameObject> unitInRange = new List<GameObject>();
-        Collider[] EnemyShip = Physics.OverlapSphere(randomShip.transform.position, shipSO.tiers[currentTier].rangeAttack, invaderLayer);
-
-        if (EnemyShip.Length > 0)
+        for (int i = 0; i < shipSO.tiers[currentTier].nbAttack; i++)
         {
-            print(randomShip.name);
-            GameObject target = ChoseEnemy(EnemyShip);
+            //Choisis un vaisseaux joueurs random
+            GameObject randomShip = unitsList[Random.Range(0, unitsList.Count)];
+            //CheckEnemyInrange
+            List<GameObject> unitInRange = new List<GameObject>();
+            Collider[] EnemyShip = Physics.OverlapSphere(randomShip.transform.position, shipSO.tiers[currentTier].rangeAttack, invaderLayer);
 
-            Vector3 direction = (target.transform.position - randomShip.transform.position).normalized;
-            float distance = Vector3.Distance(randomShip.transform.position, target.transform.position);
-            if (Physics.Raycast(randomShip.transform.position, direction, out RaycastHit hit, distance, InvaderAndPlanetLayer))
+            if (EnemyShip.Length > 0)
             {
-                Attack(randomShip.transform, target.transform);
+                GameObject target = ChoseEnemy(EnemyShip);
+
+                Vector3 direction = (target.transform.position - randomShip.transform.position).normalized;
+                float distance = Vector3.Distance(randomShip.transform.position, target.transform.position);
+                if (Physics.Raycast(randomShip.transform.position, direction, out RaycastHit hit, distance, InvaderAndPlanetLayer))
+                {
+                    Attack(randomShip.transform, target.transform);
+                }
+                else // recommance
+                    CheckAttack();
             }
-            else // recommance
-                CheckAttack();
         }
     }
 
     [SerializeField, Range(0, 100)]
     private float targetPriority = 75f; // 100 = proche, 0 = loin
-    GameObject ChoseEnemy(Collider[] invaders)
+   public virtual GameObject ChoseEnemy(Collider[] enemyCollider)
     {
-        if (invaders == null || invaders.Length == 0)
+        List<Collider> EnemyActif = new List<Collider>();
+        foreach (Collider enemy in enemyCollider)
+        {
+            if(enemy.gameObject.activeSelf == true)
+                EnemyActif.Add(enemy);
+        }
+
+        if (EnemyActif == null || EnemyActif.Count == 0)
             return null;
 
         // Cas extrêmes
         if (targetPriority <= 0)
-            return invaders[invaders.Length - 1].gameObject;
+            return EnemyActif[EnemyActif.Count - 1].gameObject;
 
         if (targetPriority >= 100)
-            return invaders[0].gameObject;
+            return EnemyActif[0].gameObject;
 
         float t = targetPriority / 100f;
 
         // Plus t est grand, plus on favorise les petits indices.
         float random = Mathf.Pow(Random.value, Mathf.Lerp(3f, 0.35f, t));
 
-        int index = Mathf.RoundToInt(random * (invaders.Length - 1));
+        int index = Mathf.RoundToInt(random * (EnemyActif.Count - 1));
 
-        return invaders[index].gameObject;
+        return EnemyActif[index].gameObject;
     }
 
-    public void Attack(Transform ship, Transform target)
+    public virtual void Attack(Transform ship, Transform target)
     {
         GameObject missile = myPoolMissile.GetPoolObject();
         missile.transform.position = ship.transform.position;
@@ -94,7 +103,7 @@ public class WeaponShip : Weapon
         missile.GetComponent<MissileHoming>().target = target;
     }
 
-    public void SpawnUnits()
+    public virtual void SpawnUnits()
     {
         if (unitsList.Count < shipSO.tiers[currentTier].maxUnits && isCreatingShip == false)
         {
@@ -110,7 +119,7 @@ public class WeaponShip : Weapon
         CreateShip();
     }
 
-    public void CreateShip()
+    public virtual void CreateShip()
     {
         //Faire une pool
         //GameObject newShips = Instantiate(shipSO.tiers[currentTier].ship, transform.position, transform.rotation, _groupShip);

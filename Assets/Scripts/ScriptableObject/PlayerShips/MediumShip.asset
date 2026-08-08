@@ -15,12 +15,13 @@ MonoBehaviour:
   tiers:
   - tierName: Drone1
     ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
-    maxUnits: 5
-    cdSpawnUnits: 3
-    pv: 15
+    maxUnits: 6
+    cdSpawnUnits: 1
+    pv: 10
     damage: 3
     cdAttack: 2
     rangeAttack: 10000
+    nbAttack: 1
     sphereCenter: {fileID: 0}
     orbitRadiusMin: 250
     orbitRadiusMax: 800
@@ -46,10 +47,41 @@ MonoBehaviour:
     ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
     maxUnits: 50
     cdSpawnUnits: 0.1
-    pv: 10
+    pv: 15
     damage: 3
     cdAttack: 5
     rangeAttack: 10000
+    nbAttack: 1
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 250
+    orbitRadiusMax: 1000
+    thrust: 100
+    maxSpeed: 500
+    maxTurnRateDegPerSec: 30
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 50
+    maxTimeOnTarget: 20
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    planetDetectionDistance: 100
+    planetCastRadius: 8
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 64
+    shipDetectionRadius: 50
+    avoidanceForce: 1000
+  - tierName: Drone1
+    ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
+    maxUnits: 30
+    cdSpawnUnits: 0.5
+    pv: 5
+    damage: 3
+    cdAttack: 5
+    rangeAttack: 10000
+    nbAttack: 1
     sphereCenter: {fileID: 0}
     orbitRadiusMin: 250
     orbitRadiusMax: 1000

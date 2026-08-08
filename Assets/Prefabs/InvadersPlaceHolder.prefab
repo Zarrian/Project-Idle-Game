@@ -15,13 +15,14 @@ GameObject:
   - component: {fileID: 8082807844354837848}
   - component: {fileID: 723410830668465184}
   - component: {fileID: 8870319931263635149}
+  - component: {fileID: 5739813179378266308}
   m_Layer: 8
   m_Name: InvadersPlaceHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6309088899000245398
 Transform:
   m_ObjectHideFlags: 0
@@ -30,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5952901031979287560}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -19.400024, y: 214, z: 0}
   m_LocalScale: {x: 73.437, y: 73.437, z: 73.437}
   m_ConstrainProportionsScale: 0
@@ -188,7 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e6a198fc53fb224dad7c837e8fe0486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyShip
-  manager: {fileID: 0}
+  managerUnit: {fileID: 0}
   shipSO: {fileID: 11400000, guid: 6130427648c41844cac867eec514a149, type: 2}
   movement: {fileID: 0}
   damage: 0
@@ -204,6 +205,22 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   manager: {fileID: 0}
+--- !u!114 &5739813179378266308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5952901031979287560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cecf8ea9a67b7594d84273910e34758d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FeedbackShip
+  ship: {fileID: 8870319931263635149}
+  poolExplosionDamage: {fileID: 0}
+  poolExplosionDeath: {fileID: 0}
+  scaleExplosion: 200
 --- !u!1001 &599046483122666845
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -24,6 +24,7 @@ public class UnitTier
     public float damage;
     public float cdAttack;
     public float rangeAttack;
+    public int nbAttack = 1;
 
     [Header("Movement")]
     [Tooltip("Centre de la sphère autour de laquelle on tourne")]
