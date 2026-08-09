@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830624160f40fe248b70c0d859e48c1c, type: 3}
+  m_Name: Collector
+  m_EditorClassIdentifier: Assembly-CSharp::UnitTierSet
+  tiers:
+  - tierName: Drone1
+    ship: {fileID: 2715899796734009256, guid: 3e832266b19db264e9efd4561b77677a, type: 3}
+    maxUnits: 5
+    cdSpawnUnits: 1
+    pv: 100
+    damage: 20
+    cdAttack: 15
+    rangeAttack: 10000
+    nbAttack: 0
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 500
+    orbitRadiusMax: 1000
+    thrust: 200
+    maxSpeed: 500
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 15
+    targetReachedDistance: 15
+    maxTimeOnTarget: 1000
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    planetDetectionDistance: 50
+    planetCastRadius: 15
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 0
+    avoidanceForce: 1000
+  - tierName: Drone1
+    ship: {fileID: 2715899796734009256, guid: 3e832266b19db264e9efd4561b77677a, type: 3}
+    maxUnits: 5
+    cdSpawnUnits: 1
+    pv: 100
+    damage: 20
+    cdAttack: 15
+    rangeAttack: 10000
+    nbAttack: 0
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 500
+    orbitRadiusMax: 1000
+    thrust: 200
+    maxSpeed: 500
+    maxTurnRateDegPerSec: 400
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 15
+    targetReachedDistance: 15
+    maxTimeOnTarget: 1000
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    planetDetectionDistance: 50
+    planetCastRadius: 15
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 0
+    avoidanceForce: 1000
+  - tierName: Drone1
+    ship: {fileID: 2715899796734009256, guid: 3e832266b19db264e9efd4561b77677a, type: 3}
+    maxUnits: 20
+    cdSpawnUnits: 0.1
+    pv: 100
+    damage: 20
+    cdAttack: 15
+    rangeAttack: 10000
+    nbAttack: 0
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 500
+    orbitRadiusMax: 1000
+    thrust: 200
+    maxSpeed: 500
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 15
+    targetReachedDistance: 15
+    maxTimeOnTarget: 1000
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    planetDetectionDistance: 50
+    planetCastRadius: 15
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 0
+    avoidanceForce: 1000
+  - tierName: Drone1
+    ship: {fileID: 2715899796734009256, guid: 3e832266b19db264e9efd4561b77677a, type: 3}
+    maxUnits: 30
+    cdSpawnUnits: 0.1
+    pv: 100
+    damage: 20
+    cdAttack: 15
+    rangeAttack: 10000
+    nbAttack: 0
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 500
+    orbitRadiusMax: 1000
+    thrust: 200
+    maxSpeed: 500
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 15
+    targetReachedDistance: 15
+    maxTimeOnTarget: 1000
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    planetDetectionDistance: 50
+    planetCastRadius: 15
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 0
+    avoidanceForce: 1000
+  - tierName: Drone1
+    ship: {fileID: 2715899796734009256, guid: 3e832266b19db264e9efd4561b77677a, type: 3}
+    maxUnits: 50
+    cdSpawnUnits: 0.1
+    pv: 100
+    damage: 20
+    cdAttack: 15
+    rangeAttack: 10000
+    nbAttack: 0
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 500
+    orbitRadiusMax: 1000
+    thrust: 200
+    maxSpeed: 500
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 15
+    targetReachedDistance: 15
+    maxTimeOnTarget: 1000
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    planetDetectionDistance: 50
+    planetCastRadius: 15
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 0
+    avoidanceForce: 1000

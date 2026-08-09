@@ -6,7 +6,7 @@ public class Ship : MonoBehaviour
     public WeaponShip managerUnit;
     public UnitTierSet shipSO;
 
-    public BirdOrbitFlight movement;
+    public MovementPhysic movement;
 
     public float damage;
     public float pv;
@@ -19,7 +19,7 @@ public class Ship : MonoBehaviour
 
     private void Awake()
     {
-        movement = GetComponent<BirdOrbitFlight>();
+        //movement = GetComponent<BirdOrbitFlight>();
 
         if (myPool == null)
             myPool = transform.parent.GetComponent<Pool>();
@@ -53,19 +53,19 @@ public class Ship : MonoBehaviour
     public void SetStatsCombats()
     {
         damage = shipSO.tiers[managerUnit.currentTier].damage;
-        pv = shipSO.tiers[managerUnit.currentTier].damage;
+        pv = shipSO.tiers[managerUnit.currentTier].pv;
         cdAttack = shipSO.tiers[managerUnit.currentTier].cdAttack;
         rangeAttack = shipSO.tiers[managerUnit.currentTier].rangeAttack;
         nbAttack = shipSO.tiers[managerUnit.currentTier].nbAttack;
     }
 
-    public UnityEvent OnTakeDamage;
-    public void TakeDamage(float damage)
+    public UnityEvent<Vector3> OnTakeDamage;
+    public void TakeDamage(float damage, Vector3 pos)
     {
         if (gameObject.activeSelf == false)
             return;
 
-        OnTakeDamage?.Invoke();
+        OnTakeDamage?.Invoke(pos);
 
         pv -= damage;
 

@@ -28,8 +28,8 @@ public class MissileHoming : MonoBehaviour
     public LayerMask enemyLayer;
 
     Rigidbody rb;
-    Rigidbody targetRb;
-    Ship targetShip;
+    public Rigidbody targetRb;
+    public Ship targetShip;
 
     // Mis en cache une fois pour éviter de refaire la multiplication à
     // chaque frame dans la comparaison de distance.
@@ -75,9 +75,19 @@ public class MissileHoming : MonoBehaviour
             if (target == null)
             {
                 myPool.ReturnPool(gameObject);
+                return;
             }
-            return; // reprend le guidage normal au prochain FixedUpdate
+            //Set target variable
+            targetRb = target.GetComponent<Rigidbody>();
+            targetShip = target.GetComponent<Ship>();
         }
+
+        if (target != null && targetRb == null | targetShip == null)
+        {
+            targetRb = target.GetComponent<Rigidbody>();
+            targetShip = target.GetComponent<Ship>();
+        }
+
 
         // Positions lues une seule fois par frame et réutilisées partout
         // en dessous, plutôt que de relire transform.position/target.position
@@ -128,22 +138,10 @@ public class MissileHoming : MonoBehaviour
 
     void Explode(Vector3 currentPosition, Vector3 targetPosition)
     {
-
-        // Buffer de sécurité (+1) au cas où Explode() serait un jour aussi
-        // déclenché par une collision physique plutôt que la seule
-        // détection de proximité.
-        float bufferSqr = (detonationDistance + 1f) * (detonationDistance + 1f);
-        if ((targetPosition - currentPosition).sqrMagnitude <= bufferSqr && targetShip != null)
-        {
-            targetShip.TakeDamage(damage);
-        }
+        targetShip.TakeDamage(damage, transform.position);
 
         onImpact?.Invoke();
         myPool.ReturnPool(gameObject);
-        // exploded reste à true : il ne repasse à false que dans OnEnable(),
-        // au prochain GetPoolObject() de ce missile. Le remettre ici
-        // rouvrait une fenêtre d'une frame où l'objet pouvait redéclencher
-        // une explosion avant que le SetActive(false) du pool ne soit effectif.
     }
 
 }

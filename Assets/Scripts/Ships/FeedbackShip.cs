@@ -11,18 +11,27 @@ public class FeedbackShip : MonoBehaviour
 
     private void Awake()
     {
-        if(ship == null)
+        if (ship == null)
             ship = GetComponent<Ship>();
 
         ship.OnTakeDamage.AddListener(ExplosionDamage);
         ship.OnDeath.AddListener(ExplosionDeath);
     }
 
-    void ExplosionDamage()
+    public float offsetDistance = 10;
+    void ExplosionDamage(Vector3 pos)
     {
+        Vector3 direction = (pos - transform.position).normalized;
+
+        if (ship.GetComponent<EnemyShip>())
+        {
+            print("explosionBlue");
+        }
+
         GameObject explosion = poolExplosionDamage.GetPoolObject();
-        explosion.transform.position = transform.position;
+        explosion.transform.position = transform.position + direction * offsetDistance;
         explosion.transform.rotation = transform.rotation;
+
     }
 
     void ExplosionDeath()

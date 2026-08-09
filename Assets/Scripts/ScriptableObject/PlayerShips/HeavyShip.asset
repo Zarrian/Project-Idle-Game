@@ -15,6 +15,66 @@ MonoBehaviour:
   tiers:
   - tierName: Drone1
     ship: {fileID: 2715899796734009256, guid: 3e832266b19db264e9efd4561b77677a, type: 3}
+    maxUnits: 0
+    cdSpawnUnits: 8
+    pv: 100
+    damage: 20
+    cdAttack: 15
+    rangeAttack: 10000
+    nbAttack: 0
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 500
+    orbitRadiusMax: 1000
+    thrust: 10
+    maxSpeed: 50
+    maxTurnRateDegPerSec: 5
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 15
+    maxTimeOnTarget: 30
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    planetDetectionDistance: 50
+    planetCastRadius: 15
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 0
+    avoidanceForce: 1000
+  - tierName: Drone1
+    ship: {fileID: 2715899796734009256, guid: 3e832266b19db264e9efd4561b77677a, type: 3}
+    maxUnits: 0
+    cdSpawnUnits: 8
+    pv: 100
+    damage: 20
+    cdAttack: 15
+    rangeAttack: 10000
+    nbAttack: 5
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 500
+    orbitRadiusMax: 1000
+    thrust: 10
+    maxSpeed: 50
+    maxTurnRateDegPerSec: 5
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 15
+    maxTimeOnTarget: 30
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    planetDetectionDistance: 50
+    planetCastRadius: 15
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 0
+    avoidanceForce: 1000
+  - tierName: Drone1
+    ship: {fileID: 2715899796734009256, guid: 3e832266b19db264e9efd4561b77677a, type: 3}
     maxUnits: 1
     cdSpawnUnits: 15
     pv: 35

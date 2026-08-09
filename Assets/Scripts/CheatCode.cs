@@ -29,11 +29,27 @@ public class CheatCode : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.Keypad1))
+        if (Input.GetKeyUp(KeyCode.Keypad2))
         {
             foreach (Weapon item in weapons)
             {
                 item.currentTier = 2;
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.Keypad3))
+        {
+            foreach (Weapon item in weapons)
+            {
+                item.currentTier = 3;
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.Keypad4))
+        {
+            foreach (Weapon item in weapons)
+            {
+                item.currentTier = 4;
             }
         }
     }
