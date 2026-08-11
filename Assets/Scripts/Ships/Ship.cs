@@ -1,8 +1,14 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Ship : MonoBehaviour
 {
+
+    public static Action<Ship> OnShipCreated;
+    public static Action<Ship> OnShipDestroyed;
+    public static Action<Ship, float> OnShipTakeDamage;
+
     public WeaponShip managerUnit;
     public UnitTierSet shipSO;
 
@@ -29,6 +35,8 @@ public class Ship : MonoBehaviour
     {
         SetStatsCombats();
         SetMovement();
+
+        OnShipCreated?.Invoke(this);
     }
     public void SetMovement()
     {
@@ -64,7 +72,8 @@ public class Ship : MonoBehaviour
     {
         if (gameObject.activeSelf == false)
             return;
-
+        
+        OnShipTakeDamage?.Invoke(this, damage);
         OnTakeDamage?.Invoke(pos);
 
         pv -= damage;
@@ -80,6 +89,7 @@ public class Ship : MonoBehaviour
     public void Death()
     {
         OnDeath?.Invoke();
+        OnShipDestroyed?.Invoke(this);
 
         managerUnit.unitsList.Remove(gameObject);
         myPool.ReturnPool(gameObject);
