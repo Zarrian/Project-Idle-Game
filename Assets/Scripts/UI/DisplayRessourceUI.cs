@@ -23,4 +23,5 @@ public class DisplayRessourceUI : MonoBehaviour
         textRessource.text = DeathStar.instance.GetAmount(myRessource).ToString();
     }
 
+
 }

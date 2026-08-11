@@ -1,56 +1,60 @@
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CheatCode : MonoBehaviour
 {
     public Weapon[] weapons;
 
+    public TextMeshProUGUI TierText;
+    public int currentTier = 1;
+    public int maxTier;
+
     private void Start()
     {
         weapons = Object.FindObjectsByType<Weapon>(FindObjectsSortMode.None);
+
+        foreach (Weapon item in weapons)
+        {
+            item.currentTier = 1;
+        }
+        TierText.text = "Current Tier: " + currentTier;
     }
 
-    //Afficher les code de triches dans un button
-    void Update()
+    public void IncreaseTier()
     {
-        if (Input.GetKeyUp(KeyCode.Keypad0))
-        {
-            foreach (Weapon item in weapons)
-            {
-                item.currentTier = 0;
-            }
-        }
+        currentTier++;
+        currentTier = Mathf.Clamp(currentTier, 0, maxTier);
 
-        if (Input.GetKeyUp(KeyCode.Keypad1))
+        TierText.text = "Current Tier: " + currentTier;
+        foreach (Weapon item in weapons)
         {
-            foreach (Weapon item in weapons)
-            {
-                item.currentTier = 1;
-            }
+            item.currentTier = currentTier;
         }
+    }
 
-        if (Input.GetKeyUp(KeyCode.Keypad2))
+    public void DecreaseTier()
+    {
+        currentTier--;
+        currentTier = Mathf.Clamp(currentTier, 0, maxTier);
+        TierText.text = "Current Tier: " + currentTier;
+        foreach (Weapon item in weapons)
         {
-            foreach (Weapon item in weapons)
-            {
-                item.currentTier = 2;
-            }
+            item.currentTier = currentTier;
         }
+    }
 
-        if (Input.GetKeyUp(KeyCode.Keypad3))
-        {
-            foreach (Weapon item in weapons)
-            {
-                item.currentTier = 3;
-            }
-        }
+    public void AddMetal()
+    {
+        DeathStar.instance.AddRessources(DeathStar.Ressources.Metal, 100f);
+    }
 
-        if (Input.GetKeyUp(KeyCode.Keypad4))
-        {
-            foreach (Weapon item in weapons)
-            {
-                item.currentTier = 4;
-            }
-        }
+    public void AddElectricity()
+    {
+        DeathStar.instance.AddRessources(DeathStar.Ressources.Electricity, 100f);
+    }
+
+    public void AddUranium()
+    {
+        DeathStar.instance.AddRessources(DeathStar.Ressources.Uranium, 100f);
     }
 }

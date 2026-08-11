@@ -86,7 +86,7 @@ MonoBehaviour:
     orbitRadiusMin: 200
     orbitRadiusMax: 300
     thrust: 200
-    maxSpeed: 600
+    maxSpeed: 200
     maxTurnRateDegPerSec: 100
     maxBankAngle: 45
     bankLerpSpeed: 2
@@ -116,7 +116,7 @@ MonoBehaviour:
     orbitRadiusMin: 200
     orbitRadiusMax: 300
     thrust: 200
-    maxSpeed: 600
+    maxSpeed: 200
     maxTurnRateDegPerSec: 100
     maxBankAngle: 45
     bankLerpSpeed: 2
@@ -146,7 +146,7 @@ MonoBehaviour:
     orbitRadiusMin: 200
     orbitRadiusMax: 300
     thrust: 200
-    maxSpeed: 600
+    maxSpeed: 200
     maxTurnRateDegPerSec: 100
     maxBankAngle: 45
     bankLerpSpeed: 2

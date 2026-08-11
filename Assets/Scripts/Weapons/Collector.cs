@@ -44,7 +44,6 @@ public class Collector : WeaponShip
 
     public void FindNearestScrap(CollectorShip collector)
     {
-        print("trytofindNearestScrap");
         Collider[] scraps = Physics.OverlapSphere(collector.transform.position, scrapSearchRadius, scrapLayer);
         if (scraps.Length == 0) return;
 
@@ -60,7 +59,6 @@ public class Collector : WeaponShip
             if (!IsAlreadyTargeted(scrap.transform, collector.transform))
             {
                 chosenTarget = scrap.transform;
-                print(chosenTarget);
                 break;
             }
         }

@@ -57,9 +57,6 @@ public class CollectorShip : MovementPhysic
         heading = transform.forward;
 
         manager.FindNearestScrap(this);
-
-
-
     }
 
     void FixedUpdate()
@@ -83,7 +80,7 @@ public class CollectorShip : MovementPhysic
 
     void Arrive()
     {
-        hasArrived = true;
+        //hasArrived = true;
         rb.linearVelocity = Vector3.zero;
         target.GetComponent<Scrap>().Collect();
 

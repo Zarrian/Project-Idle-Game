@@ -81,4 +81,5 @@ public class DeathStar : MonoBehaviour
     {
         return maxAmounts[type];
     }
+
 }
