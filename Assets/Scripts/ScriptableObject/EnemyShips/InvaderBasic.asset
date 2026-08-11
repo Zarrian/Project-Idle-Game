@@ -45,41 +45,11 @@ MonoBehaviour:
     avoidanceForce: 1000
   - tierName: InvaderBasics
     ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
-    maxUnits: 5
+    maxUnits: 10
     cdSpawnUnits: 3
-    pv: 10
+    pv: 1
     damage: 1
     cdAttack: 8
-    rangeAttack: 10000
-    nbAttack: 1
-    sphereCenter: {fileID: 0}
-    orbitRadiusMin: 500
-    orbitRadiusMax: 1200
-    thrust: 500
-    maxSpeed: 600
-    maxTurnRateDegPerSec: 70
-    maxBankAngle: 45
-    bankLerpSpeed: 2
-    rotationFollowSpeed: 8
-    targetReachedDistance: 50
-    maxTimeOnTarget: 20
-    planetLayerMask:
-      serializedVersion: 2
-      m_Bits: 128
-    planetDetectionDistance: 100
-    planetCastRadius: 8
-    shipLayerMask:
-      serializedVersion: 2
-      m_Bits: 320
-    shipDetectionRadius: 50
-    avoidanceForce: 1000
-  - tierName: InvaderBasics
-    ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
-    maxUnits: 10
-    cdSpawnUnits: 1
-    pv: 3
-    damage: 1
-    cdAttack: 1
     rangeAttack: 10000
     nbAttack: 1
     sphereCenter: {fileID: 0}
@@ -106,10 +76,40 @@ MonoBehaviour:
   - tierName: InvaderBasics
     ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
     maxUnits: 50
-    cdSpawnUnits: 0.01
+    cdSpawnUnits: 0.5
+    pv: 3
+    damage: 1
+    cdAttack: 3
+    rangeAttack: 10000
+    nbAttack: 1
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 500
+    orbitRadiusMax: 1200
+    thrust: 500
+    maxSpeed: 600
+    maxTurnRateDegPerSec: 70
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 50
+    maxTimeOnTarget: 20
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    planetDetectionDistance: 100
+    planetCastRadius: 8
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 320
+    shipDetectionRadius: 50
+    avoidanceForce: 1000
+  - tierName: InvaderBasics
+    ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
+    maxUnits: 100
+    cdSpawnUnits: 0.1
     pv: 10
     damage: 1
-    cdAttack: 8
+    cdAttack: 3
     rangeAttack: 10000
     nbAttack: 1
     sphereCenter: {fileID: 0}
@@ -136,10 +136,10 @@ MonoBehaviour:
   - tierName: InvaderBasics
     ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
     maxUnits: 500
-    cdSpawnUnits: 0.1
+    cdSpawnUnits: 0.01
     pv: 10
     damage: 1
-    cdAttack: 8
+    cdAttack: 3
     rangeAttack: 10000
     nbAttack: 1
     sphereCenter: {fileID: 0}

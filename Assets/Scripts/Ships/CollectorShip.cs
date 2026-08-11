@@ -15,6 +15,8 @@ public class CollectorShip : MovementPhysic
     [Header("Cible")]
     public Transform target;
 
+    public Collector manager;
+
 
     [Header("Guidage — quasi-linéaire")]
     [Tooltip("Taux de virage très élevé pour une trajectoire presque droite. Ne baisse cette valeur que si tu veux réintroduire de la courbe.")]
@@ -54,10 +56,10 @@ public class CollectorShip : MovementPhysic
 
         heading = transform.forward;
 
-        if (target == null)
-        {
-            Debug.LogWarning("CollectorShip: aucune target assignée.");
-        }
+        manager.FindNearestScrap(this);
+
+
+
     }
 
     void FixedUpdate()
@@ -83,8 +85,14 @@ public class CollectorShip : MovementPhysic
     {
         hasArrived = true;
         rb.linearVelocity = Vector3.zero;
+        target.GetComponent<Scrap>().Collect();
+
+        manager.FindNearestScrap(this);
+        target = null;
         onArrival?.Invoke();
+
     }
+
 
     /// <summary>
     /// Courbe le cap vers la cible à vitesse angulaire plafonnée — le
