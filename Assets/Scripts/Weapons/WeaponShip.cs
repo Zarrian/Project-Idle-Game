@@ -98,9 +98,13 @@ public class WeaponShip : Weapon
     public virtual void Attack(Transform ship, Transform target)
     {
         GameObject missile = myPoolMissile.GetPoolObject();
-        missile.GetComponent<MissileHoming>().target = target;
+        MissileHoming missileHoming = missile.GetComponent<MissileHoming>();
+        missileHoming.target = target;
+        missileHoming.damage = shipSO.tiers[currentTier].damage;
+
         missile.transform.position = ship.transform.position;
         missile.transform.rotation = ship.transform.rotation;
+        
     }
 
     public virtual void SpawnUnits()

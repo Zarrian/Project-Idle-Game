@@ -23,7 +23,7 @@ public class MissileHoming : MonoBehaviour
     public UnityEvent onImpact;
     public Pool myPool;
 
-    public int damage = 1;
+    public float damage = 1;
 
     public LayerMask enemyLayer;
 
@@ -101,6 +101,7 @@ public class MissileHoming : MonoBehaviour
         // pas besoin de la vraie distance.
         if (sqrDistance <= detonationDistanceSqr)
         {
+            print("here");
             Explode(currentPosition, targetPosition);
             return;
         }
@@ -138,7 +139,9 @@ public class MissileHoming : MonoBehaviour
 
     void Explode(Vector3 currentPosition, Vector3 targetPosition)
     {
+        print("Check");
         targetShip.TakeDamage(damage, transform.position);
+        print("DoubleCheck");
 
         onImpact?.Invoke();
         myPool.ReturnPool(gameObject);

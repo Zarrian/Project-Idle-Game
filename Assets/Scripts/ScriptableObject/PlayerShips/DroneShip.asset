@@ -48,7 +48,7 @@ MonoBehaviour:
     maxUnits: 5
     cdSpawnUnits: 1
     pv: 5
-    damage: 1
+    damage: 3
     cdAttack: 3
     rangeAttack: 10000
     nbAttack: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
     maxUnits: 10
     cdSpawnUnits: 0.01
     pv: 5
-    damage: 1
+    damage: 3
     cdAttack: 5
     rangeAttack: 10000
     nbAttack: 1
@@ -108,7 +108,7 @@ MonoBehaviour:
     maxUnits: 50
     cdSpawnUnits: 0.01
     pv: 8
-    damage: 1
+    damage: 3
     cdAttack: 3
     rangeAttack: 10000
     nbAttack: 1
@@ -138,7 +138,7 @@ MonoBehaviour:
     maxUnits: 500
     cdSpawnUnits: 0.01
     pv: 8
-    damage: 1
+    damage: 5
     cdAttack: 3
     rangeAttack: 10000
     nbAttack: 1

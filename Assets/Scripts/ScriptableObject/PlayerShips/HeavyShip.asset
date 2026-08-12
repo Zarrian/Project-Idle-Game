@@ -78,7 +78,7 @@ MonoBehaviour:
     maxUnits: 1
     cdSpawnUnits: 15
     pv: 35
-    damage: 20
+    damage: 10
     cdAttack: 5
     rangeAttack: 10000
     nbAttack: 10

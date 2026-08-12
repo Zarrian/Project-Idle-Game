@@ -64,10 +64,10 @@ public class ManagerStatistiques : MonoBehaviour
 
     public IEnumerator UpdateUI()
     {
-        barShips.fillAmount = Mathf.Clamp01((float)shipPlayer.Count / (shipPlayer.Count + shipInvaders.Count));
-        barPV.fillAmount = Mathf.Clamp01(playerCurrentPV / (playerCurrentPV + invaderCurrentPV));
-        barDPS.fillAmount = Mathf.Clamp01(playerDPS / (playerDPS + invaderDPS));
-        barDPTen.fillAmount = Mathf.Clamp01(playerDamageLast10Seconds / (playerDamageLast10Seconds + invaderDamageLast10Seconds));
+        barShips.fillAmount = SafeRatio(shipPlayer.Count, shipInvaders.Count);
+        barPV.fillAmount = SafeRatio(playerCurrentPV, invaderCurrentPV);
+        barDPS.fillAmount = SafeRatio(playerDPS, invaderDPS);
+        barDPTen.fillAmount = SafeRatio(playerDamageLast10Seconds, invaderDamageLast10Seconds);
 
         textPlayerShip.text = shipPlayer.Count.ToString();
         textInvaderShip.text = shipInvaders.Count.ToString();
@@ -78,9 +78,20 @@ public class ManagerStatistiques : MonoBehaviour
         textPlayerDPTen.text = playerDamageLast10Seconds.ToString("F1");
         textInvaderDPTen.text = invaderDamageLast10Seconds.ToString("F1");
 
-
         yield return new WaitForSeconds(0.2f);
         StartCoroutine(UpdateUI());
+    }
+
+    /// <summary>
+    /// Ratio a / (a + b), sécurisé contre la division par zéro. Si les deux
+    /// valeurs sont à 0 (aucun combat encore), retourne 0.5 (barre à
+    /// l'équilibre) plutôt qu'un NaN qui casse le rendu du Canvas.
+    /// </summary>
+    float SafeRatio(float a, float b)
+    {
+        float total = a + b;
+        if (total <= 0f) return 0.5f;
+        return Mathf.Clamp01(a / total);
     }
 
     public IEnumerator UpdateDamage()
@@ -113,12 +124,12 @@ public class ManagerStatistiques : MonoBehaviour
     {
         if ((playerShipLayerMask.value & (1 << ship.gameObject.layer)) != 0)
         {
-            playerDamageInstances.Add(new DamageInstance(damage));
+            invaderDamageInstances.Add(new DamageInstance(damage));
             playerCurrentPV -= damage;
         }
         else if ((invaderLayerMask.value & (1 << ship.gameObject.layer)) != 0)
         {
-            invaderDamageInstances.Add(new DamageInstance(damage));
+            playerDamageInstances.Add(new DamageInstance(damage));
             invaderCurrentPV -= damage;
         }
     }
