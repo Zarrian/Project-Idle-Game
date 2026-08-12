@@ -40,7 +40,7 @@ MonoBehaviour:
     planetCastRadius: 8
     shipLayerMask:
       serializedVersion: 2
-      m_Bits: 64
+      m_Bits: 320
     shipDetectionRadius: 50
     avoidanceForce: 1000
   - tierName: Drone1

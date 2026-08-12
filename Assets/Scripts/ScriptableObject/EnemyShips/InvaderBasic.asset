@@ -75,7 +75,7 @@ MonoBehaviour:
     avoidanceForce: 1000
   - tierName: InvaderBasics
     ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
-    maxUnits: 50
+    maxUnits: 40
     cdSpawnUnits: 0.4
     pv: 10
     damage: 1
@@ -105,7 +105,7 @@ MonoBehaviour:
     avoidanceForce: 1000
   - tierName: InvaderBasics
     ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
-    maxUnits: 150
+    maxUnits: 100
     cdSpawnUnits: 0.1
     pv: 15
     damage: 2
@@ -135,7 +135,7 @@ MonoBehaviour:
     avoidanceForce: 1000
   - tierName: InvaderBasics
     ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
-    maxUnits: 500
+    maxUnits: 200
     cdSpawnUnits: 0.01
     pv: 10
     damage: 1

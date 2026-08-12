@@ -67,14 +67,14 @@ public class Ship : MonoBehaviour
         nbAttack = shipSO.tiers[managerUnit.currentTier].nbAttack;
     }
 
-    public UnityEvent<Vector3> OnTakeDamage;
+    public UnityEvent<Vector3, float> OnTakeDamage;
     public void TakeDamage(float damage, Vector3 pos)
     {
         if (gameObject.activeSelf == false)
             return;
         
         OnShipTakeDamage?.Invoke(this, damage);
-        OnTakeDamage?.Invoke(pos);
+        OnTakeDamage?.Invoke(pos, damage);
 
         float pvBefore = pv;
         pv -= damage;
