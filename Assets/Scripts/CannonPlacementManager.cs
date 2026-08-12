@@ -55,7 +55,6 @@ public class CannonPlacementManager : MonoBehaviour
             cannons.Add(cannon);
         }
 
-        Debug.Log($"{cannonCount} canons créés avec succès !");
         return cannons;
     }
 

@@ -1,13 +1,13 @@
 using UnityEngine;
+using System.Collections;
+using UnityEngine.Events;
 
 public class CannonAI : MonoBehaviour
 {
-
     public CanonTierSet canonSO;
     public Weapon manager;
 
     [SerializeField] private float visionConeAngle = 45f;
-    [SerializeField] private float visionRange = 50f;
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private Transform cannonBarrel;
 
@@ -24,9 +24,34 @@ public class CannonAI : MonoBehaviour
     public float rangeAttack;
     public int nbAttack = 1;
 
+    [Header("Laser Settings")]
+    [SerializeField] private float laserWidth = 0.2f;
+    [SerializeField] private Color laserColorIdle = new Color(0f, 1f, 0f, 0.5f);
+    [SerializeField] private Color laserColorFire = new Color(1f, 0f, 0f, 1f);
+
+    public LineRenderer laserLine;
+    private Coroutine fireEffectCoroutine;
+
     private void OnEnable()
     {
         SetStatistique();
+        SetupLaser();
+    }
+
+    private void SetupLaser()
+    {
+        // Créer un GameObject pour le LineRenderer
+        GameObject laserObject = new GameObject("LaserBeam");
+        laserObject.transform.SetParent(transform);
+        laserObject.transform.localPosition = Vector3.zero;
+
+        laserLine = laserObject.AddComponent<LineRenderer>();
+        laserLine.material = new Material(Shader.Find("Sprites/Default"));
+        laserLine.startWidth = laserWidth;
+        laserLine.endWidth = laserWidth;
+        laserLine.startColor = laserColorIdle;
+        laserLine.endColor = laserColorIdle;
+        laserLine.positionCount = 0;
     }
 
     private void FixedUpdate()
@@ -36,13 +61,18 @@ public class CannonAI : MonoBehaviour
         if (currenttarget != null)
         {
             LookTarget();
+            //UpdateLaserPosition();
 
             currentAttack += Time.fixedDeltaTime;
             if (currentAttack >= cdAttack)
             {
-                Fire();
+                Fire(currenttarget.gameObject);
                 currentAttack = 0;
             }
+        }
+        else
+        {
+            //HideLaser();
         }
     }
 
@@ -55,119 +85,141 @@ public class CannonAI : MonoBehaviour
         nbAttack = canonSO.tiers[manager.currentTier].nbAttack;
     }
 
+    [SerializeField] private float rotationSpeed = 180f; // À ajuster dans l'Inspecteur
+    
     public void LookTarget()
     {
         Vector3 directionToTarget = (currenttarget.position - transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
-        cannonBarrel.rotation = Quaternion.RotateTowards(cannonBarrel.rotation, targetRotation, 90f * Time.deltaTime);
+        cannonBarrel.rotation = Quaternion.RotateTowards(cannonBarrel.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
     private void DetectTargets()
     {
-        Vector3 forwardDirection = transform.up; // Direction d'orientation du canon
+        // Utiliser la direction du barrel (pas transform.up)
+        Vector3 forwardDirection = cannonBarrel != null 
+            ? cannonBarrel.forward 
+            : transform.forward;
 
-        // Chercher tous les objets dans la portée
         targetCount = Physics.OverlapSphereNonAlloc(
             transform.position,
-            visionRange,
+            rangeAttack,
             colliders,
             targetLayer
         );
+
+        bool targetStillInRange = false;
 
         for (int i = 0; i < targetCount; i++)
         {
             Vector3 directionToTarget = (colliders[i].transform.position - transform.position).normalized;
             float angleToTarget = Vector3.Angle(forwardDirection, directionToTarget);
 
-            // Vérifier si la cible est dans le cône de vision
             if (angleToTarget <= visionConeAngle / 2f)
             {
                 if (currenttarget == null)
+                {
                     OnTargetDetected(colliders[i].gameObject);
-                else if (colliders[i].gameObject != currenttarget?.gameObject) // Vérifie si ce n'est pas déjà la cible actuelle
-                    OnTargetDetected(colliders[i].gameObject);
+                    targetStillInRange = true;
+                    break;
+                }
+                else if (colliders[i].gameObject == currenttarget.gameObject)
+                {
+                    targetStillInRange = true;
+                    break;
+                }
             }
+        }
+
+        if (currenttarget != null && !targetStillInRange)
+        {
+            //Debug.Log($"Canon {gameObject.name} a perdu sa cible");
+            currenttarget = null;
+            //HideLaser();
         }
     }
 
     private void OnTargetDetected(GameObject target)
     {
-        // À customiser selon vos besoins
-        Debug.Log($"Canon {gameObject.name} détecte : {target.name}");
         currenttarget = target.transform;
+        //DrawLaser();
     }
 
-    private void Fire()
+    public void DrawLaser()
     {
-        // Votre logique de tir ici
-        Debug.Log($"Canon {gameObject.name} tire !");
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (!Application.isPlaying)
+        if (laserLine == null || currenttarget == null)
             return;
 
-        Vector3 forwardDirection = transform.up;
-
-        // Dessiner la portée (sphère)
-        Gizmos.color = new Color(1f, 1f, 0f, 0.1f);
-        DrawWireSphere(transform.position, visionRange, 16);
-
-        // Dessiner le cône de vision
-        Gizmos.color = new Color(0f, 1f, 0f, 0.3f);
-        DrawVisionCone(transform.position, forwardDirection, visionRange, visionConeAngle, 16);
-
-        // Dessiner la direction avant
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position, transform.position + forwardDirection * visionRange);
+        laserLine.startColor = laserColorIdle;
+        laserLine.endColor = laserColorIdle;
     }
 
-    private void DrawWireSphere(Vector3 center, float radius, int segments)
+    private void UpdateLaserPosition()
     {
-        float segmentAngle = 360f / segments;
-        Vector3 prevPoint = center + new Vector3(radius, 0, 0);
+        if (laserLine == null || currenttarget == null)
+            return;
 
-        for (int i = 1; i <= segments; i++)
+        Vector3 startPos = cannonBarrel != null ? cannonBarrel.position : transform.position;
+        Vector3 endPos = currenttarget.position;
+
+        laserLine.positionCount = 2;
+        laserLine.SetPosition(0, startPos);
+        laserLine.SetPosition(1, endPos);
+    }
+
+    public UnityEvent OnFire;
+    private void Fire(GameObject target)
+    {
+        if (currenttarget == null)
         {
-            float angle = i * segmentAngle * Mathf.Deg2Rad;
-            Vector3 newPoint = center + new Vector3(
-                Mathf.Cos(angle) * radius,
-                0,
-                Mathf.Sin(angle) * radius
-            );
-            Gizmos.DrawLine(prevPoint, newPoint);
-            prevPoint = newPoint;
+            Debug.Log($"Canon {gameObject.name} tire !");
+            return;
+        }
+
+        // Arrêter l'effet précédent
+        if (fireEffectCoroutine != null)
+            StopCoroutine(fireEffectCoroutine);
+
+        //fireEffectCoroutine = StartCoroutine(LaserFireEffect());
+        OnFire?.Invoke();
+        target.GetComponent<Ship>().TakeDamage(damage, transform.position);
+        //Instantie aussi un autre VFX ?
+    }
+
+ /*   private IEnumerator LaserFireEffect()
+    {
+        float laserDuration = 0.33f; // Durée courte pour l'effet de tir
+        float elapsedTime = 0f;
+
+        // Changer la couleur du laser à rouge/intense
+        laserLine.startColor = laserColorFire;
+        laserLine.endColor = laserColorFire;
+
+        while (elapsedTime < laserDuration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            // Pulsation optionnelle
+            float pulse = Mathf.Sin(elapsedTime * 10f) * 0.5f + 0.5f;
+            laserLine.startWidth = laserWidth * (0.8f + pulse * 0.4f);
+            laserLine.endWidth = laserWidth * (0.8f + pulse * 0.4f);
+
+            yield return null;
+        }
+
+        // Revenir à la couleur normale
+        laserLine.startColor = laserColorIdle;
+        laserLine.endColor = laserColorIdle;
+        laserLine.startWidth = laserWidth;
+        laserLine.endWidth = laserWidth;
+    }*/
+
+    private void HideLaser()
+    {
+        if (laserLine != null)
+        {
+            laserLine.positionCount = 0;
         }
     }
 
-    private void DrawVisionCone(Vector3 origin, Vector3 direction, float range, float angle, int segments)
-    {
-        float halfAngle = angle / 2f;
-        float segmentAngle = angle / segments;
-
-        for (int i = 0; i < segments; i++)
-        {
-            float currentAngle = -halfAngle + i * segmentAngle;
-            float nextAngle = -halfAngle + (i + 1) * segmentAngle;
-
-            // Créer les points du cône
-            Vector3 point1 = GetConePoint(origin, direction, range, currentAngle);
-            Vector3 point2 = GetConePoint(origin, direction, range, nextAngle);
-
-            Gizmos.DrawLine(origin, point1);
-            Gizmos.DrawLine(point1, point2);
-        }
-
-        // Fermer le cône
-        Vector3 lastPoint = GetConePoint(origin, direction, range, -halfAngle);
-        Vector3 endPoint = GetConePoint(origin, direction, range, halfAngle);
-        Gizmos.DrawLine(lastPoint, endPoint);
-    }
-
-    private Vector3 GetConePoint(Vector3 origin, Vector3 direction, float range, float angleOffset)
-    {
-        Quaternion rotation = Quaternion.AngleAxis(angleOffset, Vector3.right);
-        return origin + rotation * direction * range;
-    }
 }

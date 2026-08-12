@@ -9,7 +9,7 @@ public class CheatCode : MonoBehaviour
     public int currentTier = 1;
     public int maxTier;
 
-    private void Start()
+    private void Awake()
     {
         weapons = Object.FindObjectsByType<Weapon>(FindObjectsSortMode.None);
 

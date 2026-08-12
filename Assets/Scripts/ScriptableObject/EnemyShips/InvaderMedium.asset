@@ -75,9 +75,9 @@ MonoBehaviour:
     avoidanceForce: 1000
   - tierName: Drone1
     ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
-    maxUnits: 6
+    maxUnits: 10
     cdSpawnUnits: 1
-    pv: 10
+    pv: 30
     damage: 5
     cdAttack: 2
     rangeAttack: 10000
