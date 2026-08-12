@@ -76,12 +76,14 @@ public class Ship : MonoBehaviour
         OnShipTakeDamage?.Invoke(this, damage);
         OnTakeDamage?.Invoke(pos);
 
+        float pvBefore = pv;
         pv -= damage;
 
         if (pv <= 0)
         {
             Death();
         }
+
 
     }
 

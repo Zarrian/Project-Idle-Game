@@ -15,7 +15,7 @@ public class CheatCode : MonoBehaviour
 
         foreach (Weapon item in weapons)
         {
-            item.currentTier = 1;
+            item.currentTier = currentTier;
         }
         TierText.text = "Current Tier: " + currentTier;
     }

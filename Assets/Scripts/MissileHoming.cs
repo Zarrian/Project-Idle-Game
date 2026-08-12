@@ -29,7 +29,6 @@ public class MissileHoming : MonoBehaviour
 
     Rigidbody rb;
     public Rigidbody targetRb;
-    public Ship targetShip;
 
     // Mis en cache une fois pour éviter de refaire la multiplication à
     // chaque frame dans la comparaison de distance.
@@ -54,11 +53,9 @@ public class MissileHoming : MonoBehaviour
         detonationDistanceSqr = detonationDistance * detonationDistance;
 
         targetRb = null;
-        targetShip = null;
         if (target != null)
         {
             targetRb = target.GetComponent<Rigidbody>();
-            targetShip = target.GetComponent<Ship>();
         }
 
         rb.linearVelocity = transform.forward * speed;
@@ -66,26 +63,21 @@ public class MissileHoming : MonoBehaviour
 
     void FixedUpdate()
     {
-        //Si la target n'est plus
-        if (target.gameObject.activeSelf == false)
+        // Garde-fou contre un target vraiment null, pas juste inactif
+        if (target == null || !target.gameObject.activeSelf)
         {
-            // La cible a été détruite en vol : on cherche la plus proche
-            // cible valide restante plutôt que d'abandonner directement.
             target = FunctionUsefullManager.Instance.TryFindNearestTarget(transform, enemyLayer);
             if (target == null)
             {
                 myPool.ReturnPool(gameObject);
                 return;
             }
-            //Set target variable
             targetRb = target.GetComponent<Rigidbody>();
-            targetShip = target.GetComponent<Ship>();
         }
 
-        if (target != null && targetRb == null | targetShip == null)
+        if (targetRb == null)
         {
             targetRb = target.GetComponent<Rigidbody>();
-            targetShip = target.GetComponent<Ship>();
         }
 
 
@@ -101,7 +93,6 @@ public class MissileHoming : MonoBehaviour
         // pas besoin de la vraie distance.
         if (sqrDistance <= detonationDistanceSqr)
         {
-            print("here");
             Explode(currentPosition, targetPosition);
             return;
         }
@@ -139,9 +130,7 @@ public class MissileHoming : MonoBehaviour
 
     void Explode(Vector3 currentPosition, Vector3 targetPosition)
     {
-        print("Check");
-        targetShip.TakeDamage(damage, transform.position);
-        print("DoubleCheck");
+        target.GetComponent<Ship>().TakeDamage(damage, transform.position);
 
         onImpact?.Invoke();
         myPool.ReturnPool(gameObject);

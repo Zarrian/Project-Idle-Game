@@ -62,12 +62,36 @@ public class ManagerStatistiques : MonoBehaviour
         Ship.OnShipDestroyed -= HandleShipDestroyed;
     }
 
+    [Tooltip("Vitesse de rattrapage du lerp. Plus haut = rattrape plus vite (moins de lissage visible), plus bas = plus lent/fluide.")]
+    public float fillSmoothSpeed = 8f;
+
+    void FixedUpdate()
+    {
+        UpdateBarSmooth(barShips, SafeRatio(shipPlayer.Count, shipInvaders.Count));
+        UpdateBarSmooth(barPV, SafeRatio(playerCurrentPV, invaderCurrentPV));
+        UpdateBarSmooth(barDPS, SafeRatio(playerDPS, invaderDPS));
+        UpdateBarSmooth(barDPTen, SafeRatio(playerDamageLast10Seconds, invaderDamageLast10Seconds));
+    }
+
+    /// <summary>
+    /// Lerp exponentiel vers targetValue, indépendant du framerate. Contrairement
+    /// à Mathf.Lerp(bar.fillAmount, target, vitesse * Time.fixedDeltaTime) — un
+    /// piège classique — cette formule donne le MÊME résultat visuel peu importe
+    /// le framerate/le fixedDeltaTime, parce qu'elle compose correctement le
+    /// taux de rattrapage sur plusieurs frames au lieu de l'additionner linéairement.
+    /// </summary>
+    void UpdateBarSmooth(Image bar, float targetValue)
+    {
+        float t = 1f - Mathf.Exp(-fillSmoothSpeed * Time.fixedDeltaTime);
+        bar.fillAmount = Mathf.Lerp(bar.fillAmount, targetValue, t);
+    }
+
     public IEnumerator UpdateUI()
     {
-        barShips.fillAmount = SafeRatio(shipPlayer.Count, shipInvaders.Count);
-        barPV.fillAmount = SafeRatio(playerCurrentPV, invaderCurrentPV);
-        barDPS.fillAmount = SafeRatio(playerDPS, invaderDPS);
-        barDPTen.fillAmount = SafeRatio(playerDamageLast10Seconds, invaderDamageLast10Seconds);
+        //barShips.fillAmount = SafeRatio(shipPlayer.Count, shipInvaders.Count);
+        //barPV.fillAmount = SafeRatio(playerCurrentPV, invaderCurrentPV);
+        //barDPS.fillAmount = SafeRatio(playerDPS, invaderDPS);
+        //barDPTen.fillAmount = SafeRatio(playerDamageLast10Seconds, invaderDamageLast10Seconds);
 
         textPlayerShip.text = shipPlayer.Count.ToString();
         textInvaderShip.text = shipInvaders.Count.ToString();
