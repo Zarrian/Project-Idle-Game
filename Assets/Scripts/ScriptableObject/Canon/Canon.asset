@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff579a79c93e484c9e3d17cb3bcc702, type: 3}
+  m_Name: Canon
+  m_EditorClassIdentifier: Assembly-CSharp::CanonTierSet
+  tiers:
+  - tierName: Canon1
+    canon: {fileID: 8603223996072900382, guid: e4038444fcd1b3346a10d3cb6c2986d4, type: 3}
+    maxUnits: 12
+    cdSpawnUnits: 0
+    pv: 100
+    damage: 5
+    cdAttack: 1
+    rangeAttack: 4000
+    nbAttack: 1
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 256
+  - tierName: Canon1
+    canon: {fileID: 8603223996072900382, guid: e4038444fcd1b3346a10d3cb6c2986d4, type: 3}
+    maxUnits: 12
+    cdSpawnUnits: 0
+    pv: 100
+    damage: 5
+    cdAttack: 2
+    rangeAttack: 4000
+    nbAttack: 1
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 256
+  - tierName: Canon1
+    canon: {fileID: 8603223996072900382, guid: e4038444fcd1b3346a10d3cb6c2986d4, type: 3}
+    maxUnits: 24
+    cdSpawnUnits: 0
+    pv: 100
+    damage: 5
+    cdAttack: 2
+    rangeAttack: 4000
+    nbAttack: 1
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 256
+  - tierName: Canon1
+    canon: {fileID: 8603223996072900382, guid: e4038444fcd1b3346a10d3cb6c2986d4, type: 3}
+    maxUnits: 36
+    cdSpawnUnits: 0
+    pv: 100
+    damage: 5
+    cdAttack: 2
+    rangeAttack: 4000
+    nbAttack: 1
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 256
+  - tierName: Canon1
+    canon: {fileID: 8603223996072900382, guid: e4038444fcd1b3346a10d3cb6c2986d4, type: 3}
+    maxUnits: 48
+    cdSpawnUnits: 0
+    pv: 100
+    damage: 5
+    cdAttack: 2
+    rangeAttack: 4000
+    nbAttack: 1
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 128
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 256
