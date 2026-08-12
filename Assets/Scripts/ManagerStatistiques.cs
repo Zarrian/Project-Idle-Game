@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ManagerStatistiques : MonoBehaviour
 {
     public static ManagerStatistiques instance;
 
     public List<Ship> allships;
-    public List<Ship> shipPlayer;
-    public List<Ship> shipInvaders;
 
     public LayerMask playerShipLayerMask;
     public LayerMask invaderLayerMask;
+
+    public List<Ship> shipPlayer;
+    public List<Ship> shipInvaders;
 
     public float playerDamageLast10Seconds;
     public float invaderDamageLast10Seconds;
@@ -21,6 +24,20 @@ public class ManagerStatistiques : MonoBehaviour
 
     public float playerCurrentPV;
     public float invaderCurrentPV;
+
+    public Image barShips;
+    public Image barPV;
+    public Image barDPS;
+    public Image barDPTen;
+
+    public TextMeshProUGUI textPlayerShip;
+    public TextMeshProUGUI textInvaderShip;
+    public TextMeshProUGUI textPlayerPV;
+    public TextMeshProUGUI textInvaderPV;
+    public TextMeshProUGUI textPlayerDPS;
+    public TextMeshProUGUI textInvaderDPS;
+    public TextMeshProUGUI textPlayerDPTen;
+    public TextMeshProUGUI textInvaderDPTen;
 
 
     private void Awake()
@@ -35,6 +52,7 @@ public class ManagerStatistiques : MonoBehaviour
         Ship.OnShipDestroyed += HandleShipDestroyed;
 
         StartCoroutine(UpdateDamage());
+        StartCoroutine(UpdateUI());
     }
 
     private void OnDisable()
@@ -42,6 +60,27 @@ public class ManagerStatistiques : MonoBehaviour
         Ship.OnShipCreated -= HandleShipCreated;
         Ship.OnShipTakeDamage -= HandleShipTakeDamage;
         Ship.OnShipDestroyed -= HandleShipDestroyed;
+    }
+
+    public IEnumerator UpdateUI()
+    {
+        barShips.fillAmount = Mathf.Clamp01((float)shipPlayer.Count / (shipPlayer.Count + shipInvaders.Count));
+        barPV.fillAmount = Mathf.Clamp01(playerCurrentPV / (playerCurrentPV + invaderCurrentPV));
+        barDPS.fillAmount = Mathf.Clamp01(playerDPS / (playerDPS + invaderDPS));
+        barDPTen.fillAmount = Mathf.Clamp01(playerDamageLast10Seconds / (playerDamageLast10Seconds + invaderDamageLast10Seconds));
+
+        textPlayerShip.text = shipPlayer.Count.ToString();
+        textInvaderShip.text = shipInvaders.Count.ToString();
+        textPlayerPV.text = playerCurrentPV.ToString("F0");
+        textInvaderPV.text = invaderCurrentPV.ToString("F0");
+        textPlayerDPS.text = playerDPS.ToString("F1");
+        textInvaderDPS.text = invaderDPS.ToString("F1");
+        textPlayerDPTen.text = playerDamageLast10Seconds.ToString("F1");
+        textInvaderDPTen.text = invaderDamageLast10Seconds.ToString("F1");
+
+
+        yield return new WaitForSeconds(0.2f);
+        StartCoroutine(UpdateUI());
     }
 
     public IEnumerator UpdateDamage()
