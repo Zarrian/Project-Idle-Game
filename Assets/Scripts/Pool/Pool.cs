@@ -13,7 +13,7 @@ public class Pool : MonoBehaviour
 
     // L'enfant 0 sert de modèle pour Instantiate (garde son Inspector tel
     // quel) et n'est jamais lui-même remis dans la pile de disponibles.
-    private GameObject template;
+    public GameObject template;
 
     void OnEnable()
     {
