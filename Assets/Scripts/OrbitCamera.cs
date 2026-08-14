@@ -74,8 +74,8 @@ public class OrbitCamera : MonoBehaviour
 
     void HandleRotation()
     {
-        // Bouton 2 = clic molette
-        if (Input.GetMouseButton(2))
+        // Bouton 1 = clic droit
+        if (Input.GetMouseButton(1))
         {
             float mouseX = Input.GetAxis("Mouse X");
             float mouseY = Input.GetAxis("Mouse Y");

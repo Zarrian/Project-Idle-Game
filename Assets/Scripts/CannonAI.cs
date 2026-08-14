@@ -1,6 +1,7 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.Events;
+using VolumetricLines;
 
 public class CannonAI : MonoBehaviour
 {
@@ -24,13 +25,17 @@ public class CannonAI : MonoBehaviour
     public float rangeAttack;
     public int nbAttack = 1;
 
+    public VolumetricLineBehavior laserLine;
+
     [Header("Laser Settings")]
     [SerializeField] private float laserWidth = 0.2f;
-    [SerializeField] private Color laserColorIdle = new Color(0f, 1f, 0f, 0.5f);
     [SerializeField] private Color laserColorFire = new Color(1f, 0f, 0f, 1f);
+    [SerializeField] private float rotationSpeed = 180f;
 
-    public LineRenderer laserLine;
+    //public LineRenderer laserLine;
     private Coroutine fireEffectCoroutine;
+
+    public UnityEvent OnFire;
 
     private void OnEnable()
     {
@@ -40,18 +45,17 @@ public class CannonAI : MonoBehaviour
 
     private void SetupLaser()
     {
-        // Créer un GameObject pour le LineRenderer
-        GameObject laserObject = new GameObject("LaserBeam");
-        laserObject.transform.SetParent(transform);
-        laserObject.transform.localPosition = Vector3.zero;
+        //laserLine.transform.parent = null;
+        //laserLine.gameObject.SetActive(false);
+        //GameObject laserObject = new GameObject("LaserBeam");
+        //laserObject.transform.SetParent(transform);
+        //laserObject.transform.localPosition = Vector3.zero;
 
-        laserLine = laserObject.AddComponent<LineRenderer>();
-        laserLine.material = new Material(Shader.Find("Sprites/Default"));
-        laserLine.startWidth = laserWidth;
-        laserLine.endWidth = laserWidth;
-        laserLine.startColor = laserColorIdle;
-        laserLine.endColor = laserColorIdle;
-        laserLine.positionCount = 0;
+        //laserLine = laserObject.AddComponent<LineRenderer>();
+        //laserLine.material = new Material(Shader.Find("Sprites/Default"));
+        //laserLine.startWidth = laserWidth;
+        //laserLine.endWidth = laserWidth;
+        //laserLine.positionCount = 0;
     }
 
     private void FixedUpdate()
@@ -61,7 +65,6 @@ public class CannonAI : MonoBehaviour
         if (currenttarget != null)
         {
             LookTarget();
-            //UpdateLaserPosition();
 
             currentAttack += Time.fixedDeltaTime;
             if (currentAttack >= cdAttack)
@@ -69,10 +72,6 @@ public class CannonAI : MonoBehaviour
                 Fire(currenttarget.gameObject);
                 currentAttack = 0;
             }
-        }
-        else
-        {
-            //HideLaser();
         }
     }
 
@@ -85,8 +84,6 @@ public class CannonAI : MonoBehaviour
         nbAttack = canonSO.tiers[manager.currentTier].nbAttack;
     }
 
-    [SerializeField] private float rotationSpeed = 180f; // À ajuster dans l'Inspecteur
-    
     public void LookTarget()
     {
         Vector3 directionToTarget = (currenttarget.position - transform.position).normalized;
@@ -96,9 +93,8 @@ public class CannonAI : MonoBehaviour
 
     private void DetectTargets()
     {
-        // Utiliser la direction du barrel (pas transform.up)
-        Vector3 forwardDirection = cannonBarrel != null 
-            ? cannonBarrel.forward 
+        Vector3 forwardDirection = cannonBarrel != null
+            ? cannonBarrel.forward
             : transform.forward;
 
         targetCount = Physics.OverlapSphereNonAlloc(
@@ -133,41 +129,16 @@ public class CannonAI : MonoBehaviour
 
         if (currenttarget != null && !targetStillInRange)
         {
-            //Debug.Log($"Canon {gameObject.name} a perdu sa cible");
             currenttarget = null;
-            //HideLaser();
+            HideLaser();
         }
     }
 
     private void OnTargetDetected(GameObject target)
     {
         currenttarget = target.transform;
-        //DrawLaser();
     }
 
-    public void DrawLaser()
-    {
-        if (laserLine == null || currenttarget == null)
-            return;
-
-        laserLine.startColor = laserColorIdle;
-        laserLine.endColor = laserColorIdle;
-    }
-
-    private void UpdateLaserPosition()
-    {
-        if (laserLine == null || currenttarget == null)
-            return;
-
-        Vector3 startPos = cannonBarrel != null ? cannonBarrel.position : transform.position;
-        Vector3 endPos = currenttarget.position;
-
-        laserLine.positionCount = 2;
-        laserLine.SetPosition(0, startPos);
-        laserLine.SetPosition(1, endPos);
-    }
-
-    public UnityEvent OnFire;
     private void Fire(GameObject target)
     {
         if (currenttarget == null)
@@ -176,50 +147,79 @@ public class CannonAI : MonoBehaviour
             return;
         }
 
-        // Arrêter l'effet précédent
         if (fireEffectCoroutine != null)
             StopCoroutine(fireEffectCoroutine);
 
-        //fireEffectCoroutine = StartCoroutine(LaserFireEffect());
+        fireEffectCoroutine = StartCoroutine(LaserFireEffect());
         OnFire?.Invoke();
-        target.GetComponent<Ship>().TakeDamage(damage, transform.position);
-        //Instantie aussi un autre VFX ?
     }
 
- /*   private IEnumerator LaserFireEffect()
+    private IEnumerator LaserFireEffect()
     {
-        float laserDuration = 0.33f; // Durée courte pour l'effet de tir
+        float laserDuration = 0.5f;
         float elapsedTime = 0f;
+        float tickInterval = 0.1f;
+        float lastTickTime = 0f;
 
-        // Changer la couleur du laser à rouge/intense
-        laserLine.startColor = laserColorFire;
-        laserLine.endColor = laserColorFire;
+        float laserProgress = 0;
+        float timeForLaserToBeComplete = 0.1f;
 
-        while (elapsedTime < laserDuration)
+        laserLine.gameObject.SetActive(true);
+        Ship target = currenttarget.GetComponent<Ship>();
+
+        // Phase de charge : laserProgress passe de 0 à 1 en timeForLaserToBeComplete secondes
+        while (laserProgress < 1)
         {
-            elapsedTime += Time.deltaTime;
-
-            // Pulsation optionnelle
-            float pulse = Mathf.Sin(elapsedTime * 10f) * 0.5f + 0.5f;
-            laserLine.startWidth = laserWidth * (0.8f + pulse * 0.4f);
-            laserLine.endWidth = laserWidth * (0.8f + pulse * 0.4f);
-
+            laserProgress += Time.deltaTime / timeForLaserToBeComplete;
+            UpdateLaserPosition(laserProgress);
             yield return null;
         }
 
-        // Revenir à la couleur normale
-        laserLine.startColor = laserColorIdle;
-        laserLine.endColor = laserColorIdle;
-        laserLine.startWidth = laserWidth;
-        laserLine.endWidth = laserWidth;
-    }*/
+        // Phase de tir
+        while (elapsedTime < laserDuration)
+        {
+            UpdateLaserPosition(1);
+
+            if (elapsedTime - lastTickTime >= tickInterval)
+            {
+                if (currenttarget == null)
+                {
+                    HideLaser();
+                    yield break;
+                }
+
+                if (target != null)
+                {
+                    float damagePerTick = damage * tickInterval / laserDuration;
+                    target.TakeDamage(damagePerTick, transform.position);
+                }
+                lastTickTime = elapsedTime;
+            }
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        HideLaser();
+    }
+
+    private void UpdateLaserPosition(float progress)
+    {
+        if (laserLine == null || currenttarget == null)
+            return;
+
+        print(progress);
+        float distance = Vector3.Distance(cannonBarrel.position, currenttarget.position) * 2;
+        laserLine.EndPos = Vector3.forward * (distance * progress);
+        //laserLine.EndPos = Vector3.forward * Vector3.Distance(cannonBarrel.position, currenttarget.position);
+    }
 
     private void HideLaser()
     {
         if (laserLine != null)
         {
-            laserLine.positionCount = 0;
+            laserLine.gameObject.SetActive(false);
+            laserLine.EndPos = Vector3.zero;
         }
     }
-
 }

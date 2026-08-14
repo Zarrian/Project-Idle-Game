@@ -33,6 +33,6 @@ public class SpawnerEnemy : WeaponShip
 
         base.CreateShip();
 
-        transform.position = originalSpawnPosition;
+        //transform.position = originalSpawnPosition;
     }
 }

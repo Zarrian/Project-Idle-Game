@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MediumShip
   m_EditorClassIdentifier: Assembly-CSharp::UnitTierSet
   tiers:
-  - tierName: Drone1
+  - tierName: Tier
     ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
     maxUnits: 0
     cdSpawnUnits: 3
@@ -43,7 +43,7 @@ MonoBehaviour:
       m_Bits: 192
     shipDetectionRadius: 50
     avoidanceForce: 1000
-  - tierName: Drone1
+  - tierName: Tier2
     ship: {fileID: 3206848913856899126, guid: 32e855600d4459b4890b430c03204bc9, type: 3}
     maxUnits: 2
     cdSpawnUnits: 3
