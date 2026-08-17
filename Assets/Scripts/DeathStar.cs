@@ -5,9 +5,7 @@ using UnityEngine.Events;
 public class DeathStar : MonoBehaviour
 {
     public static DeathStar instance;
-
     public List<List<GameObject>> listWeapons;
-
     public enum Ressources { Metal, Electricity, Uranium }
 
     /// <summary>Plafond de stockage par ressource, visible et réglable dans l'Inspector.</summary>
@@ -27,10 +25,33 @@ public class DeathStar : MonoBehaviour
     private Dictionary<Ressources, float> currentAmounts;
     private Dictionary<Ressources, float> maxAmounts;
 
+    public List<Ship> allShipPlayer;
+    public LayerMask playerShipLayerMask;
+
+
     private void Awake()
     {
         instance = this;
         BuildDictionaries();
+
+        Ship.OnShipCreated += HandleShipCreated;
+        Ship.OnShipDestroyed += HandleShipDestroyed;
+    }
+
+    private void HandleShipCreated(Ship ship)
+    {
+        if ((playerShipLayerMask.value & (1 << ship.gameObject.layer)) != 0)
+        {
+            allShipPlayer.Add(ship);
+        }
+    }
+
+    private void HandleShipDestroyed(Ship ship)
+    {
+        {
+            // Retirer le Ship des listes
+            allShipPlayer.Remove(ship);
+        }
     }
 
     /// <summary>

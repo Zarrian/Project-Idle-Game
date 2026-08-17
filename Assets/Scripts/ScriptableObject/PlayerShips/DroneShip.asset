@@ -105,7 +105,7 @@ MonoBehaviour:
     avoidanceForce: 1000
   - tierName: Drone1
     ship: {fileID: 5860862257747030917, guid: 3c8523b7770bea54f9c671ccea3bfe32, type: 3}
-    maxUnits: 50
+    maxUnits: 100
     cdSpawnUnits: 0.01
     pv: 8
     damage: 3
@@ -135,7 +135,7 @@ MonoBehaviour:
     avoidanceForce: 1000
   - tierName: Drone1
     ship: {fileID: 5860862257747030917, guid: 3c8523b7770bea54f9c671ccea3bfe32, type: 3}
-    maxUnits: 500
+    maxUnits: 200
     cdSpawnUnits: 0.01
     pv: 8
     damage: 5

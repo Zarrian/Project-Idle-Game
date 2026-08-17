@@ -162,7 +162,7 @@ public class CannonAI : MonoBehaviour
         float lastTickTime = 0f;
 
         float laserProgress = 0;
-        float timeForLaserToBeComplete = 0.1f;
+        float timeForLaserToBeComplete = 0.15f;
 
         laserLine.gameObject.SetActive(true);
         Ship target = currenttarget.GetComponent<Ship>();
@@ -207,8 +207,7 @@ public class CannonAI : MonoBehaviour
     {
         if (laserLine == null || currenttarget == null)
             return;
-
-        print(progress);
+;
         float distance = Vector3.Distance(cannonBarrel.position, currenttarget.position) * 2;
         laserLine.EndPos = Vector3.forward * (distance * progress);
         //laserLine.EndPos = Vector3.forward * Vector3.Distance(cannonBarrel.position, currenttarget.position);

@@ -90,11 +90,15 @@ public class Ship : MonoBehaviour
     public UnityEvent OnDeath;
     public void Death()
     {
+        managerUnit.RemoveShip(gameObject);
         OnDeath?.Invoke();
         OnShipDestroyed?.Invoke(this);
+    }
 
-        managerUnit.unitsList.Remove(gameObject);
-        myPool.ReturnPool(gameObject);
+
+    public void SetPosition(Vector3 pos)
+    {
+        transform.position = pos;
     }
 
 }

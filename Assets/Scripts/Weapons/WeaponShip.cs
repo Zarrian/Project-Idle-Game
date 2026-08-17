@@ -133,4 +133,10 @@ public class WeaponShip : Weapon
         unitsList.Add(newShip);
         isCreatingShip = false;
     }
+
+    public virtual void RemoveShip(GameObject ship)
+    {
+        unitsList.Remove(ship);
+        myPoolShips.ReturnPool(ship);
+    }
 }
