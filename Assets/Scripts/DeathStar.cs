@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class DeathStar : MonoBehaviour
 {
     public static DeathStar instance;
-    public List<List<GameObject>> listWeapons;
+    public List<Weapon> listModules;
     public enum Ressources { Metal, Electricity, Uranium }
 
     /// <summary>Plafond de stockage par ressource, visible et réglable dans l'Inspector.</summary>
@@ -36,6 +36,20 @@ public class DeathStar : MonoBehaviour
 
         Ship.OnShipCreated += HandleShipCreated;
         Ship.OnShipDestroyed += HandleShipDestroyed;
+    }
+
+    private void Start()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).GetComponent<Weapon>())
+                listModules.Add(transform.GetChild(i).GetComponent<Weapon>());
+        }
+
+        foreach (Weapon module in listModules)
+        {
+            module.transform.parent = null;
+        }
     }
 
     private void HandleShipCreated(Ship ship)
