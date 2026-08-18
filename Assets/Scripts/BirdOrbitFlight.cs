@@ -1,37 +1,31 @@
 using UnityEngine;
 
-/// <summary>
-/// Fait voler un objet (oiseau, avion...) de façon autonome autour d'une sphère,
-/// en vol libre (pas collé à la surface). Le mouvement est propulsé par un
-/// Rigidbody (poussée constante vers l'avant) mais le cap de vol est contraint
-/// à un taux max de degrés/seconde, ce qui oblige l'objet à faire de longues
-/// courbes larges pour changer de direction — effet "avion de la Grande Guerre"
-/// qui n'a pas la maniabilité pour tourner sec.
-/// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class BirdOrbitFlight : MovementPhysic
 {
-
     private Rigidbody rb;
     private Vector3 currentTarget;
     private float timeOnCurrentTarget;
     private float currentBank;
-
-    // Cap de pilotage : direction dans laquelle on POUSSE, distincte de la
-    // rotation visuelle. Se courbe progressivement vers la cible.
     private Vector3 heading;
 
-    // Debug/gizmo uniquement.
+    // Debug/gizmo uniquement
     private Vector3 lastPlanetHitPoint;
     private bool hasPlanetHit;
+
+    // === OPTIMISATION : Caching pour OverlapSphere ===
+    private Collider[] neighbourCache = new Collider[50];
+    private int neighbourCount;
+
+    // === OPTIMISATION : Caching de la vélocité ===
+    private Vector3 cachedVelocity;
+    private Vector3 cachedVelocityNormalized;
+    private float cachedVelocitySqrMagnitude;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
-
-        // Le drag linéaire agit comme une résistance de l'air : ça plafonne
-        // naturellement la vitesse atteinte par la poussée constante.
         rb.linearDamping = thrust / Mathf.Max(maxSpeed, 0.01f);
 
         if (sphereCenter == null)
@@ -43,10 +37,14 @@ public class BirdOrbitFlight : MovementPhysic
         PickNewTarget();
     }
 
-    // La boucle physique reste volontairement une simple liste d'étapes :
-    // chaque responsabilité vit dans sa propre méthode ci-dessous.
     void FixedUpdate()
     {
+        // === OPTIMISATION : Cacher la vélocité une fois par frame ===
+        cachedVelocity = rb.linearVelocity;
+        cachedVelocitySqrMagnitude = cachedVelocity.sqrMagnitude;
+        if (cachedVelocitySqrMagnitude > 0.01f)
+            cachedVelocityNormalized = cachedVelocity.normalized;
+
         UpdateTargetSelection();
         UpdateHeading();
         ApplyThrust();
@@ -54,27 +52,20 @@ public class BirdOrbitFlight : MovementPhysic
         UpdateVisualRotation();
     }
 
-    /// <summary>
-    /// Choisit une nouvelle cible sur la sphère quand l'actuelle est
-    /// atteinte, ou si ça traîne trop longtemps (évite les boucles infinies).
-    /// </summary>
     void UpdateTargetSelection()
     {
         timeOnCurrentTarget += Time.fixedDeltaTime;
-        float distToTarget = Vector3.Distance(transform.position, currentTarget);
+        
+        // === OPTIMISATION : sqrMagnitude au lieu de Distance ===
+        float sqrDistToTarget = (transform.position - currentTarget).sqrMagnitude;
+        float sqrTargetReachedDistance = targetReachedDistance * targetReachedDistance;
 
-        if (distToTarget < targetReachedDistance || timeOnCurrentTarget > maxTimeOnTarget)
+        if (sqrDistToTarget < sqrTargetReachedDistance || timeOnCurrentTarget > maxTimeOnTarget)
         {
             PickNewTarget();
         }
     }
 
-    /// <summary>
-    /// Courbe le cap de pilotage ("heading") vers la cible à vitesse
-    /// angulaire plafonnée. C'est ce vecteur qui reçoit la poussée, pas
-    /// forcément la rotation affichée. C'est cette limite qui empêche les
-    /// virages serrés et force les grandes courbes.
-    /// </summary>
     void UpdateHeading()
     {
         Vector3 dirToTarget = (currentTarget - transform.position).normalized;
@@ -88,26 +79,18 @@ public class BirdOrbitFlight : MovementPhysic
         ).normalized;
     }
 
-    /// <summary>
-    /// Poussée constante le long du cap de pilotage, comme un moteur d'avion
-    /// qui ne s'arrête jamais.
-    /// </summary>
     void ApplyThrust()
     {
         rb.AddForce(heading * thrust, ForceMode.Acceleration);
     }
 
-    /// <summary>
-    /// Force d'esquive additionnelle, superposée à la poussée normale.
-    /// Comme elle agit directement sur la vélocité, et que la rotation
-    /// visuelle suit cette vélocité (voir UpdateVisualRotation), l'esquive
-    /// se voit naturellement dans le vol sans rien toucher d'autre.
-    /// </summary>
     void ApplyAvoidance()
     {
         Vector3 avoidance = Vector3.zero;
-        Vector3 castDirection = rb.linearVelocity.sqrMagnitude > 0.01f
-            ? rb.linearVelocity.normalized
+        
+        // === OPTIMISATION : Utiliser la vélocité cachée ===
+        Vector3 castDirection = cachedVelocitySqrMagnitude > 0.01f
+            ? cachedVelocityNormalized
             : heading;
 
         avoidance += ComputePlanetAvoidance(castDirection);
@@ -122,11 +105,6 @@ public class BirdOrbitFlight : MovementPhysic
         }
     }
 
-    /// <summary>
-    /// SphereCast physique devant le vaisseau, dans la direction du
-    /// mouvement réel (pas juste le heading), pour détecter la planète
-    /// même en pleine courbe.
-    /// </summary>
     Vector3 ComputePlanetAvoidance(Vector3 castDirection)
     {
         bool didHit = Physics.SphereCast(
@@ -143,49 +121,49 @@ public class BirdOrbitFlight : MovementPhysic
 
         lastPlanetHitPoint = hit.point;
 
-        // Plus l'impact est proche, plus on pousse fort. hit.normal pointe
-        // vers l'extérieur de la sphère, donc "s'éloigner de la surface" =
-        // exactement ce qu'on veut.
         float urgency = 1f - Mathf.Clamp01(hit.distance / planetDetectionDistance);
         return hit.normal * urgency;
     }
 
-    /// <summary>
-    /// Détection simple par overlap des vaisseaux voisins, avec une force
-    /// de fuite pondérée par la proximité.
-    /// </summary>
+    // === OPTIMISATION : OverlapSphereNonAlloc au lieu de OverlapSphere ===
     Vector3 ComputeShipAvoidance()
     {
         Vector3 avoidance = Vector3.zero;
-        Collider[] neighbours = Physics.OverlapSphere(transform.position, shipDetectionRadius, shipLayerMask);
+        
+        // Utiliser l'array en cache et récupérer le count
+        neighbourCount = Physics.OverlapSphereNonAlloc(
+            transform.position,
+            shipDetectionRadius,
+            neighbourCache,
+            shipLayerMask
+        );
 
-        foreach (Collider col in neighbours)
+        for (int i = 0; i < neighbourCount; i++)
         {
-            if (col.attachedRigidbody == rb) continue; // on ignore son propre collider
+            Collider col = neighbourCache[i];
+            if (col.attachedRigidbody == rb) continue;
 
             Vector3 away = transform.position - col.transform.position;
-            float dist = away.magnitude;
-            if (dist < 0.01f) continue;
+            float sqrDist = away.sqrMagnitude;
+            
+            // === OPTIMISATION : sqrMagnitude au lieu de magnitude ===
+            if (sqrDist < 0.0001f) continue;
 
-            float weight = 1f - Mathf.Clamp01(dist / shipDetectionRadius);
-            avoidance += (away / dist) * weight;
+            float shipDetectionRadiusSqr = shipDetectionRadius * shipDetectionRadius;
+            float weight = 1f - Mathf.Clamp01(sqrDist / shipDetectionRadiusSqr);
+            
+            avoidance += (away / Mathf.Sqrt(sqrDist)) * weight;
         }
 
         return avoidance;
     }
 
-    /// <summary>
-    /// La rotation affichée suit la VÉLOCITÉ RÉELLE du Rigidbody, pas la
-    /// cible ni même le heading. Comme la vélocité met un instant à
-    /// "rattraper" le cap à cause de l'inertie physique, le nez pointe
-    /// toujours là où l'objet va vraiment, jamais là où il voudrait aller.
-    /// </summary>
     void UpdateVisualRotation()
     {
-        Vector3 velocity = rb.linearVelocity;
-        if (velocity.sqrMagnitude < 0.05f) return;
+        // === OPTIMISATION : Utiliser la vélocité cachée ===
+        if (cachedVelocitySqrMagnitude < 0.05f) return;
 
-        Vector3 velocityDir = velocity.normalized;
+        Vector3 velocityDir = cachedVelocityNormalized;
         Quaternion lookRotation = Quaternion.LookRotation(velocityDir, Vector3.up);
         lookRotation *= Quaternion.Euler(0f, 0f, ComputeBankAngle(velocityDir));
 
@@ -197,10 +175,6 @@ public class BirdOrbitFlight : MovementPhysic
         rb.MoveRotation(newRotation);
     }
 
-    /// <summary>
-    /// Roulis (bank) dans le sens du virage, purement visuel, basé sur
-    /// l'écart entre le nez actuel et la direction de vélocité.
-    /// </summary>
     float ComputeBankAngle(Vector3 velocityDir)
     {
         float turnAngle = Vector3.SignedAngle(transform.forward, velocityDir, transform.up);
@@ -213,11 +187,8 @@ public class BirdOrbitFlight : MovementPhysic
     {
         Vector3 center = sphereCenter != null ? sphereCenter.position : Vector3.zero;
         float radius = Random.Range(orbitRadiusMin, orbitRadiusMax);
-
-        // Point aléatoire uniforme sur une sphère de ce rayon.
         Vector3 randomDir = Random.onUnitSphere;
         currentTarget = center + randomDir * radius;
-
         timeOnCurrentTarget = 0f;
     }
 
@@ -234,13 +205,11 @@ public class BirdOrbitFlight : MovementPhysic
             Gizmos.DrawWireSphere(currentTarget, 0.5f);
         }
 
-        // Zone de détection des autres vaisseaux.
         Gizmos.color = new Color(1f, 0.6f, 0f, 0.4f);
         Gizmos.DrawWireSphere(transform.position, shipDetectionRadius);
 
-        // Portée du SphereCast vers la planète.
-        Vector3 castDir = Application.isPlaying && rb != null && rb.linearVelocity.sqrMagnitude > 0.01f
-            ? rb.linearVelocity.normalized
+        Vector3 castDir = Application.isPlaying && rb != null && cachedVelocitySqrMagnitude > 0.01f
+            ? cachedVelocityNormalized
             : transform.forward;
         Gizmos.color = hasPlanetHit ? Color.red : new Color(0f, 1f, 0f, 0.5f);
         Gizmos.DrawLine(transform.position, transform.position + castDir * planetDetectionDistance);

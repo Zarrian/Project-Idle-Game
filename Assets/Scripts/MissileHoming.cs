@@ -14,8 +14,6 @@ public class MissileHoming : MonoBehaviour
     [Header("Guidance")]
     public float turnRate = 720f;
     public float closeTurnMultiplier = 2f;
-
-    [Tooltip("Temps max d'anticipation.")]
     public float maxPredictionTime = 1.2f;
 
     [Header("Explosion")]
@@ -24,46 +22,51 @@ public class MissileHoming : MonoBehaviour
     public Pool myPool;
 
     public float damage = 1;
-
     public LayerMask enemyLayer;
 
-    Rigidbody rb;
-    public Rigidbody targetRb;
+    private Rigidbody rb;
+    private Rigidbody targetRb;
+    private Ship targetShip; // === OPTIMISATION : Cache du composant Ship ===
 
-    // Mis en cache une fois pour éviter de refaire la multiplication à
-    // chaque frame dans la comparaison de distance.
-    float detonationDistanceSqr;
+    private float detonationDistanceSqr;
+    private float closeTurnDistance = 30f; // === OPTIMISATION : Constante pour lerp ===
+    private float closeTurnDistanceSqr; // === OPTIMISATION : Distance au carré ===
+
+    // === OPTIMISATION : Cache de la vélocité cible ===
+    private Vector3 cachedTargetVelocity;
+    private Vector3 cachedTargetPosition;
+    private float cachedCurrentSpeed;
 
     void Awake()
     {
-        // GetComponent une seule fois pour toute la durée de vie de
-        // l'objet, même s'il est réactivé plusieurs fois depuis le pool.
         rb = GetComponent<Rigidbody>();
     }
 
     void OnEnable()
     {
-        // OnEnable (contrairement à Start) se relance à chaque fois que le
-        // missile ressort du pool — c'est ici qu'il faut remettre l'état à
-        // zéro, sinon un missile réutilisé garde exploded/vitesse du tir
-        // précédent le temps d'un frame.
         rb.useGravity = false;
         rb.linearDamping = 0f;
         rb.angularDamping = 0f;
+        
         detonationDistanceSqr = detonationDistance * detonationDistance;
+        closeTurnDistanceSqr = closeTurnDistance * closeTurnDistance; // === OPTIMISATION ===
 
         targetRb = null;
+        targetShip = null; // === OPTIMISATION ===
+        
         if (target != null)
         {
             targetRb = target.GetComponent<Rigidbody>();
+            targetShip = target.GetComponent<Ship>(); // === OPTIMISATION : Cache une seule fois ===
         }
 
         rb.linearVelocity = transform.forward * speed;
+        cachedCurrentSpeed = speed; // === OPTIMISATION ===
     }
 
     void FixedUpdate()
     {
-        // Garde-fou contre un target vraiment null, pas juste inactif
+        // === OPTIMISATION : Vérifier si target est vraiment null/inactif ===
         if (target == null || !target.gameObject.activeSelf)
         {
             target = FunctionUsefullManager.Instance.TryFindNearestTarget(transform, enemyLayer);
@@ -72,49 +75,53 @@ public class MissileHoming : MonoBehaviour
                 myPool.ReturnPool(gameObject);
                 return;
             }
+            
             targetRb = target.GetComponent<Rigidbody>();
+            targetShip = target.GetComponent<Ship>(); // === OPTIMISATION : Cache ici aussi ===
         }
 
-        if (targetRb == null)
+        // === OPTIMISATION : Ne pas refaire GetComponent si déjà en cache ===
+        if (targetRb == null && target != null)
         {
             targetRb = target.GetComponent<Rigidbody>();
         }
+        
+        if (targetShip == null && target != null)
+        {
+            targetShip = target.GetComponent<Ship>();
+        }
 
-
-        // Positions lues une seule fois par frame et réutilisées partout
-        // en dessous, plutôt que de relire transform.position/target.position
-        // à chaque usage (chaque lecture recalcule depuis les matrices).
+        // === OPTIMISATION : Lecture une seule fois ===
         Vector3 currentPosition = transform.position;
         Vector3 targetPosition = target.position;
         Vector3 toTarget = targetPosition - currentPosition;
         float sqrDistance = toTarget.sqrMagnitude;
 
-        // Comparaison en distance au carré : évite un sqrt tant qu'on n'a
-        // pas besoin de la vraie distance.
+        // === OPTIMISATION : Comparaison en distance au carré ===
         if (sqrDistance <= detonationDistanceSqr)
         {
-            Explode(currentPosition, targetPosition);
+            Explode(targetPosition);
             return;
         }
 
-        // À partir d'ici on a vraiment besoin de la distance réelle (pour
-        // la prédiction en mètres/seconde et le multiplicateur de virage),
-        // donc un seul sqrt, calculé une seule fois.
+        // === OPTIMISATION : Un seul sqrt ===
         float distance = Mathf.Sqrt(sqrDistance);
 
-        Vector3 targetVelocity = targetRb != null ? targetRb.linearVelocity : Vector3.zero;
+        // === OPTIMISATION : Cache la vélocité cible ===
+        cachedTargetVelocity = targetRb != null ? targetRb.linearVelocity : Vector3.zero;
 
         //-------------------------------------
         // LEAD PURSUIT
         //-------------------------------------
         float prediction = Mathf.Clamp(distance / speed, 0f, maxPredictionTime);
-        Vector3 predictedPosition = targetPosition + targetVelocity * prediction;
+        Vector3 predictedPosition = targetPosition + cachedTargetVelocity * prediction;
         Vector3 desiredDirection = (predictedPosition - currentPosition).normalized;
 
         //-------------------------------------
         // TURN RATE
         //-------------------------------------
-        float multiplier = Mathf.Lerp(closeTurnMultiplier, 1f, Mathf.Clamp01(distance / 30f));
+        // === OPTIMISATION : Utiliser sqrDistance au lieu de distance pour le lerp ===
+        float multiplier = Mathf.Lerp(closeTurnMultiplier, 1f, Mathf.Clamp01(sqrDistance / closeTurnDistanceSqr));
         Quaternion desiredRotation = Quaternion.LookRotation(desiredDirection);
         rb.MoveRotation(
             Quaternion.RotateTowards(rb.rotation, desiredRotation, turnRate * multiplier * Time.fixedDeltaTime)
@@ -123,17 +130,20 @@ public class MissileHoming : MonoBehaviour
         //-------------------------------------
         // SPEED
         //-------------------------------------
-        float currentSpeed = rb.linearVelocity.magnitude;
-        currentSpeed = Mathf.MoveTowards(currentSpeed, speed, acceleration * Time.fixedDeltaTime);
-        rb.linearVelocity = rb.rotation * Vector3.forward * currentSpeed;
+        // === OPTIMISATION : Utiliser cachedCurrentSpeed au lieu de relire rb.linearVelocity.magnitude ===
+        cachedCurrentSpeed = Mathf.MoveTowards(cachedCurrentSpeed, speed, acceleration * Time.fixedDeltaTime);
+        rb.linearVelocity = rb.rotation * Vector3.forward * cachedCurrentSpeed;
     }
 
-    void Explode(Vector3 currentPosition, Vector3 targetPosition)
+    void Explode(Vector3 targetPosition)
     {
-        target.GetComponent<Ship>().TakeDamage(damage, transform.position);
+        // === OPTIMISATION : Utiliser le cache au lieu de GetComponent ===
+        if (targetShip != null)
+        {
+            targetShip.TakeDamage(damage, transform.position);
+        }
 
         onImpact?.Invoke();
         myPool.ReturnPool(gameObject);
     }
-
 }
