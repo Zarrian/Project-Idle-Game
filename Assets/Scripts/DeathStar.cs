@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class DeathStar : MonoBehaviour
 {
     public static DeathStar instance;
+    public PlanetSO planetSO;
     public List<Weapon> listModules;
     public enum Ressources { Metal, Electricity, Uranium }
 

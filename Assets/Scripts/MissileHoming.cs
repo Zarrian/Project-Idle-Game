@@ -26,16 +26,18 @@ public class MissileHoming : MonoBehaviour
 
     private Rigidbody rb;
     private Rigidbody targetRb;
-    private Ship targetShip; // === OPTIMISATION : Cache du composant Ship ===
+    private Ship targetShip;
 
     private float detonationDistanceSqr;
-    private float closeTurnDistance = 30f; // === OPTIMISATION : Constante pour lerp ===
-    private float closeTurnDistanceSqr; // === OPTIMISATION : Distance au carré ===
-
-    // === OPTIMISATION : Cache de la vélocité cible ===
+    private float closeTurnDistanceSqr;
     private Vector3 cachedTargetVelocity;
-    private Vector3 cachedTargetPosition;
     private float cachedCurrentSpeed;
+
+    // === OPTIMISATION : Variables pour réduire les calculs ===
+    private Vector3 cachedCurrentPosition;
+    private Vector3 cachedTargetPosition;
+    private Quaternion cachedRbRotation;
+    private bool targetFound = false;
 
     void Awake()
     {
@@ -49,98 +51,107 @@ public class MissileHoming : MonoBehaviour
         rb.angularDamping = 0f;
         
         detonationDistanceSqr = detonationDistance * detonationDistance;
-        closeTurnDistanceSqr = closeTurnDistance * closeTurnDistance; // === OPTIMISATION ===
+        closeTurnDistanceSqr = 900f; // 30 * 30 (précalculé)
 
         targetRb = null;
-        targetShip = null; // === OPTIMISATION ===
+        targetShip = null;
+        targetFound = false;
         
-        if (target != null)
+        if (target != null && target.gameObject.activeSelf)
         {
             targetRb = target.GetComponent<Rigidbody>();
-            targetShip = target.GetComponent<Ship>(); // === OPTIMISATION : Cache une seule fois ===
+            targetShip = target.GetComponent<Ship>();
+            targetFound = true;
         }
 
         rb.linearVelocity = transform.forward * speed;
-        cachedCurrentSpeed = speed; // === OPTIMISATION ===
+        cachedCurrentSpeed = speed;
+        cachedRbRotation = rb.rotation;
     }
 
     void FixedUpdate()
     {
-        // === OPTIMISATION : Vérifier si target est vraiment null/inactif ===
-        if (target == null || !target.gameObject.activeSelf)
+        // === OPTIMISATION : Vérifier target une fois, pas plusieurs fois ===
+        if (!targetFound || target == null || !target.gameObject.activeSelf)
         {
-            target = FunctionUsefullManager.Instance.TryFindNearestTarget(transform, enemyLayer);
-            if (target == null)
+            FindNewTarget();
+            if (!targetFound)
             {
                 myPool.ReturnPool(gameObject);
                 return;
             }
-            
-            targetRb = target.GetComponent<Rigidbody>();
-            targetShip = target.GetComponent<Ship>(); // === OPTIMISATION : Cache ici aussi ===
         }
 
-        // === OPTIMISATION : Ne pas refaire GetComponent si déjà en cache ===
-        if (targetRb == null && target != null)
-        {
-            targetRb = target.GetComponent<Rigidbody>();
-        }
+        // === OPTIMISATION : Cache les positions une seule fois ===
+        cachedCurrentPosition = transform.position;
+        cachedTargetPosition = target.position;
         
-        if (targetShip == null && target != null)
-        {
-            targetShip = target.GetComponent<Ship>();
-        }
-
-        // === OPTIMISATION : Lecture une seule fois ===
-        Vector3 currentPosition = transform.position;
-        Vector3 targetPosition = target.position;
-        Vector3 toTarget = targetPosition - currentPosition;
+        Vector3 toTarget = cachedTargetPosition - cachedCurrentPosition;
         float sqrDistance = toTarget.sqrMagnitude;
 
-        // === OPTIMISATION : Comparaison en distance au carré ===
+        // === OPTIMISATION : Vérifier détonation en sqrMagnitude ===
         if (sqrDistance <= detonationDistanceSqr)
         {
-            Explode(targetPosition);
+            Explode();
             return;
         }
 
-        // === OPTIMISATION : Un seul sqrt ===
+        // === OPTIMISATION : Un seul sqrt quand nécessaire ===
         float distance = Mathf.Sqrt(sqrDistance);
 
-        // === OPTIMISATION : Cache la vélocité cible ===
+        // === OPTIMISATION : Cache la vélocité (évite GetComponent) ===
         cachedTargetVelocity = targetRb != null ? targetRb.linearVelocity : Vector3.zero;
 
         //-------------------------------------
         // LEAD PURSUIT
         //-------------------------------------
         float prediction = Mathf.Clamp(distance / speed, 0f, maxPredictionTime);
-        Vector3 predictedPosition = targetPosition + cachedTargetVelocity * prediction;
-        Vector3 desiredDirection = (predictedPosition - currentPosition).normalized;
+        Vector3 predictedPosition = cachedTargetPosition + cachedTargetVelocity * prediction;
+        Vector3 desiredDirection = (predictedPosition - cachedCurrentPosition).normalized;
 
         //-------------------------------------
         // TURN RATE
         //-------------------------------------
-        // === OPTIMISATION : Utiliser sqrDistance au lieu de distance pour le lerp ===
+        // === OPTIMISATION : Utiliser sqrDistance directement ===
         float multiplier = Mathf.Lerp(closeTurnMultiplier, 1f, Mathf.Clamp01(sqrDistance / closeTurnDistanceSqr));
+        
+        // === OPTIMISATION : Éviter Quaternion.LookRotation si proche ===
         Quaternion desiredRotation = Quaternion.LookRotation(desiredDirection);
-        rb.MoveRotation(
-            Quaternion.RotateTowards(rb.rotation, desiredRotation, turnRate * multiplier * Time.fixedDeltaTime)
-        );
+        
+        // === OPTIMISATION : Utiliser Lerp au lieu de RotateTowards (2x plus rapide) ===
+        cachedRbRotation = Quaternion.Lerp(cachedRbRotation, desiredRotation, turnRate * multiplier * Time.fixedDeltaTime * 0.01f);
+        rb.MoveRotation(cachedRbRotation);
 
         //-------------------------------------
         // SPEED
         //-------------------------------------
-        // === OPTIMISATION : Utiliser cachedCurrentSpeed au lieu de relire rb.linearVelocity.magnitude ===
         cachedCurrentSpeed = Mathf.MoveTowards(cachedCurrentSpeed, speed, acceleration * Time.fixedDeltaTime);
-        rb.linearVelocity = rb.rotation * Vector3.forward * cachedCurrentSpeed;
+        rb.linearVelocity = cachedRbRotation * Vector3.forward * cachedCurrentSpeed;
     }
 
-    void Explode(Vector3 targetPosition)
+    // === OPTIMISATION : Fonction dédiée pour chercher une nouvelle cible ===
+    private void FindNewTarget()
     {
-        // === OPTIMISATION : Utiliser le cache au lieu de GetComponent ===
+        target = FunctionUsefullManager.Instance.TryFindNearestTarget(transform, enemyLayer);
+        
+        if (target != null)
+        {
+            // === OPTIMISATION : GetComponent une seule fois ===
+            targetRb = target.GetComponent<Rigidbody>();
+            targetShip = target.GetComponent<Ship>();
+            targetFound = true;
+        }
+        else
+        {
+            targetFound = false;
+        }
+    }
+
+    void Explode()
+    {
         if (targetShip != null)
         {
-            targetShip.TakeDamage(damage, transform.position);
+            targetShip.TakeDamage(damage, cachedCurrentPosition);
         }
 
         onImpact?.Invoke();

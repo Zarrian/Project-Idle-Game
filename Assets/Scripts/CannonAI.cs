@@ -32,35 +32,40 @@ public class CannonAI : MonoBehaviour
     [SerializeField] private Color laserColorFire = new Color(1f, 0f, 0f, 1f);
     [SerializeField] private float rotationSpeed = 180f;
 
-    //public LineRenderer laserLine;
     private Coroutine fireEffectCoroutine;
-
     public UnityEvent OnFire;
+
+    // === OPTIMISATION : Caching des valeurs ===
+    private float visionConeHalfAngleCos; // Cosinus du demi-angle du cône
+    private float rangeAttackSqr; // Distance au carré
+    private Vector3 cachedForwardDirection;
+    private float detectionCheckTimer = 0f;
+    private const float DETECTION_CHECK_INTERVAL = 0.1f; // Vérifier tous les 100ms
 
     private void OnEnable()
     {
         SetStatistique();
         SetupLaser();
+        
+        // === OPTIMISATION : Précalculer les valeurs ===
+        visionConeHalfAngleCos = Mathf.Cos(visionConeAngle * 0.5f * Mathf.Deg2Rad);
+        rangeAttackSqr = rangeAttack * rangeAttack;
     }
 
     private void SetupLaser()
     {
-        //laserLine.transform.parent = null;
-        //laserLine.gameObject.SetActive(false);
-        //GameObject laserObject = new GameObject("LaserBeam");
-        //laserObject.transform.SetParent(transform);
-        //laserObject.transform.localPosition = Vector3.zero;
-
-        //laserLine = laserObject.AddComponent<LineRenderer>();
-        //laserLine.material = new Material(Shader.Find("Sprites/Default"));
-        //laserLine.startWidth = laserWidth;
-        //laserLine.endWidth = laserWidth;
-        //laserLine.positionCount = 0;
+        // Vide intentionnellement
     }
 
     private void FixedUpdate()
     {
-        DetectTargets();
+        // === OPTIMISATION : Ne pas vérifier tous les frames ===
+        detectionCheckTimer += Time.fixedDeltaTime;
+        if (detectionCheckTimer >= DETECTION_CHECK_INTERVAL)
+        {
+            DetectTargets();
+            detectionCheckTimer = 0f;
+        }
 
         if (currenttarget != null)
         {
@@ -82,6 +87,9 @@ public class CannonAI : MonoBehaviour
         cdAttack = canonSO.tiers[manager.currentTier].cdAttack;
         rangeAttack = canonSO.tiers[manager.currentTier].rangeAttack;
         nbAttack = canonSO.tiers[manager.currentTier].nbAttack;
+        
+        // === OPTIMISATION : Mettre à jour les caches ===
+        rangeAttackSqr = rangeAttack * rangeAttack;
     }
 
     public void LookTarget()
@@ -91,12 +99,12 @@ public class CannonAI : MonoBehaviour
         cannonBarrel.rotation = Quaternion.RotateTowards(cannonBarrel.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
+    // === OPTIMISATION MAJEURE : DetectTargets ultra-optimisé ===
     private void DetectTargets()
     {
-        Vector3 forwardDirection = cannonBarrel != null
-            ? cannonBarrel.forward
-            : transform.forward;
+        cachedForwardDirection = cannonBarrel != null ? cannonBarrel.forward : transform.forward;
 
+        // === OPTIMISATION : Utiliser sqrMagnitude au lieu de Distance ===
         targetCount = Physics.OverlapSphereNonAlloc(
             transform.position,
             rangeAttack,
@@ -105,21 +113,42 @@ public class CannonAI : MonoBehaviour
         );
 
         bool targetStillInRange = false;
+        Vector3 currentPos = transform.position;
 
         for (int i = 0; i < targetCount; i++)
         {
-            Vector3 directionToTarget = (colliders[i].transform.position - transform.position).normalized;
-            float angleToTarget = Vector3.Angle(forwardDirection, directionToTarget);
+            Collider col = colliders[i];
+            Vector3 targetPos = col.transform.position;
+            
+            // === OPTIMISATION : Vérifier la distance avant l'angle ===
+            Vector3 directionToTarget = targetPos - currentPos;
+            float sqrDistance = directionToTarget.sqrMagnitude;
+            
+            // Early exit si trop loin
+            if (sqrDistance > rangeAttackSqr)
+                continue;
 
-            if (angleToTarget <= visionConeAngle / 2f)
+            // === OPTIMISATION : Utiliser dot product au lieu de Vector3.Angle ===
+            // dot(a, b) = |a| * |b| * cos(angle)
+            // Donc : cos(angle) = dot(a, b) / (|a| * |b|)
+            float distance = Mathf.Sqrt(sqrDistance);
+            Vector3 normalizedDirection = directionToTarget / distance;
+            
+            // Utiliser le produit scalaire normalisé
+            float dotProduct = Vector3.Dot(cachedForwardDirection, normalizedDirection);
+            
+            // === OPTIMISATION : Comparer directement avec le cosinus ===
+            // Au lieu de : Vector3.Angle(forwardDirection, directionToTarget) <= visionConeAngle / 2f
+            // On fait : dotProduct >= cos(visionConeAngle / 2f)
+            if (dotProduct >= visionConeHalfAngleCos)
             {
                 if (currenttarget == null)
                 {
-                    OnTargetDetected(colliders[i].gameObject);
+                    OnTargetDetected(col.gameObject);
                     targetStillInRange = true;
                     break;
                 }
-                else if (colliders[i].gameObject == currenttarget.gameObject)
+                else if (col.gameObject == currenttarget.gameObject)
                 {
                     targetStillInRange = true;
                     break;
@@ -167,7 +196,6 @@ public class CannonAI : MonoBehaviour
         laserLine.gameObject.SetActive(true);
         Ship target = currenttarget.GetComponent<Ship>();
 
-        // Phase de charge : laserProgress passe de 0 à 1 en timeForLaserToBeComplete secondes
         while (laserProgress < 1)
         {
             laserProgress += Time.deltaTime / timeForLaserToBeComplete;
@@ -175,7 +203,6 @@ public class CannonAI : MonoBehaviour
             yield return null;
         }
 
-        // Phase de tir
         while (elapsedTime < laserDuration)
         {
             UpdateLaserPosition(1);
@@ -207,10 +234,9 @@ public class CannonAI : MonoBehaviour
     {
         if (laserLine == null || currenttarget == null)
             return;
-;
+
         float distance = Vector3.Distance(cannonBarrel.position, currenttarget.position) * 2;
         laserLine.EndPos = Vector3.forward * (distance * progress);
-        //laserLine.EndPos = Vector3.forward * Vector3.Distance(cannonBarrel.position, currenttarget.position);
     }
 
     private void HideLaser()
