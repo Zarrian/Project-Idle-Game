@@ -1,9 +1,14 @@
 using UnityEngine;
 using UnityEngine.Events;
+using FunctionUseful;
+using System;
 
 [RequireComponent(typeof(Rigidbody))]
 public class MissileHoming : MonoBehaviour
 {
+    public static Action<MissileHoming> OnMissileCreated;
+    public static Action<MissileHoming> OnMissileDestroyed;
+
     [Header("Target")]
     public Transform target;
 
@@ -26,7 +31,7 @@ public class MissileHoming : MonoBehaviour
 
     private Rigidbody rb;
     private Rigidbody targetRb;
-    private Ship targetShip;
+    private IDamageable targetDamageable;
 
     private float detonationDistanceSqr;
     private float closeTurnDistanceSqr;
@@ -39,6 +44,9 @@ public class MissileHoming : MonoBehaviour
     private Quaternion cachedRbRotation;
     private bool targetFound = false;
 
+    private float detectionCheckTimer;
+    public const float DETECTION_CHECK_INTERVAL = 0.1f;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -46,6 +54,7 @@ public class MissileHoming : MonoBehaviour
 
     void OnEnable()
     {
+        OnMissileCreated?.Invoke(this);
         rb.useGravity = false;
         rb.linearDamping = 0f;
         rb.angularDamping = 0f;
@@ -54,13 +63,13 @@ public class MissileHoming : MonoBehaviour
         closeTurnDistanceSqr = 900f; // 30 * 30 (précalculé)
 
         targetRb = null;
-        targetShip = null;
+        targetDamageable = null;
         targetFound = false;
         
         if (target != null && target.gameObject.activeSelf)
         {
             targetRb = target.GetComponent<Rigidbody>();
-            targetShip = target.GetComponent<Ship>();
+            targetDamageable = target.GetComponent<IDamageable>();
             targetFound = true;
         }
 
@@ -69,7 +78,7 @@ public class MissileHoming : MonoBehaviour
         cachedRbRotation = rb.rotation;
     }
 
-    void FixedUpdate()
+    void UpdateMissileBehavior()
     {
         // === OPTIMISATION : Vérifier target une fois, pas plusieurs fois ===
         if (!targetFound || target == null || !target.gameObject.activeSelf)
@@ -85,7 +94,7 @@ public class MissileHoming : MonoBehaviour
         // === OPTIMISATION : Cache les positions une seule fois ===
         cachedCurrentPosition = transform.position;
         cachedTargetPosition = target.position;
-        
+
         Vector3 toTarget = cachedTargetPosition - cachedCurrentPosition;
         float sqrDistance = toTarget.sqrMagnitude;
 
@@ -114,10 +123,10 @@ public class MissileHoming : MonoBehaviour
         //-------------------------------------
         // === OPTIMISATION : Utiliser sqrDistance directement ===
         float multiplier = Mathf.Lerp(closeTurnMultiplier, 1f, Mathf.Clamp01(sqrDistance / closeTurnDistanceSqr));
-        
+
         // === OPTIMISATION : Éviter Quaternion.LookRotation si proche ===
         Quaternion desiredRotation = Quaternion.LookRotation(desiredDirection);
-        
+
         // === OPTIMISATION : Utiliser Lerp au lieu de RotateTowards (2x plus rapide) ===
         cachedRbRotation = Quaternion.Lerp(cachedRbRotation, desiredRotation, turnRate * multiplier * Time.fixedDeltaTime * 0.01f);
         rb.MoveRotation(cachedRbRotation);
@@ -129,16 +138,30 @@ public class MissileHoming : MonoBehaviour
         rb.linearVelocity = cachedRbRotation * Vector3.forward * cachedCurrentSpeed;
     }
 
+    public void FixedUpdate()
+    {
+        UpdateMissileBehavior();
+
+/*        detectionCheckTimer += Time.fixedDeltaTime;
+        if (detectionCheckTimer < DETECTION_CHECK_INTERVAL)
+            return;
+
+        UpdateMissileBehavior();
+        detectionCheckTimer = 0;*/
+
+        
+    }
+
     // === OPTIMISATION : Fonction dédiée pour chercher une nouvelle cible ===
     private void FindNewTarget()
     {
-        target = FunctionUsefullManager.Instance.TryFindNearestTarget(transform, enemyLayer);
+        target = FunctionUsefullManager.FindTarget(transform, enemyLayer);
         
         if (target != null)
         {
             // === OPTIMISATION : GetComponent une seule fois ===
             targetRb = target.GetComponent<Rigidbody>();
-            targetShip = target.GetComponent<Ship>();
+            targetDamageable = target.GetComponent<Ship>();
             targetFound = true;
         }
         else
@@ -149,12 +172,20 @@ public class MissileHoming : MonoBehaviour
 
     void Explode()
     {
-        if (targetShip != null)
+        if(targetDamageable == null)
+            targetDamageable = target.GetComponent<IDamageable>();
+
+        if (targetDamageable != null)
         {
-            targetShip.TakeDamage(damage, cachedCurrentPosition);
+            targetDamageable.TakeDamage(damage, cachedCurrentPosition);
         }
 
         onImpact?.Invoke();
         myPool.ReturnPool(gameObject);
+    }
+
+    private void OnDisable()
+    {
+        OnMissileDestroyed?.Invoke(this);
     }
 }

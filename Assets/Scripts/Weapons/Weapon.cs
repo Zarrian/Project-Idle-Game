@@ -6,6 +6,7 @@ public class Weapon : MonoBehaviour
     //public UnitTier weaponSO;
 
     public List<GameObject> unitsList;
+    public List<MovementPhysic> movements;
 
     public int currentTier;
 

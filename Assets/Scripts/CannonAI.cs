@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using VolumetricLines;
@@ -104,7 +105,6 @@ public class CannonAI : MonoBehaviour
     {
         cachedForwardDirection = cannonBarrel != null ? cannonBarrel.forward : transform.forward;
 
-        // === OPTIMISATION : Utiliser sqrMagnitude au lieu de Distance ===
         targetCount = Physics.OverlapSphereNonAlloc(
             transform.position,
             rangeAttack,
@@ -118,28 +118,29 @@ public class CannonAI : MonoBehaviour
         for (int i = 0; i < targetCount; i++)
         {
             Collider col = colliders[i];
+
+            // === OPTIMISATION : Vérifier IDamageable en premier (early exit) ===
+            IDamageable damageable = col.GetComponent<IDamageable>();
+            if (damageable == null)
+                continue;
+
             Vector3 targetPos = col.transform.position;
-            
+
             // === OPTIMISATION : Vérifier la distance avant l'angle ===
             Vector3 directionToTarget = targetPos - currentPos;
             float sqrDistance = directionToTarget.sqrMagnitude;
-            
+
             // Early exit si trop loin
             if (sqrDistance > rangeAttackSqr)
                 continue;
 
             // === OPTIMISATION : Utiliser dot product au lieu de Vector3.Angle ===
-            // dot(a, b) = |a| * |b| * cos(angle)
-            // Donc : cos(angle) = dot(a, b) / (|a| * |b|)
             float distance = Mathf.Sqrt(sqrDistance);
             Vector3 normalizedDirection = directionToTarget / distance;
-            
-            // Utiliser le produit scalaire normalisé
+
             float dotProduct = Vector3.Dot(cachedForwardDirection, normalizedDirection);
-            
+
             // === OPTIMISATION : Comparer directement avec le cosinus ===
-            // Au lieu de : Vector3.Angle(forwardDirection, directionToTarget) <= visionConeAngle / 2f
-            // On fait : dotProduct >= cos(visionConeAngle / 2f)
             if (dotProduct >= visionConeHalfAngleCos)
             {
                 if (currenttarget == null)
@@ -217,8 +218,14 @@ public class CannonAI : MonoBehaviour
 
                 if (target != null)
                 {
-                    float damagePerTick = damage * tickInterval / laserDuration;
-                    target.TakeDamage(damagePerTick, transform.position);
+                    IDamageable damageable = target.GetComponent<IDamageable>();
+                    if (damageable != null)
+                    {
+                        float damagePerTick = damage * tickInterval / laserDuration;
+                        damageable.TakeDamage(damagePerTick, transform.position);
+                    }
+
+
                 }
                 lastTickTime = elapsedTime;
             }

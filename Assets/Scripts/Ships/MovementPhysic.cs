@@ -55,4 +55,9 @@ public class MovementPhysic : MonoBehaviour
     [Header("Évitement — Force")]
     [Tooltip("Intensité de la force d'esquive ajoutée par-dessus la poussée normale")]
     public float avoidanceForce = 60f;
+
+    public virtual void MovementPhysicUpdate()
+    {
+
+    }
 }

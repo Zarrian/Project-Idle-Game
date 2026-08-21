@@ -4,18 +4,18 @@ using TMPro;
 public class FPSCount : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI fpsText;
-    [SerializeField] private TextMeshProUGUI averageFpsText;
+    //[SerializeField] private TextMeshProUGUI averageFpsText;
 
     private float currentFPS;
     private float totalFrames = 0f;
-    private float totalTime = 0f;
-    private float updateInterval = 0.5f; // Mise à jour tous les 0.5 secondes
+    //private float totalTime = 0f;
+    private float updateInterval = 1f; // Mise à jour tous les 0.5 secondes
     private float timeSinceLastUpdate = 0f;
 
     private void Update()
     {
         totalFrames++;
-        totalTime += Time.deltaTime;
+        //totalTime += Time.deltaTime;
         timeSinceLastUpdate += Time.deltaTime;
 
         // Mettre à jour les FPS actuels

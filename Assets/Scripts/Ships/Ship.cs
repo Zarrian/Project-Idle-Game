@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Ship : MonoBehaviour
+public class Ship : MonoBehaviour, IDamageable
 {
 
     public static Action<Ship> OnShipCreated;

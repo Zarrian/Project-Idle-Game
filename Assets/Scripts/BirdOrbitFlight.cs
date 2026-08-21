@@ -26,7 +26,10 @@ public class BirdOrbitFlight : MovementPhysic
     private float targetReachedDistanceSqr;
     private Quaternion cachedLookRotation;
     private float lastAvoidanceCheckTime = 0f;
-    private const float AVOIDANCE_CHECK_INTERVAL = 0.05f; // Check tous les 50ms au lieu de chaque frame
+    private float detectionCheckTimer;
+    private const float AVOIDANCE_CHECK_INTERVAL = 0.1f; // Check tous les 100ms au lieu de chaque frame
+
+    public const float DETECTION_CHECK_INTERVAL = 0.1f;
 
     void Start()
     {
@@ -40,16 +43,30 @@ public class BirdOrbitFlight : MovementPhysic
         }
 
         heading = transform.forward;
-        
+
         // === OPTIMISATION : Précalculer les valeurs constantes ===
         shipDetectionRadiusSqr = shipDetectionRadius * shipDetectionRadius;
         targetReachedDistanceSqr = targetReachedDistance * targetReachedDistance;
-        
+
         PickNewTarget();
     }
 
-    void FixedUpdate()
+
+    private void FixedUpdate()
     {
+        MovementPhysicUpdate();
+
+/*        detectionCheckTimer += Time.fixedDeltaTime;
+        if (detectionCheckTimer < DETECTION_CHECK_INTERVAL)
+            return;
+
+        MovementPhysicUpdate();
+        detectionCheckTimer = 0;*/
+    }
+
+    public override void MovementPhysicUpdate()
+    {
+        base.MovementPhysicUpdate();
         // === OPTIMISATION : Cacher la vélocité une fois par frame ===
         cachedVelocity = rb.linearVelocity;
         cachedVelocitySqrMagnitude = cachedVelocity.sqrMagnitude;
@@ -59,7 +76,7 @@ public class BirdOrbitFlight : MovementPhysic
         UpdateTargetSelection();
         UpdateHeading();
         ApplyThrust();
-        
+
         // === OPTIMISATION : N'appeler ApplyAvoidance que tous les 50ms ===
         lastAvoidanceCheckTime += Time.fixedDeltaTime;
         if (lastAvoidanceCheckTime >= AVOIDANCE_CHECK_INTERVAL)
@@ -67,14 +84,14 @@ public class BirdOrbitFlight : MovementPhysic
             ApplyAvoidance();
             lastAvoidanceCheckTime = 0f;
         }
-        
+
         UpdateVisualRotation();
     }
 
     void UpdateTargetSelection()
     {
         timeOnCurrentTarget += Time.fixedDeltaTime;
-        
+
         float sqrDistToTarget = (transform.position - currentTarget).sqrMagnitude;
 
         if (sqrDistToTarget < targetReachedDistanceSqr || timeOnCurrentTarget > maxTimeOnTarget)
@@ -105,7 +122,7 @@ public class BirdOrbitFlight : MovementPhysic
     void ApplyAvoidance()
     {
         Vector3 avoidance = Vector3.zero;
-        
+
         Vector3 castDirection = cachedVelocitySqrMagnitude > 0.01f
             ? cachedVelocityNormalized
             : heading;
@@ -147,7 +164,7 @@ public class BirdOrbitFlight : MovementPhysic
     Vector3 ComputeShipAvoidance()
     {
         Vector3 avoidance = Vector3.zero;
-        
+
         neighbourCount = Physics.OverlapSphereNonAlloc(
             transform.position,
             shipDetectionRadius,
@@ -157,7 +174,7 @@ public class BirdOrbitFlight : MovementPhysic
 
         // === OPTIMISATION : Limiter le nombre de vérifications ===
         int maxNeighbours = Mathf.Min(neighbourCount, 10); // Max 10 voisins à vérifier
-        
+
         for (int i = 0; i < maxNeighbours; i++)
         {
             Collider col = neighbourCache[i];
@@ -165,12 +182,12 @@ public class BirdOrbitFlight : MovementPhysic
 
             Vector3 away = transform.position - col.transform.position;
             float sqrDist = away.sqrMagnitude;
-            
+
             if (sqrDist < 0.0001f) continue;
 
             // === OPTIMISATION : Utiliser sqrDist directement, éviter Sqrt si possible ===
             float weight = 1f - Mathf.Clamp01(sqrDist / shipDetectionRadiusSqr);
-            
+
             // === OPTIMISATION : Normaliser une seule fois ===
             avoidance += (away / Mathf.Sqrt(sqrDist)) * weight;
         }
@@ -184,20 +201,20 @@ public class BirdOrbitFlight : MovementPhysic
         if (cachedVelocitySqrMagnitude < 0.05f) return;
 
         Vector3 velocityDir = cachedVelocityNormalized;
-        
+
         // === OPTIMISATION : Éviter Quaternion.LookRotation si possible ===
         // Utiliser une approximation plus rapide
         float bankAngle = ComputeBankAngle(velocityDir);
-        
+
         // === OPTIMISATION : Moins de Slerp, plus de Lerp (plus rapide) ===
         Quaternion targetRotation = Quaternion.LookRotation(velocityDir, Vector3.up);
         targetRotation *= Quaternion.Euler(0f, 0f, bankAngle);
 
         float rotSpeed = Time.fixedDeltaTime * rotationFollowSpeed;
-        
+
         // === OPTIMISATION : Utiliser Lerp au lieu de Slerp (2x plus rapide) ===
         Quaternion newRotation = Quaternion.Lerp(rb.rotation, targetRotation, rotSpeed);
-        
+
         rb.MoveRotation(newRotation);
     }
 

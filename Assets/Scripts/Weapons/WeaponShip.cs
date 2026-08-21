@@ -1,7 +1,6 @@
+using FunctionUseful;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 public class WeaponShip : Weapon
 {
     //Ajouttez fonction pour faire spawn des ships
@@ -15,6 +14,12 @@ public class WeaponShip : Weapon
     public Pool myPoolShips;
 
     public float currentTimeAttack;
+
+    [SerializeField, Range(0, 100)]
+    private float targetPriority = 75f;
+
+    private const float DETECTION_CHECK_INTERVAL = 0f; // Vérifier tous les 100ms
+    private float detectionCheckTimer;
     public virtual void Start()
     {
         //Save and disociate groupGameObject
@@ -35,6 +40,18 @@ public class WeaponShip : Weapon
                 currentTimeAttack = 0;
             }
         }
+
+
+/*        detectionCheckTimer += Time.fixedDeltaTime;
+        if (detectionCheckTimer < DETECTION_CHECK_INTERVAL)
+            return;
+
+        foreach (MovementPhysic ship in movements)
+        {
+            ship.MovementPhysicUpdate();
+        }
+        detectionCheckTimer = 0f;*/
+
     }
 
 
@@ -45,55 +62,20 @@ public class WeaponShip : Weapon
             //Choisis un vaisseaux joueurs random
             GameObject randomShip = unitsList[Random.Range(0, unitsList.Count)];
             //CheckEnemyInrange
-            List<GameObject> unitInRange = new List<GameObject>();
-            Collider[] EnemyShip = Physics.OverlapSphere(randomShip.transform.position, shipSO.tiers[currentTier].rangeAttack, invaderLayer);
 
-            if (EnemyShip.Length > 0)
+            Transform target = FunctionUsefullManager.FindTarget(randomShip.transform, invaderLayer, targetPriority);
+
+            Vector3 direction = (target.transform.position - randomShip.transform.position).normalized;
+            float distance = Vector3.Distance(randomShip.transform.position, target.transform.position);
+            if (Physics.Raycast(randomShip.transform.position, direction, out RaycastHit hit, distance, InvaderAndPlanetLayer))
             {
-                GameObject target = ChoseEnemy(EnemyShip);
-
-                Vector3 direction = (target.transform.position - randomShip.transform.position).normalized;
-                float distance = Vector3.Distance(randomShip.transform.position, target.transform.position);
-                if (Physics.Raycast(randomShip.transform.position, direction, out RaycastHit hit, distance, InvaderAndPlanetLayer))
-                {
-                    Attack(randomShip.transform, target.transform);
-                }
-                else // recommance
-                    CheckAttack();
+                Attack(randomShip.transform, target.transform);
             }
+            else // recommance
+                CheckAttack();
         }
     }
 
-    [SerializeField, Range(0, 100)]
-    private float targetPriority = 75f; // 100 = proche, 0 = loin
-   public virtual GameObject ChoseEnemy(Collider[] enemyCollider)
-    {
-        List<Collider> EnemyActif = new List<Collider>();
-        foreach (Collider enemy in enemyCollider)
-        {
-            if(enemy.gameObject.activeSelf == true)
-                EnemyActif.Add(enemy);
-        }
-
-        if (EnemyActif == null || EnemyActif.Count == 0)
-            return null;
-
-        // Cas extrÃªmes
-        if (targetPriority <= 0)
-            return EnemyActif[EnemyActif.Count - 1].gameObject;
-
-        if (targetPriority >= 100)
-            return EnemyActif[0].gameObject;
-
-        float t = targetPriority / 100f;
-
-        // Plus t est grand, plus on favorise les petits indices.
-        float random = Mathf.Pow(Random.value, Mathf.Lerp(3f, 0.35f, t));
-
-        int index = Mathf.RoundToInt(random * (EnemyActif.Count - 1));
-
-        return EnemyActif[index].gameObject;
-    }
 
     public virtual void Attack(Transform ship, Transform target)
     {
@@ -104,7 +86,7 @@ public class WeaponShip : Weapon
 
         missile.transform.position = ship.transform.position;
         missile.transform.rotation = ship.transform.rotation;
-        
+
     }
 
     public virtual void SpawnUnits()
@@ -131,12 +113,14 @@ public class WeaponShip : Weapon
         newShip.transform.position = transform.position;
         newShip.transform.rotation = transform.rotation;
         unitsList.Add(newShip);
+        movements.Add(newShip.GetComponent<MovementPhysic>());
         isCreatingShip = false;
     }
 
     public virtual void RemoveShip(GameObject ship)
     {
         unitsList.Remove(ship);
+        movements.Remove(ship.GetComponent<MovementPhysic>());
         myPoolShips.ReturnPool(ship);
     }
 }

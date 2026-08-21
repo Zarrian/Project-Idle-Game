@@ -1,57 +1,96 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class FunctionUsefullManager : MonoBehaviour
+namespace FunctionUseful
 {
-    public static FunctionUsefullManager Instance;
-    private void Awake()
+    public static class FunctionUsefullManager
     {
-        Instance = this;
 
-        Application.targetFrameRate = 144;
-        QualitySettings.vSyncCount = 0;
-
-        //Afficher les fps avec un text
-        // À appeler au démarrage du jeu
-
-        Resources.UnloadUnusedAssets();
-        System.GC.Collect();
-
-        StartCoroutine(CleanGarbage());
-
-    }
-
-    //Clean toute les minutes la mémoire
-    public IEnumerator CleanGarbage()
-    {
-        yield return new WaitForSeconds(60f);
-        System.GC.Collect();
-
-        StartCoroutine(CleanGarbage());
-    }
-
-    public Transform TryFindNearestTarget(Transform originPoint, LayerMask enemyLayer)
-    {
-        Collider[] candidates = Physics.OverlapSphere(originPoint.position, 10000, enemyLayer);
-        if (candidates.Length == 0)
-            return null;
-
-        Transform nearest = null;
-        float nearestSqrDistance = float.MaxValue;
-
-        foreach (Collider col in candidates)
+        public static Transform FindTarget(Transform originPoint, LayerMask enemyLayer, float targetPriority)
         {
-            float sqrDistance = (col.transform.position - originPoint.position).sqrMagnitude;
-            if (sqrDistance < nearestSqrDistance && col.gameObject.activeSelf == true)
+            Collider[] candidates = Physics.OverlapSphere(originPoint.position, 10000, enemyLayer);
+            if (candidates.Length == 0)
+                return null;
+
+            //Verifie que l'objet a l'interface Idamageable
+            List<Transform> EnemyActif = new List<Transform>();
+            foreach (Collider unit in candidates)
             {
-                nearestSqrDistance = sqrDistance;
-                nearest = col.transform;
+                IDamageable damageable = unit.GetComponent<IDamageable>();
+                if (damageable != null)
+                {
+                    EnemyActif.Add(unit.transform);
+                }
+
+                if (EnemyActif.Count > 100)
+                {
+                    break;
+                }
             }
+
+            if (EnemyActif == null || EnemyActif.Count == 0)
+                return null;
+
+            // Cas extrêmes
+            if (targetPriority <= 0)
+                return EnemyActif[EnemyActif.Count - 1];
+
+            if (targetPriority >= 100)
+                return EnemyActif[0];
+
+            float t = targetPriority / 100f;
+
+            // Plus t est grand, plus on favorise les petits indices.
+            float random = Mathf.Pow(Random.value, Mathf.Lerp(3f, 0.35f, t));
+
+            int index = Mathf.RoundToInt(random * (EnemyActif.Count - 1));
+
+            return EnemyActif[index];
         }
 
-        if (nearest == null)
-            return null;
+        public static Transform FindTarget(Transform originPoint, LayerMask enemyLayer)
+        {
+            float targetPriority = Random.Range(0f, 100f); // Random priority between 0 and 100
 
-        return nearest;
+            Collider[] candidates = Physics.OverlapSphere(originPoint.position, 10000, enemyLayer);
+            if (candidates.Length == 0)
+                return null;
+
+            //Verifie que l'objet a l'interface Idamageable
+            List<Transform> EnemyActif = new List<Transform>();
+            foreach (Collider unit in candidates)
+            {
+                IDamageable damageable = unit.GetComponent<IDamageable>();
+                if (damageable != null)
+                {
+                    EnemyActif.Add(unit.transform);
+                }
+
+                if (EnemyActif.Count > 100)
+                {
+                    break;
+                }
+            }
+
+            if (EnemyActif == null || EnemyActif.Count == 0)
+                return null;
+
+            // Cas extrêmes
+            if (targetPriority <= 0)
+                return EnemyActif[EnemyActif.Count - 1];
+
+            if (targetPriority >= 100)
+                return EnemyActif[0];
+
+            float t = targetPriority / 100f;
+
+            // Plus t est grand, plus on favorise les petits indices.
+            float random = Mathf.Pow(Random.value, Mathf.Lerp(3f, 0.35f, t));
+
+            int index = Mathf.RoundToInt(random * (EnemyActif.Count - 1));
+
+            return EnemyActif[index];
+        }
     }
 }

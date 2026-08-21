@@ -14,6 +14,7 @@ public class SpawnerEnemy : WeaponShip
     [Tooltip("Distance maximale du centre à laquelle un ennemi peut spawn")]
     public float maxSpawnRadius = 4000f;
 
+
     public override void CreateShip()
     {
         // Random.onUnitSphere donne une direction aléatoire uniforme sur
@@ -28,6 +29,7 @@ public class SpawnerEnemy : WeaponShip
         newShip.transform.position = spawnPosition;
         newShip.transform.rotation = transform.rotation;
         unitsList.Add(newShip);
+        movements.Add(newShip.GetComponent<MovementPhysic>());
         isCreatingShip = false;
 
         //StartCoroutine(Replacement(newShip.transform, spawnPosition));
