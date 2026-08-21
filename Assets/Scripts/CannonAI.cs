@@ -240,7 +240,7 @@ public class CannonAI : MonoBehaviour
         if (laserLine == null || currenttarget == null)
             return;
 
-        float distance = Vector3.Distance(cannonBarrel.position, currenttarget.position) * 2;
+        float distance = Vector3.Distance(cannonBarrel.position, currenttarget.position);
         laserLine.EndPos = Vector3.forward * (distance * progress);
     }
 

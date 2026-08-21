@@ -24,8 +24,6 @@ public class FeedbackShip : MonoBehaviour
     {
         Vector3 direction = (pos - transform.position).normalized;
 
-
-       
         GameObject explosion = poolExplosionDamage.GetPoolObject();
 
         // Racine carrée au lieu d'une simple multiplication : la taille

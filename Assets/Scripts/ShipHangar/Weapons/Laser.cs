@@ -6,73 +6,102 @@ public class Laser : MonoBehaviour
 {
     public Pool myPool;
     public VolumetricLineBehavior laserLine;
+
+    // Le vaisseau n'est plus un vrai parent Unity : on suit sa position
+    // manuellement pour ne pas dépendre du cycle de vie de son GameObject.
+    public Transform ship;
     public Transform target;
 
+    [SerializeField] float delayLaser = 0.15f;
+    [SerializeField] float laserDuration = 0.2f;
+    [SerializeField] float ratioLineWidth = 1;
+
     public float damage;
-    public Coroutine laserCoroutine;
+
+    private Coroutine mainCoroutine;
+    private Coroutine securityCoroutine;
+    private bool isReturning = false;
 
     public void ActiveLaser(Transform ship, Transform target, float damage)
     {
+        // Annule tout ce qui tournait avant (réutilisation depuis le pool)
+        StopAllCoroutines();
+        isReturning = false;
+
         laserLine.EndPos = Vector3.zero;
         laserLine.StartPos = Vector3.zero;
 
-        transform.parent = ship;
-        transform.localPosition = Vector3.zero;
+        // On ne parente plus réellement au vaisseau : ça évite que ce
+        // GameObject soit détruit automatiquement si le vaisseau meurt.
+        transform.SetParent(myPool != null ? myPool.transform : null, false);
 
+        this.ship = ship;
         this.target = target;
         this.damage = damage;
 
+        if (ship != null)
+            transform.position = ship.position;
 
-        if (laserCoroutine != null)
-            StopCoroutine(laserCoroutine);
+        float scaleValue = Mathf.Sqrt(damage) * ratioLineWidth;
+        laserLine.LineWidth = scaleValue;
 
-        laserCoroutine = StartCoroutine(LaserFireEffect());
+        mainCoroutine = StartCoroutine(LaserSequence());
+        //securityCoroutine = StartCoroutine(SecurityTimeout());
     }
 
-    private IEnumerator LaserFireEffect()
+    // Filet de sécurité : si pour une raison X la séquence normale ne
+    // désactive jamais l'objet (bug futur, edge case imprévu...), on force
+    // la désactivation après un délai large.
+/*    private IEnumerator SecurityTimeout()
     {
-        float laserDuration = 0.2f;
-        float elapsedTime = 0f;
-        float tickInterval = 0.05f;
-        float lastTickTime = 0f;
+        yield return new WaitForSeconds((delayLaser * 2 + laserDuration) * 2f);
+        Deactivate();
+    }*/
 
-        float laserProgress = 0;
-        float timeForLaserToBeComplete = 0.1f;
-
+    private IEnumerator LaserSequence()
+    {
         laserLine.gameObject.SetActive(true);
-        IDamageable damageable = target.GetComponent<IDamageable>();
 
-        while (laserProgress < 1)
+        // --- Phase 1 : le laser grandit jusqu'à la cible ---
+        float laserProgress = 0f;
+        float timeForLaserToBeComplete = delayLaser;
+
+        while (laserProgress < 1f)
         {
-            transform.LookAt(target.position);
+            if (!IsShipAndTargetAlive())
+            {
+                yield return StartCoroutine(HideLaser(laserProgress));
+                yield break;
+            }
+
+            FollowShipAndLookAtTarget();
             laserProgress += Time.deltaTime / timeForLaserToBeComplete;
             UpdateLaserPosition(laserProgress);
             yield return null;
         }
 
+        // --- Phase 2 : dégâts tant que le laser est maintenu ---
+        IDamageable damageable = target.GetComponent<IDamageable>();
+        float elapsedTime = 0f;
+        float tickInterval = 0.05f;
+        float lastTickTime = 0f;
+
         while (elapsedTime < laserDuration)
         {
-            transform.LookAt(target.position);
+            if (!IsShipAndTargetAlive())
+                break;
+
+            FollowShipAndLookAtTarget();
             UpdateLaserPosition(1);
 
             if (elapsedTime - lastTickTime >= tickInterval)
             {
-                if (target.gameObject.activeSelf == false)
-                {
-                    StartCoroutine( HideLaser(laserProgress));
-                    yield break;
-                }
-
                 if (damageable != null)
                 {
-                    if (damageable != null)
-                    {
-                        float damagePerTick = damage * tickInterval / laserDuration;
-                        damageable.TakeDamage(damagePerTick, transform.position);
-                    }
-
-
+                    float damagePerTick = damage * tickInterval / laserDuration;
+                    damageable.TakeDamage(damagePerTick, transform.position);
                 }
+
                 lastTickTime = elapsedTime;
             }
 
@@ -80,7 +109,26 @@ public class Laser : MonoBehaviour
             yield return null;
         }
 
-        StartCoroutine(HideLaser(laserProgress));
+        yield return StartCoroutine(HideLaser(laserProgress));
+    }
+
+    // true seulement si le vaisseau ET la cible existent ET sont actifs.
+    // Important : le vaisseau (comme la cible) peut être poolé (SetActive(false))
+    // plutôt que détruit -> une simple vérif "!= null" ne suffit pas, une
+    // Transform désactivée reste une référence valide en mémoire.
+    private bool IsShipAndTargetAlive()
+    {
+        return ship != null && ship.gameObject.activeInHierarchy
+            && target != null && target.gameObject.activeInHierarchy;
+    }
+
+    private void FollowShipAndLookAtTarget()
+    {
+        if (ship != null)
+            transform.position = ship.position;
+
+        if (target != null)
+            transform.LookAt(target.position);
     }
 
     private void UpdateLaserPosition(float progress)
@@ -88,27 +136,65 @@ public class Laser : MonoBehaviour
         if (laserLine == null || target == null)
             return;
 
-        float distance = Vector3.Distance(transform.position, target.position) * 2;
+        float distance = Vector3.Distance(transform.position, target.position);
         laserLine.EndPos = Vector3.forward * (distance * progress);
     }
 
     private IEnumerator HideLaser(float progressLaserOriginal)
     {
         float laserProgress = progressLaserOriginal;
-        float timeForLaserToDisappear = 0.5f;
+        float timeForLaserToDisappear = delayLaser;
 
         while (laserProgress > 0)
         {
             laserProgress -= Time.deltaTime / timeForLaserToDisappear;
-            UpdateLaserPosition(laserProgress);
-            transform.LookAt(target.position);
+
+            if (target != null)
+            {
+                UpdateLaserPosition(laserProgress);
+                transform.LookAt(target.position);
+            }
+
             yield return null;
         }
 
-        laserLine.gameObject.SetActive(false);
-        myPool.ReturnPool(gameObject);
-
-        yield return null;
+        Deactivate();
     }
 
+    // Point d'entrée unique pour "éteindre" le laser. Ne touche PAS au pool
+    // directement : ça se passe uniquement dans OnDisable, pour garantir
+    // qu'il n'y a jamais deux retours au pool pour le même objet.
+    private void Deactivate()
+    {
+        if (gameObject.activeSelf)
+            gameObject.SetActive(false);
+        else
+            ReturnToPool(); // déjà désactivé (rare) : on force quand même le retour
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+
+        if (laserLine != null)
+            laserLine.gameObject.SetActive(false);
+
+        ReturnToPool();
+    }
+
+    // Seul et unique endroit qui appelle myPool.ReturnPool(), protégé par
+    // isReturning pour être idempotent quel que soit le chemin emprunté.
+    private void ReturnToPool()
+    {
+        if (isReturning)
+            return;
+
+        isReturning = true;
+
+        ship = null;
+        target = null;
+
+        if (myPool != null)
+            myPool.ReturnPool(gameObject);
+    }
 }
