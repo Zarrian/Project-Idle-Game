@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnerEnemy : WeaponShip
+public class SpawnerEnemy : HangarShip
 {
     [Header("Zone de spawn")]
     [Tooltip("Centre de référence de la zone de spawn (ex: le centre de la planète)")]

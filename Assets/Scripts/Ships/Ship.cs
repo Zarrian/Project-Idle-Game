@@ -9,7 +9,7 @@ public class Ship : MonoBehaviour, IDamageable
     public static Action<Ship> OnShipDestroyed;
     public static Action<Ship, float> OnShipTakeDamage;
 
-    public WeaponShip managerUnit;
+    public HangarShip managerUnit;
     public UnitTierSet shipSO;
 
     public MovementPhysic movement;

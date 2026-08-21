@@ -5,7 +5,7 @@ using UnityEngine;
 public class MissileManager : MonoBehaviour
 {
 
-    public List<MissileHoming> activeMissiles = new List<MissileHoming>();
+/*    public List<MissileHoming> activeMissiles = new List<MissileHoming>();
     List<MissileHoming> missilesToRemove = new List<MissileHoming>();
 
     private float detectionCheckTimer;
@@ -33,7 +33,7 @@ public class MissileManager : MonoBehaviour
         missilesToRemove.Add(missile);
     }
 
-/*    private void FixedUpdate()
+    private void FixedUpdate()
     {
         detectionCheckTimer += Time.fixedDeltaTime;
         if (detectionCheckTimer < DETECTION_CHECK_INTERVAL)

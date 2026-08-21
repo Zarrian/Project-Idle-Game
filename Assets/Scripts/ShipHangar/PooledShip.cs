@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PooledShip : MonoBehaviour
 {
-    public WeaponShip OwnerWeapon { get; set; }
+    public HangarShip OwnerWeapon { get; set; }
 
     /// <summary>À appeler à la place de Destroy(gameObject).</summary>
     public void ReturnToPool()

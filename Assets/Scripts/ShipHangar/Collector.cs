@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Collector : WeaponShip
+public class Collector : HangarShip
 {
 
     public override void Start()

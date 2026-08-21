@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HeavyWeaponShip : WeaponShip
+public class HeavyWeaponShip : HangarShip
 {
     //public override void CheckAttack()
     //{

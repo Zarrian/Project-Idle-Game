@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WeaponCanon : Weapon
+public class WeaponCanon : Hangar
 {
     public CanonTierSet canonSO;
     public CannonPlacementManager placementManager;

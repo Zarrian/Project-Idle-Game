@@ -6,7 +6,7 @@ public class DeathStar : MonoBehaviour
 {
     public static DeathStar instance;
     public PlanetSO planetSO;
-    public List<Weapon> listModules;
+    public List<Hangar> listModules;
     public enum Ressources { Metal, Electricity, Uranium }
 
     /// <summary>Plafond de stockage par ressource, visible et réglable dans l'Inspector.</summary>
@@ -43,11 +43,11 @@ public class DeathStar : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            if (transform.GetChild(i).GetComponent<Weapon>())
-                listModules.Add(transform.GetChild(i).GetComponent<Weapon>());
+            if (transform.GetChild(i).GetComponent<Hangar>())
+                listModules.Add(transform.GetChild(i).GetComponent<Hangar>());
         }
 
-        foreach (Weapon module in listModules)
+        foreach (Hangar module in listModules)
         {
             module.transform.parent = null;
         }

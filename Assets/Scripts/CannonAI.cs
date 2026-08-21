@@ -7,7 +7,7 @@ using VolumetricLines;
 public class CannonAI : MonoBehaviour
 {
     public CanonTierSet canonSO;
-    public Weapon manager;
+    public Hangar manager;
 
     [SerializeField] private float visionConeAngle = 45f;
     [SerializeField] private LayerMask targetLayer;
@@ -29,8 +29,6 @@ public class CannonAI : MonoBehaviour
     public VolumetricLineBehavior laserLine;
 
     [Header("Laser Settings")]
-    [SerializeField] private float laserWidth = 0.2f;
-    [SerializeField] private Color laserColorFire = new Color(1f, 0f, 0f, 1f);
     [SerializeField] private float rotationSpeed = 180f;
 
     private Coroutine fireEffectCoroutine;

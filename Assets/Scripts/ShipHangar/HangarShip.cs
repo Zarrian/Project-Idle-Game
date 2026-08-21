@@ -1,16 +1,16 @@
 using FunctionUseful;
 using System.Collections;
 using UnityEngine;
-public class WeaponShip : Weapon
+public class HangarShip : Hangar
 {
     //Ajouttez fonction pour faire spawn des ships
 
     public UnitTierSet shipSO;
+    public Weapon myWeapon;
     public LayerMask invaderLayer;
     public LayerMask InvaderAndPlanetLayer;
     public bool isCreatingShip = false;
 
-    public Pool myPoolMissile;
     public Pool myPoolShips;
 
     public float currentTimeAttack;
@@ -69,24 +69,11 @@ public class WeaponShip : Weapon
             float distance = Vector3.Distance(randomShip.transform.position, target.transform.position);
             if (Physics.Raycast(randomShip.transform.position, direction, out RaycastHit hit, distance, InvaderAndPlanetLayer))
             {
-                Attack(randomShip.transform, target.transform);
+                myWeapon.Attack(randomShip.transform, target.transform, shipSO.tiers[currentTier].damage);
             }
             else // recommance
                 CheckAttack();
         }
-    }
-
-
-    public virtual void Attack(Transform ship, Transform target)
-    {
-        GameObject missile = myPoolMissile.GetPoolObject();
-        MissileHoming missileHoming = missile.GetComponent<MissileHoming>();
-        missileHoming.target = target;
-        missileHoming.damage = shipSO.tiers[currentTier].damage;
-
-        missile.transform.position = ship.transform.position;
-        missile.transform.rotation = ship.transform.rotation;
-
     }
 
     public virtual void SpawnUnits()

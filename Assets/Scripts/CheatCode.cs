@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CheatCode : MonoBehaviour
 {
-    public Weapon[] weapons;
+    public Hangar[] weapons;
 
     public TextMeshProUGUI TierText;
     public int currentTier = 1;
@@ -11,9 +11,9 @@ public class CheatCode : MonoBehaviour
 
     private void Awake()
     {
-        weapons = Object.FindObjectsByType<Weapon>(FindObjectsSortMode.None);
+        weapons = Object.FindObjectsByType<Hangar>(FindObjectsSortMode.None);
 
-        foreach (Weapon item in weapons)
+        foreach (Hangar item in weapons)
         {
             item.currentTier = currentTier;
         }
@@ -26,7 +26,7 @@ public class CheatCode : MonoBehaviour
         currentTier = Mathf.Clamp(currentTier, 0, maxTier);
 
         TierText.text = "Current Tier: " + currentTier;
-        foreach (Weapon item in weapons)
+        foreach (Hangar item in weapons)
         {
             item.currentTier = currentTier;
         }
@@ -37,7 +37,7 @@ public class CheatCode : MonoBehaviour
         currentTier--;
         currentTier = Mathf.Clamp(currentTier, 0, maxTier);
         TierText.text = "Current Tier: " + currentTier;
-        foreach (Weapon item in weapons)
+        foreach (Hangar item in weapons)
         {
             item.currentTier = currentTier;
         }
