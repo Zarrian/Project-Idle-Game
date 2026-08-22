@@ -77,7 +77,7 @@ MonoBehaviour:
     ship: {fileID: 2715899796734009256, guid: 3e832266b19db264e9efd4561b77677a, type: 3}
     maxUnits: 1
     cdSpawnUnits: 15
-    pv: 50
+    pv: 100
     damage: 10
     cdAttack: 5
     rangeAttack: 10000
