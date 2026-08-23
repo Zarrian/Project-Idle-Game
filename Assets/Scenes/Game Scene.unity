@@ -280,7 +280,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1582401255}
+  - {fileID: 1741319323}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -407,88 +407,6 @@ RectTransform:
   m_AnchoredPosition: {x: -98.6, y: -4}
   m_SizeDelta: {x: 325.374, y: 164.17123}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!21 &116270862
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: SingleLine-LightSaber(Clone)
-  m_Shader: {fileID: 4800000, guid: 2d9a4ca4b2730b64e8aade7030f8caeb, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailAlbedoMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailMask:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailNormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _ParallaxMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _BumpScale: 1
-    - _Cutoff: 0.5
-    - _DetailNormalMapScale: 1
-    - _DstBlend: 0
-    - _Glossiness: 0.5
-    - _LightSaberFactor: 0.8
-    - _LineScale: 1.116843
-    - _LineWidth: 20
-    - _Metallic: 0
-    - _Mode: 0
-    - _OcclusionStrength: 1
-    - _Parallax: 0.02
-    - _SrcBlend: 1
-    - _UVSec: 0
-    - _UvBasedLightSaberFactor: 0
-    - _ZWrite: 1
-    m_Colors:
-    - _Color: {r: 0.73571557, g: 0.9339623, b: 0.902537, a: 0.29803923}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!1 &117074961
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,100 +544,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117074961}
   m_CullTransparentMesh: 1
---- !u!1001 &120682483
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 501970961}
-    m_Modifications:
-    - target: {fileID: 1253286640031572, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_Name
-      value: SM_Veh_WarpGate_Inner_01
-      objectReference: {fileID: 0}
-    - target: {fileID: 1253286640031572, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1253286640031572, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 4938720506320106, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.0033333332
-      objectReference: {fileID: 0}
-    - target: {fileID: 4938720506320106, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.0033333334
-      objectReference: {fileID: 0}
-    - target: {fileID: 4938720506320106, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.0033333336
-      objectReference: {fileID: 0}
-    - target: {fileID: 4938720506320106, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4938720506320106, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4938720506320106, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4938720506320106, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4938720506320106, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4938720506320106, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4938720506320106, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4938720506320106, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4938720506320106, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4938720506320106, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 23848660729006386, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 23848660729006386, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      propertyPath: m_LightProbeUsage
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 64532425626618072, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1253286640031572, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 574799123}
-  m_SourcePrefab: {fileID: 100100000, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
---- !u!4 &120682484 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4938720506320106, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-  m_PrefabInstance: {fileID: 120682483}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &127990155
 GameObject:
   m_ObjectHideFlags: 0
@@ -6119,6 +5943,37 @@ MonoBehaviour:
   movements: []
   currentTier: 1
   shipSO: {fileID: 11400000, guid: fa99d0bc8a5600944be999b7e79983fa, type: 2}
+  unit:
+    tierName: Nouveau tier
+    ship: {fileID: 0}
+    maxUnits: 0
+    cdSpawnUnits: 0
+    pv: 0
+    damage: 0
+    cdAttack: 0
+    rangeAttack: 0
+    nbAttack: 1
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 15
+    orbitRadiusMax: 25
+    thrust: 20
+    maxSpeed: 12
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 4
+    maxTimeOnTarget: 20
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    planetDetectionDistance: 15
+    planetCastRadius: 1.5
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 8
+    avoidanceForce: 60
   myWeapon: {fileID: 5460832277575274271}
   invaderLayer:
     serializedVersion: 2
@@ -11692,6 +11547,37 @@ MonoBehaviour:
   movements: []
   currentTier: 0
   shipSO: {fileID: 11400000, guid: f8d4c59242313b345aa8e4208c31b64d, type: 2}
+  unit:
+    tierName: Nouveau tier
+    ship: {fileID: 0}
+    maxUnits: 0
+    cdSpawnUnits: 0
+    pv: 0
+    damage: 0
+    cdAttack: 0
+    rangeAttack: 0
+    nbAttack: 1
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 15
+    orbitRadiusMax: 25
+    thrust: 20
+    maxSpeed: 12
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 4
+    maxTimeOnTarget: 20
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    planetDetectionDistance: 15
+    planetCastRadius: 1.5
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 8
+    avoidanceForce: 60
   myWeapon: {fileID: 0}
   invaderLayer:
     serializedVersion: 2
@@ -11820,6 +11706,37 @@ MonoBehaviour:
   flashColor: {r: 0.26321647, g: 0.8584906, b: 0.72637886, a: 1}
   flashDuration: 0.1
   uiUpragde: {fileID: 0}
+  unit:
+    tierName: Nouveau tier
+    ship: {fileID: 0}
+    maxUnits: 0
+    cdSpawnUnits: 0
+    pv: 0
+    damage: 0
+    cdAttack: 0
+    rangeAttack: 0
+    nbAttack: 1
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 15
+    orbitRadiusMax: 25
+    thrust: 20
+    maxSpeed: 12
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 4
+    maxTimeOnTarget: 20
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    planetDetectionDistance: 15
+    planetCastRadius: 1.5
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 8
+    avoidanceForce: 60
 --- !u!1 &405286277
 GameObject:
   m_ObjectHideFlags: 0
@@ -13547,7 +13464,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 204639467}
-  - {fileID: 120682484}
   m_Father: {fileID: 1255330447}
   m_LocalEulerAnglesHint: {x: -80.716, y: 58.57, z: 0}
 --- !u!114 &501970962
@@ -13566,6 +13482,37 @@ MonoBehaviour:
   movements: []
   currentTier: 0
   shipSO: {fileID: 11400000, guid: f24cf421f5e32bf45a506b9df10f6415, type: 2}
+  unit:
+    tierName: Nouveau tier
+    ship: {fileID: 0}
+    maxUnits: 0
+    cdSpawnUnits: 0
+    pv: 0
+    damage: 0
+    cdAttack: 0
+    rangeAttack: 0
+    nbAttack: 1
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 15
+    orbitRadiusMax: 25
+    thrust: 20
+    maxSpeed: 12
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 4
+    maxTimeOnTarget: 20
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    planetDetectionDistance: 15
+    planetCastRadius: 1.5
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 8
+    avoidanceForce: 60
   myWeapon: {fileID: 1933624329}
   invaderLayer:
     serializedVersion: 2
@@ -13690,6 +13637,37 @@ MonoBehaviour:
   flashColor: {r: 0.26321647, g: 0.8584906, b: 0.72637886, a: 1}
   flashDuration: 0.1
   uiUpragde: {fileID: 0}
+  unit:
+    tierName: Nouveau tier
+    ship: {fileID: 0}
+    maxUnits: 0
+    cdSpawnUnits: 0
+    pv: 0
+    damage: 0
+    cdAttack: 0
+    rangeAttack: 0
+    nbAttack: 1
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 15
+    orbitRadiusMax: 25
+    thrust: 20
+    maxSpeed: 12
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 4
+    maxTimeOnTarget: 20
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    planetDetectionDistance: 15
+    planetCastRadius: 1.5
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 8
+    avoidanceForce: 60
 --- !u!1 &524346884
 GameObject:
   m_ObjectHideFlags: 0
@@ -14344,7 +14322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CheatCode
   weapons: []
   TierText: {fileID: 117074963}
-  currentTier: 2
+  currentTier: 3
   maxTier: 4
 --- !u!1 &549289745
 GameObject:
@@ -19217,32 +19195,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FillBarEdgeIcon
   filledBar: {fileID: 2102930728}
   icon: {fileID: 1079751680}
---- !u!1 &574799119 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1253286640031572, guid: 6e0deafa173995d4c8bc0468ad071d42, type: 3}
-  m_PrefabInstance: {fileID: 120682483}
-  m_PrefabAsset: {fileID: 0}
---- !u!135 &574799123
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574799119}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 142.02028
-  m_Center: {x: 0.00000022616508, y: -10.997294, z: -0.000000017799174}
 --- !u!1 &581533714
 GameObject:
   m_ObjectHideFlags: 0
@@ -24219,6 +24171,37 @@ MonoBehaviour:
   movements: []
   currentTier: 1
   shipSO: {fileID: 11400000, guid: 6130427648c41844cac867eec514a149, type: 2}
+  unit:
+    tierName: Nouveau tier
+    ship: {fileID: 0}
+    maxUnits: 0
+    cdSpawnUnits: 0
+    pv: 0
+    damage: 0
+    cdAttack: 0
+    rangeAttack: 0
+    nbAttack: 1
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 15
+    orbitRadiusMax: 25
+    thrust: 20
+    maxSpeed: 12
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 4
+    maxTimeOnTarget: 20
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    planetDetectionDistance: 15
+    planetCastRadius: 1.5
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 8
+    avoidanceForce: 60
   myWeapon: {fileID: 293646808}
   invaderLayer:
     serializedVersion: 2
@@ -24352,6 +24335,40 @@ Transform:
   m_Children:
   - {fileID: 1183985072}
   m_Father: {fileID: 1215512969}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &742538283
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 742538284}
+  m_Layer: 0
+  m_Name: Unuse
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &742538284
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742538283}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1242, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 885369104}
+  - {fileID: 1619912682}
+  - {fileID: 1521721500}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &747645719
 GameObject:
@@ -25014,13 +25031,44 @@ MonoBehaviour:
   flashColor: {r: 0.26321647, g: 0.8584906, b: 0.72637886, a: 1}
   flashDuration: 0.1
   uiUpragde: {fileID: 0}
+  unit:
+    tierName: Nouveau tier
+    ship: {fileID: 0}
+    maxUnits: 0
+    cdSpawnUnits: 0
+    pv: 0
+    damage: 0
+    cdAttack: 0
+    rangeAttack: 0
+    nbAttack: 1
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 15
+    orbitRadiusMax: 25
+    thrust: 20
+    maxSpeed: 12
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 4
+    maxTimeOnTarget: 20
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    planetDetectionDistance: 15
+    planetCastRadius: 1.5
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 8
+    avoidanceForce: 60
 --- !u!1001 &885369101
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 742538284}
     m_Modifications:
     - target: {fileID: 4527860176138943031, guid: ee85b5c888f9f49419b1298f2a005300, type: 3}
       propertyPath: m_Enabled
@@ -25084,7 +25132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6309088899000245398, guid: ee85b5c888f9f49419b1298f2a005300, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 214
+      value: -1028
       objectReference: {fileID: 0}
     - target: {fileID: 6309088899000245398, guid: ee85b5c888f9f49419b1298f2a005300, type: 3}
       propertyPath: m_LocalPosition.z
@@ -26382,6 +26430,37 @@ MonoBehaviour:
   movements: []
   currentTier: 0
   shipSO: {fileID: 11400000, guid: 97f37f508d66f9e4cb9e3bf2a0ff6668, type: 2}
+  unit:
+    tierName: Nouveau tier
+    ship: {fileID: 0}
+    maxUnits: 0
+    cdSpawnUnits: 0
+    pv: 0
+    damage: 0
+    cdAttack: 0
+    rangeAttack: 0
+    nbAttack: 1
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 15
+    orbitRadiusMax: 25
+    thrust: 20
+    maxSpeed: 12
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 4
+    maxTimeOnTarget: 20
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    planetDetectionDistance: 15
+    planetCastRadius: 1.5
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 8
+    avoidanceForce: 60
   myWeapon: {fileID: 86719075}
   invaderLayer:
     serializedVersion: 2
@@ -26506,6 +26585,37 @@ MonoBehaviour:
   flashColor: {r: 0.26321647, g: 0.8584906, b: 0.72637886, a: 1}
   flashDuration: 0.1
   uiUpragde: {fileID: 0}
+  unit:
+    tierName: Nouveau tier
+    ship: {fileID: 0}
+    maxUnits: 0
+    cdSpawnUnits: 0
+    pv: 0
+    damage: 0
+    cdAttack: 0
+    rangeAttack: 0
+    nbAttack: 1
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 15
+    orbitRadiusMax: 25
+    thrust: 20
+    maxSpeed: 12
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 4
+    maxTimeOnTarget: 20
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    planetDetectionDistance: 15
+    planetCastRadius: 1.5
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 8
+    avoidanceForce: 60
 --- !u!1 &1063677875
 GameObject:
   m_ObjectHideFlags: 0
@@ -26992,6 +27102,88 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1081712499}
   m_CullTransparentMesh: 1
+--- !u!21 &1082601787
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SingleLine-LightSaber(Clone)
+  m_Shader: {fileID: 4800000, guid: 2d9a4ca4b2730b64e8aade7030f8caeb, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _Glossiness: 0.5
+    - _LightSaberFactor: 1
+    - _LineScale: 1
+    - _LineWidth: 2
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _UvBasedLightSaberFactor: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 0, g: 1, b: 1, a: 0.29803923}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1 &1084325142
 GameObject:
   m_ObjectHideFlags: 0
@@ -27646,6 +27838,88 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1145550341}
   m_CullTransparentMesh: 1
+--- !u!21 &1151954198
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SingleLine-LightSaber(Clone)
+  m_Shader: {fileID: 4800000, guid: 2d9a4ca4b2730b64e8aade7030f8caeb, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _Glossiness: 0.5
+    - _LightSaberFactor: 0.8
+    - _LineScale: 1.116843
+    - _LineWidth: 20
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _UvBasedLightSaberFactor: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 0.73571557, g: 0.9339623, b: 0.902537, a: 0.29803923}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1 &1153669399
 GameObject:
   m_ObjectHideFlags: 0
@@ -37693,6 +37967,37 @@ MonoBehaviour:
   movements: []
   currentTier: 1
   shipSO: {fileID: 11400000, guid: 99e042109aaea044d83bca8f518dd251, type: 2}
+  unit:
+    tierName: Nouveau tier
+    ship: {fileID: 0}
+    maxUnits: 0
+    cdSpawnUnits: 0
+    pv: 0
+    damage: 0
+    cdAttack: 0
+    rangeAttack: 0
+    nbAttack: 1
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 15
+    orbitRadiusMax: 25
+    thrust: 20
+    maxSpeed: 12
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 4
+    maxTimeOnTarget: 20
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    planetDetectionDistance: 15
+    planetCastRadius: 1.5
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 8
+    avoidanceForce: 60
   myWeapon: {fileID: 293646808}
   invaderLayer:
     serializedVersion: 2
@@ -43473,6 +43778,37 @@ MonoBehaviour:
   flashColor: {r: 0.26321647, g: 0.8584906, b: 0.72637886, a: 1}
   flashDuration: 0.1
   uiUpragde: {fileID: 0}
+  unit:
+    tierName: Nouveau tier
+    ship: {fileID: 0}
+    maxUnits: 0
+    cdSpawnUnits: 0
+    pv: 0
+    damage: 0
+    cdAttack: 0
+    rangeAttack: 0
+    nbAttack: 1
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 15
+    orbitRadiusMax: 25
+    thrust: 20
+    maxSpeed: 12
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 4
+    maxTimeOnTarget: 20
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    planetDetectionDistance: 15
+    planetCastRadius: 1.5
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 8
+    avoidanceForce: 60
 --- !u!1 &1363429975
 GameObject:
   m_ObjectHideFlags: 0
@@ -44441,7 +44777,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 116270862}
+  - {fileID: 1151954198}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -63367,14 +63703,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1521721497}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1242, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 197.73431, y: 197.73412, z: 197.73412}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2064129018}
   - {fileID: 1328570992}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 742538284}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1524939334 stripped
 GameObject:
@@ -68633,88 +68969,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1576316359}
   m_CullTransparentMesh: 1
---- !u!21 &1582401255
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: SingleLine-LightSaber(Clone)
-  m_Shader: {fileID: 4800000, guid: 2d9a4ca4b2730b64e8aade7030f8caeb, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailAlbedoMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailMask:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailNormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _ParallaxMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _BumpScale: 1
-    - _Cutoff: 0.5
-    - _DetailNormalMapScale: 1
-    - _DstBlend: 0
-    - _Glossiness: 0.5
-    - _LightSaberFactor: 1
-    - _LineScale: 1
-    - _LineWidth: 2
-    - _Metallic: 0
-    - _Mode: 0
-    - _OcclusionStrength: 1
-    - _Parallax: 0.02
-    - _SrcBlend: 1
-    - _UVSec: 0
-    - _UvBasedLightSaberFactor: 0
-    - _ZWrite: 1
-    m_Colors:
-    - _Color: {r: 1, g: 0.09962947, b: 0, a: 0.29803923}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!1 &1619793981
 GameObject:
   m_ObjectHideFlags: 0
@@ -68801,7 +69055,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1998309127}
+  - {fileID: 1082601787}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -68851,6 +69105,11 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 137.77393
   m_Center: {x: 0, y: -16.828033, z: 0}
+--- !u!4 &1619912682 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4061412763632808, guid: dde07cbdec9c94a4e9d642853bcc731f, type: 3}
+  m_PrefabInstance: {fileID: 2124780383}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1624228594 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 633810595826678407, guid: 0e1bd572e7d300848b71c401ff2a927d, type: 3}
@@ -69407,6 +69666,88 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730351176}
   m_CullTransparentMesh: 1
+--- !u!21 &1741319323
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SingleLine-LightSaber(Clone)
+  m_Shader: {fileID: 4800000, guid: 2d9a4ca4b2730b64e8aade7030f8caeb, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _Glossiness: 0.5
+    - _LightSaberFactor: 1
+    - _LineScale: 1
+    - _LineWidth: 2
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _UvBasedLightSaberFactor: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 1, g: 0.09962947, b: 0, a: 0.29803923}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1 &1753439167
 GameObject:
   m_ObjectHideFlags: 0
@@ -70360,88 +70701,6 @@ RectTransform:
   m_AnchoredPosition: {x: 151, y: -87}
   m_SizeDelta: {x: 200, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!21 &1998309127
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: SingleLine-LightSaber(Clone)
-  m_Shader: {fileID: 4800000, guid: 2d9a4ca4b2730b64e8aade7030f8caeb, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailAlbedoMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailMask:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailNormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _ParallaxMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _BumpScale: 1
-    - _Cutoff: 0.5
-    - _DetailNormalMapScale: 1
-    - _DstBlend: 0
-    - _Glossiness: 0.5
-    - _LightSaberFactor: 1
-    - _LineScale: 1
-    - _LineWidth: 2
-    - _Metallic: 0
-    - _Mode: 0
-    - _OcclusionStrength: 1
-    - _Parallax: 0.02
-    - _SrcBlend: 1
-    - _UVSec: 0
-    - _UvBasedLightSaberFactor: 0
-    - _ZWrite: 1
-    m_Colors:
-    - _Color: {r: 0, g: 1, b: 1, a: 0.29803923}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!1 &2016196119
 GameObject:
   m_ObjectHideFlags: 0
@@ -70633,6 +70892,37 @@ MonoBehaviour:
   movements: []
   currentTier: 0
   shipSO: {fileID: 11400000, guid: 142bcdd742c8e18458778a7e9dd1aa38, type: 2}
+  unit:
+    tierName: Nouveau tier
+    ship: {fileID: 0}
+    maxUnits: 0
+    cdSpawnUnits: 0
+    pv: 0
+    damage: 0
+    cdAttack: 0
+    rangeAttack: 0
+    nbAttack: 1
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 15
+    orbitRadiusMax: 25
+    thrust: 20
+    maxSpeed: 12
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 4
+    maxTimeOnTarget: 20
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    planetDetectionDistance: 15
+    planetCastRadius: 1.5
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 8
+    avoidanceForce: 60
   myWeapon: {fileID: 86719075}
   invaderLayer:
     serializedVersion: 2
@@ -70757,6 +71047,37 @@ MonoBehaviour:
   flashColor: {r: 0.26321647, g: 0.8584906, b: 0.72637886, a: 1}
   flashDuration: 0.1
   uiUpragde: {fileID: 0}
+  unit:
+    tierName: Nouveau tier
+    ship: {fileID: 0}
+    maxUnits: 0
+    cdSpawnUnits: 0
+    pv: 0
+    damage: 0
+    cdAttack: 0
+    rangeAttack: 0
+    nbAttack: 1
+    sphereCenter: {fileID: 0}
+    orbitRadiusMin: 15
+    orbitRadiusMax: 25
+    thrust: 20
+    maxSpeed: 12
+    maxTurnRateDegPerSec: 25
+    maxBankAngle: 45
+    bankLerpSpeed: 2
+    rotationFollowSpeed: 8
+    targetReachedDistance: 4
+    maxTimeOnTarget: 20
+    planetLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    planetDetectionDistance: 15
+    planetCastRadius: 1.5
+    shipLayerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    shipDetectionRadius: 8
+    avoidanceForce: 60
 --- !u!1 &2032136428
 GameObject:
   m_ObjectHideFlags: 0
@@ -86004,7 +86325,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 742538284}
     m_Modifications:
     - target: {fileID: 1636615579265300, guid: dde07cbdec9c94a4e9d642853bcc731f, type: 3}
       propertyPath: m_Name
@@ -86020,7 +86341,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4061412763632808, guid: dde07cbdec9c94a4e9d642853bcc731f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -40
+      value: -1282
       objectReference: {fileID: 0}
     - target: {fileID: 4061412763632808, guid: dde07cbdec9c94a4e9d642853bcc731f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -86032,7 +86353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4061412763632808, guid: dde07cbdec9c94a4e9d642853bcc731f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4061412763632808, guid: dde07cbdec9c94a4e9d642853bcc731f, type: 3}
       propertyPath: m_LocalRotation.y
@@ -86515,6 +86836,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 330585546}
   - {fileID: 438076490}
+  - {fileID: 154700808}
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 1255330447}
@@ -86522,15 +86844,12 @@ SceneRoots:
   - {fileID: 1215512969}
   - {fileID: 275196136}
   - {fileID: 590106392}
+  - {fileID: 887285190}
+  - {fileID: 601350146}
   - {fileID: 1753439169}
   - {fileID: 1807292749}
   - {fileID: 546292417}
-  - {fileID: 154700808}
   - {fileID: 581533717}
-  - {fileID: 885369101}
-  - {fileID: 2124780383}
-  - {fileID: 2125993878}
-  - {fileID: 887285190}
-  - {fileID: 601350146}
-  - {fileID: 1521721500}
   - {fileID: 1514946642}
+  - {fileID: 2125993878}
+  - {fileID: 742538284}

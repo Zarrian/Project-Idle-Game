@@ -22,12 +22,14 @@ public class HangarShip : Hangar
 
     private const float DETECTION_CHECK_INTERVAL = 0f; // Vérifier tous les 100ms
     private float detectionCheckTimer;
+
+
     public virtual void Start()
     {
         //Save and disociate groupGameObject
         transform.GetChild(0).parent = null;
 
-        //unit = shipSO.tiers[currentTier].Clone();
+        unit = shipSO.tiers[currentTier].Clone();
     }
 
     public virtual void FixedUpdate()
@@ -38,7 +40,7 @@ public class HangarShip : Hangar
         if (unitsList.Count > 0)
         {
             currentTimeAttack += Time.fixedDeltaTime;
-            if (currentTimeAttack >= shipSO.tiers[currentTier].cdAttack / unitsList.Count)
+            if (currentTimeAttack >= unit.cdAttack / unitsList.Count)
             {
                 CheckAttack();
                 currentTimeAttack = 0;
@@ -58,10 +60,9 @@ public class HangarShip : Hangar
 
     }
 
-
     public virtual void CheckAttack()
     {
-        for (int i = 0; i < shipSO.tiers[currentTier].nbAttack; i++)
+        for (int i = 0; i < unit.nbAttack; i++)
         {
             //Choisis un vaisseaux joueurs random
             GameObject randomShip = unitsList[Random.Range(0, unitsList.Count)];
@@ -73,7 +74,7 @@ public class HangarShip : Hangar
             float distance = Vector3.Distance(randomShip.transform.position, target.transform.position);
             if (Physics.Raycast(randomShip.transform.position, direction, out RaycastHit hit, distance, InvaderAndPlanetLayer))
             {
-                myWeapon.Attack(randomShip.transform, target.transform, shipSO.tiers[currentTier].damage);
+                myWeapon.Attack(randomShip.transform, target.transform, unit.damage);
             }
             else // recommance
                 CheckAttack();
@@ -82,7 +83,7 @@ public class HangarShip : Hangar
 
     public virtual void SpawnUnits()
     {
-        if (unitsList.Count < shipSO.tiers[currentTier].maxUnits && isCreatingShip == false)
+        if (unitsList.Count < unit.maxUnits && isCreatingShip == false)
         {
             StartCoroutine(WaitCreateShip());
         }
@@ -91,7 +92,7 @@ public class HangarShip : Hangar
     public IEnumerator WaitCreateShip()
     {
         isCreatingShip = true;
-        yield return new WaitForSeconds(shipSO.tiers[currentTier].cdSpawnUnits);
+        yield return new WaitForSeconds(unit.cdSpawnUnits);
 
         CreateShip();
     }

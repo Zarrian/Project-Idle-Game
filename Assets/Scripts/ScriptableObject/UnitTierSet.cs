@@ -78,6 +78,19 @@ public class UnitTier
     [Tooltip("Intensité de la force d'esquive ajoutée par-dessus la poussée normale")]
     public float avoidanceForce = 60f;
 
+
+    /// <summary>
+    /// Crée une copie indépendante de ce tier (pour une instance runtime
+    /// modifiable par les améliorations, sans toucher à l'asset de base).
+    /// Tous les champs sont soit des types valeur, soit des références
+    /// qu'on veut justement partager (prefab du vaisseau, sphereCenter...) :
+    /// un MemberwiseClone suffit, pas besoin de copie profonde champ par champ.
+    /// </summary>
+    public UnitTier Clone()
+    {
+        return (UnitTier)MemberwiseClone();
+    }
+
 }
 
 /// <summary>
