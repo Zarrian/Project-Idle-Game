@@ -1,11 +1,13 @@
 using FunctionUseful;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 public class HangarShip : Hangar
 {
     //Ajouttez fonction pour faire spawn des ships
 
     public UnitTierSet shipSO;
+    public UnitTier unit;
     public Weapon myWeapon;
     public LayerMask invaderLayer;
     public LayerMask InvaderAndPlanetLayer;
@@ -24,6 +26,8 @@ public class HangarShip : Hangar
     {
         //Save and disociate groupGameObject
         transform.GetChild(0).parent = null;
+
+        //unit = shipSO.tiers[currentTier].Clone();
     }
 
     public virtual void FixedUpdate()
