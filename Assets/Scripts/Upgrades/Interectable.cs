@@ -1,4 +1,7 @@
 using UnityEngine;
+using System;
+using System.Collections;
+
 
 public class Interectable : MonoBehaviour
 {
@@ -33,7 +36,7 @@ public class Interectable : MonoBehaviour
         flashRoutine = StartCoroutine(FlashOutlineRoutine());
     }
 
-    private System.Collections.IEnumerator FlashOutlineRoutine()
+    private IEnumerator FlashOutlineRoutine()
     {
 
         myOutline.OutlineColor = flashColor;
