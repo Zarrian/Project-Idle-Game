@@ -17,7 +17,8 @@ public class Pool : MonoBehaviour
 
     void OnEnable()
     {
-        template = transform.GetChild(0).gameObject;
+        if (template == null)
+            template = transform.GetChild(0).gameObject;
 
         // Récupère les enfants déjà présents dans la scène (à partir de 1,
         // le child 0 restant réservé comme modèle) comme pool de départ.
@@ -53,5 +54,25 @@ public class Pool : MonoBehaviour
     {
         GameObject newObject = Instantiate(template, transform);
         return newObject;
+    }
+
+    /// <summary>
+    /// Pré-instancie des objets et les place directement dans la pile des
+    /// disponibles, sans déclencher OnObjectPool/OnReturnPool (ce ne sont
+    /// pas de vraies prises/retours côté gameplay, juste un préchauffage).
+    /// Idempotent : si la pool a déjà assez d'objets dispo, ne fait rien.
+    /// </summary>
+    public void WarmUp(int targetAvailableCount)
+    {
+        if (template == null)
+            template = transform.GetChild(0).gameObject;
+
+        int toCreate = targetAvailableCount - availableObjects.Count;
+        for (int i = 0; i < toCreate; i++)
+        {
+            GameObject newObject = InstantiateObjectPool();
+            newObject.SetActive(false);
+            availableObjects.Push(newObject);
+        }
     }
 }

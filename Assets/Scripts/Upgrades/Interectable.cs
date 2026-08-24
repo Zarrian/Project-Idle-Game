@@ -7,7 +7,7 @@ public class Interectable : MonoBehaviour
 {
     public Outline myOutline;
 
-    private Color originalOutlineColor;
+    public Color originalOutlineColor;
     private Coroutine flashRoutine;
 
     [Header("Flash couleur au clic")]
