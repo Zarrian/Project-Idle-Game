@@ -58,5 +58,19 @@ public class CannonPlacementManager : MonoBehaviour
         return cannons;
     }
 
+    public void ClearCannons(List<GameObject> unitsList)
+    {
+        if (unitsList == null || unitsList.Count == 0)
+            return;
+
+        foreach (GameObject cannon in unitsList)
+        {
+            if (cannon != null)
+                myPool.ReturnPool(cannon);
+        }
+
+        unitsList.Clear();
+    }
+
 
 }

@@ -1,6 +1,5 @@
 using FunctionUseful;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 public class HangarShip : Hangar
 {
@@ -29,8 +28,15 @@ public class HangarShip : Hangar
         //Save and disociate groupGameObject
         transform.GetChild(0).parent = null;
 
+        SetTier();
+    }
+
+    public override void SetTier()
+    {
+        base.SetTier();
         //Copie les valeurs du bon scriptableObject
         unit.CopyFrom(shipSO.tiers[currentTier]);
+
     }
 
     public virtual void FixedUpdate()
@@ -49,15 +55,15 @@ public class HangarShip : Hangar
         }
 
 
-/*        detectionCheckTimer += Time.fixedDeltaTime;
-        if (detectionCheckTimer < DETECTION_CHECK_INTERVAL)
-            return;
+        /*        detectionCheckTimer += Time.fixedDeltaTime;
+                if (detectionCheckTimer < DETECTION_CHECK_INTERVAL)
+                    return;
 
-        foreach (MovementPhysic ship in movements)
-        {
-            ship.MovementPhysicUpdate();
-        }
-        detectionCheckTimer = 0f;*/
+                foreach (MovementPhysic ship in movements)
+                {
+                    ship.MovementPhysicUpdate();
+                }
+                detectionCheckTimer = 0f;*/
 
     }
 

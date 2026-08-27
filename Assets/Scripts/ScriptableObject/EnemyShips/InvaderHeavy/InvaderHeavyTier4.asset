@@ -15,9 +15,9 @@ MonoBehaviour:
   tierName: InvaderHeavyTier4
   ship: {fileID: 0}
   maxUnits: 5
-  cdSpawnUnits: 15
-  pv: 100
-  damage: 30
+  cdSpawnUnits: 3
+  pv: 150
+  damage: 20
   cdAttack: 15
   rangeAttack: 1000
   nbAttack: 15

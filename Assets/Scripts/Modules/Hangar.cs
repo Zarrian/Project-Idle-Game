@@ -10,6 +10,12 @@ public class Hangar : MonoBehaviour
 
     public int currentTier;
 
+    public virtual void SetTier()
+    {
+        //Copie les valeurs du bon scriptableObject
+        //unit.CopyFrom(shipSO.tiers[currentTier]);
+    }
+
     //public int maxUnits;
     //public int currentUnits;
     //

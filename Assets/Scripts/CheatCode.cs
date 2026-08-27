@@ -16,6 +16,7 @@ public class CheatCode : MonoBehaviour
         foreach (Hangar item in weapons)
         {
             item.currentTier = currentTier;
+            item.SetTier();
         }
         TierText.text = "Current Tier: " + currentTier;
     }
@@ -29,6 +30,7 @@ public class CheatCode : MonoBehaviour
         foreach (Hangar item in weapons)
         {
             item.currentTier = currentTier;
+            item.SetTier();
         }
     }
 
@@ -40,6 +42,7 @@ public class CheatCode : MonoBehaviour
         foreach (Hangar item in weapons)
         {
             item.currentTier = currentTier;
+            item.SetTier();
         }
     }
 

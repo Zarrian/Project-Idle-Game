@@ -30,7 +30,7 @@ MonoBehaviour:
     m_Value: 65472
   tint:
     m_OverrideState: 1
-    m_Value: {r: 0.7424544, g: 0.8490566, b: 0.21226415, a: 1}
+    m_Value: {r: 0.7931911, g: 0.8301887, b: 0.6148096, a: 1}
   highQualityFiltering:
     m_OverrideState: 1
     m_Value: 1
@@ -160,7 +160,7 @@ MonoBehaviour:
   active: 0
   mode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   neutralHDRRangeReductionMode:
     m_OverrideState: 0
     m_Value: 2

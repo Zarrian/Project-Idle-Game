@@ -24,13 +24,13 @@ MonoBehaviour:
   sphereCenter: {fileID: 0}
   orbitRadiusMin: 15
   orbitRadiusMax: 25
-  thrust: 50
-  maxSpeed: 500
+  thrust: 200
+  maxSpeed: 600
   maxTurnRateDegPerSec: 25
   maxBankAngle: 45
   bankLerpSpeed: 2
   rotationFollowSpeed: 8
-  targetReachedDistance: 4
+  targetReachedDistance: 50
   maxTimeOnTarget: 60
   planetLayerMask:
     serializedVersion: 2
