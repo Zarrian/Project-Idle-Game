@@ -1,7 +1,7 @@
-using UnityEngine;
-using UnityEngine.Events;
 using FunctionUseful;
 using System;
+using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody))]
 public class MissileHoming : MonoBehaviour
@@ -58,14 +58,14 @@ public class MissileHoming : MonoBehaviour
         rb.useGravity = false;
         rb.linearDamping = 0f;
         rb.angularDamping = 0f;
-        
+
         detonationDistanceSqr = detonationDistance * detonationDistance;
         closeTurnDistanceSqr = 900f; // 30 * 30 (précalculé)
 
         targetRb = null;
         targetDamageable = null;
         targetFound = false;
-        
+
         if (target != null && target.gameObject.activeSelf)
         {
             targetRb = target.GetComponent<Rigidbody>();
@@ -142,21 +142,21 @@ public class MissileHoming : MonoBehaviour
     {
         UpdateMissileBehavior();
 
-/*        detectionCheckTimer += Time.fixedDeltaTime;
-        if (detectionCheckTimer < DETECTION_CHECK_INTERVAL)
-            return;
+        /*        detectionCheckTimer += Time.fixedDeltaTime;
+                if (detectionCheckTimer < DETECTION_CHECK_INTERVAL)
+                    return;
 
-        UpdateMissileBehavior();
-        detectionCheckTimer = 0;*/
+                UpdateMissileBehavior();
+                detectionCheckTimer = 0;*/
 
-        
+
     }
 
     // === OPTIMISATION : Fonction dédiée pour chercher une nouvelle cible ===
     private void FindNewTarget()
     {
         target = FunctionUsefullManager.FindTarget(transform, enemyLayer);
-        
+
         if (target != null)
         {
             // === OPTIMISATION : GetComponent une seule fois ===
@@ -172,8 +172,8 @@ public class MissileHoming : MonoBehaviour
 
     void Explode()
     {
-        if(targetDamageable == null)
-            targetDamageable = target.GetComponent<IDamageable>();
+
+        targetDamageable = target.GetComponent<IDamageable>();
 
         if (targetDamageable != null)
         {
