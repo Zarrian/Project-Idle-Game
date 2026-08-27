@@ -29,7 +29,8 @@ public class HangarShip : Hangar
         //Save and disociate groupGameObject
         transform.GetChild(0).parent = null;
 
-        unit = shipSO.tiers[currentTier].Clone();
+        //Copie les valeurs du bon scriptableObject
+        unit.CopyFrom(shipSO.tiers[currentTier]);
     }
 
     public virtual void FixedUpdate()

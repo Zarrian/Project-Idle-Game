@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96966e2e7a6f6df4fa6a79a2fc5ac740, type: 3}
+  m_Name: MediumShipTier3
+  m_EditorClassIdentifier: Assembly-CSharp::UnitTier
+  tierName: MediumTier3
+  ship: {fileID: 0}
+  maxUnits: 50
+  cdSpawnUnits: 0.1
+  pv: 15
+  damage: 5
+  cdAttack: 2
+  rangeAttack: 10000
+  nbAttack: 1
+  sphereCenter: {fileID: 0}
+  orbitRadiusMin: 250
+  orbitRadiusMax: 1000
+  thrust: 100
+  maxSpeed: 500
+  maxTurnRateDegPerSec: 30
+  maxBankAngle: 45
+  bankLerpSpeed: 2
+  rotationFollowSpeed: 8
+  targetReachedDistance: 50
+  maxTimeOnTarget: 20
+  planetLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  planetDetectionDistance: 100
+  planetCastRadius: 8
+  shipLayerMask:
+    serializedVersion: 2
+    m_Bits: 320
+  shipDetectionRadius: 50
+  avoidanceForce: 1000

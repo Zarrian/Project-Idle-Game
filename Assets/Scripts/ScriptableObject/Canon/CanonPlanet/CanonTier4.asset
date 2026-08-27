@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bb66abce2a732c41a6c4193fa18440a, type: 3}
+  m_Name: CanonTier4
+  m_EditorClassIdentifier: Assembly-CSharp::CanonTier
+  tierName: CanonTier2
+  canon: {fileID: 8603223996072900382, guid: e4038444fcd1b3346a10d3cb6c2986d4, type: 3}
+  maxUnits: 48
+  cdSpawnUnits: 0
+  pv: 100
+  damage: 30
+  cdAttack: 3
+  rangeAttack: 4000
+  nbAttack: 1
+  planetLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  shipLayerMask:
+    serializedVersion: 2
+    m_Bits: 256

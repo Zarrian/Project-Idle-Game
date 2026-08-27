@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff579a79c93e484c9e3d17cb3bcc702, type: 3}
+  m_Name: CanonPlanetList
+  m_EditorClassIdentifier: Assembly-CSharp::CanonTierSet
+  tiers:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 2d0e2cd298ed09d4d9b1a26cad0e3ccf, type: 2}
+  - {fileID: 11400000, guid: 47efc0b5d480f604d8a90d1b753f9765, type: 2}
+  - {fileID: 11400000, guid: 7ed052acf291afd41b469a52dcdb93ba, type: 2}
+  - {fileID: 11400000, guid: 6de839e5934a6954087cff8aa574ed1c, type: 2}

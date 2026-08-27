@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96966e2e7a6f6df4fa6a79a2fc5ac740, type: 3}
+  m_Name: InvaderHeavyTier3
+  m_EditorClassIdentifier: Assembly-CSharp::UnitTier
+  tierName: InvaderHeavyTier3
+  ship: {fileID: 0}
+  maxUnits: 2
+  cdSpawnUnits: 15
+  pv: 100
+  damage: 15
+  cdAttack: 15
+  rangeAttack: 1000
+  nbAttack: 15
+  sphereCenter: {fileID: 0}
+  orbitRadiusMin: 500
+  orbitRadiusMax: 1200
+  thrust: 20
+  maxSpeed: 100
+  maxTurnRateDegPerSec: 5
+  maxBankAngle: 45
+  bankLerpSpeed: 2
+  rotationFollowSpeed: 8
+  targetReachedDistance: 30
+  maxTimeOnTarget: 30
+  planetLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  planetDetectionDistance: 50
+  planetCastRadius: 15
+  shipLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  shipDetectionRadius: 0
+  avoidanceForce: 1000

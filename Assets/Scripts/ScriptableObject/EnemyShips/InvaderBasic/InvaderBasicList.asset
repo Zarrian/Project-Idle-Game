@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830624160f40fe248b70c0d859e48c1c, type: 3}
+  m_Name: InvaderBasicList
+  m_EditorClassIdentifier: Assembly-CSharp::UnitTierSet
+  tiers:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 3eafc27051b6c5542a306e16d5e4e1b4, type: 2}
+  - {fileID: 11400000, guid: d1e5a3dbca4abc74d8d8a44e91f28136, type: 2}
+  - {fileID: 11400000, guid: d0cd0c0e08a7b9148b86746121b5a8ad, type: 2}
+  - {fileID: 11400000, guid: 4e4775432c29b2f48b60fafa4b4fcf7e, type: 2}
