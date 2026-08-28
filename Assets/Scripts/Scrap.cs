@@ -3,13 +3,16 @@ using UnityEngine;
 
 public class Scrap : MonoBehaviour
 {
-    public Pool myPool;
     public DeathStar.Ressources myRessource = DeathStar.Ressources.Metal;
     public int value;
 
-    [SerializeField] GameObject metal;
-    [SerializeField] GameObject Electricity;
-    [SerializeField] GameObject Uranium;
+    [SerializeField] Pool metal;
+    [SerializeField] Pool Electricity;
+    [SerializeField] Pool Uranium;
+
+    public Pool myPoolVisuel;
+    public Pool myPool;
+    public GameObject visuel;
 
     [Header("Auto-despawn")]
     [SerializeField] private float lifetime = 60f;
@@ -22,7 +25,7 @@ public class Scrap : MonoBehaviour
     private void OnEnable()
     {
         isReturning = false;
-        SetEsthetics();
+        //SetEsthetics();
         lifetimeCoroutine = StartCoroutine(CollectJustSome(partialCollectPourcentage));
     }
 
@@ -38,23 +41,23 @@ public class Scrap : MonoBehaviour
 
     public void SetEsthetics()
     {
-        metal.SetActive(false);
-        Electricity.SetActive(false);
-        Uranium.SetActive(false);
         switch (myRessource)
         {
             case DeathStar.Ressources.Metal:
-                metal.SetActive(true);
+                myPoolVisuel = metal;
                 break;
             case DeathStar.Ressources.Electricity:
-                Electricity.SetActive(true);
+                myPoolVisuel = Electricity;
                 break;
             case DeathStar.Ressources.Uranium:
-                Uranium.SetActive(true);
+                myPoolVisuel = Uranium;
                 break;
             default:
                 break;
         }
+
+        visuel = myPoolVisuel.GetPoolObject();
+        visuel.transform.position = transform.position;
     }
 
     public void Collect()
@@ -83,6 +86,7 @@ public class Scrap : MonoBehaviour
             lifetimeCoroutine = null;
         }
 
+        myPoolVisuel.ReturnPool(visuel);
         myPool.ReturnPool(gameObject);
     }
 }

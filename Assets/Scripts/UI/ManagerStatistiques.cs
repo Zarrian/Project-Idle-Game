@@ -30,6 +30,8 @@ public class ManagerStatistiques : MonoBehaviour
     public Image barDPS;
     public Image barDPTen;
 
+    public Image globalSituation;
+
     public TextMeshProUGUI textPlayerShip;
     public TextMeshProUGUI textInvaderShip;
     public TextMeshProUGUI textPlayerPV;
@@ -40,13 +42,20 @@ public class ManagerStatistiques : MonoBehaviour
     public TextMeshProUGUI textInvaderDPTen;
 
 
-    private void Awake()
-    {
-        instance = this;
-    }
-
     private void OnEnable()
     {
+        instance = this;
+
+        // Récupère tous les vaisseaux déjà présents et actifs dans la scène
+        // AVANT de s'abonner, pour ne pas les compter deux fois.
+        Ship[] existingShips = FindObjectsByType<Ship>(FindObjectsSortMode.None);
+        foreach (Ship ship in existingShips)
+        {
+            if (ship.gameObject.activeSelf)
+                HandleShipCreated(ship);
+        }
+
+
         Ship.OnShipCreated += HandleShipCreated;
         Ship.OnShipTakeDamage += HandleShipTakeDamage;
         Ship.OnShipDestroyed += HandleShipDestroyed;
@@ -54,6 +63,7 @@ public class ManagerStatistiques : MonoBehaviour
         StartCoroutine(UpdateDamage());
         StartCoroutine(UpdateUI());
     }
+
 
     private void OnDisable()
     {
@@ -67,10 +77,20 @@ public class ManagerStatistiques : MonoBehaviour
 
     void FixedUpdate()
     {
-        UpdateBarSmooth(barShips, SafeRatio(shipPlayer.Count, shipInvaders.Count));
-        UpdateBarSmooth(barPV, SafeRatio(playerCurrentPV, invaderCurrentPV));
-        UpdateBarSmooth(barDPS, SafeRatio(playerDPS, invaderDPS));
-        UpdateBarSmooth(barDPTen, SafeRatio(playerDamageLast10Seconds, invaderDamageLast10Seconds));
+        float ratioNbShip = SafeRatio(shipPlayer.Count, shipInvaders.Count);
+        UpdateBarSmooth(barShips, ratioNbShip);
+
+        float ratioPV = SafeRatio(playerCurrentPV, invaderCurrentPV);
+        UpdateBarSmooth(barPV, ratioPV);
+
+        float ratioDPS = SafeRatio(playerDPS, invaderDPS);
+        UpdateBarSmooth(barDPS, ratioDPS);
+
+        float ratioDPSTEN = SafeRatio(playerDamageLast10Seconds, invaderDamageLast10Seconds);
+        UpdateBarSmooth(barDPTen, ratioDPSTEN);
+
+        float globalRatio = (ratioNbShip + ratioPV + ratioDPS + ratioDPSTEN) / 4;
+        UpdateBarSmooth(globalSituation, globalRatio);
     }
 
     /// <summary>
@@ -92,6 +112,18 @@ public class ManagerStatistiques : MonoBehaviour
         //barPV.fillAmount = SafeRatio(playerCurrentPV, invaderCurrentPV);
         //barDPS.fillAmount = SafeRatio(playerDPS, invaderDPS);
         //barDPTen.fillAmount = SafeRatio(playerDamageLast10Seconds, invaderDamageLast10Seconds);
+
+        playerCurrentPV = 0;
+        invaderCurrentPV = 0;
+
+        foreach (Ship ship in shipPlayer)
+        {
+            playerCurrentPV += ship.pv;
+        }
+        foreach (Ship ship in shipInvaders)
+        {
+            invaderCurrentPV += ship.pv;
+        }
 
         textPlayerShip.text = shipPlayer.Count.ToString();
         textInvaderShip.text = shipInvaders.Count.ToString();
@@ -134,12 +166,10 @@ public class ManagerStatistiques : MonoBehaviour
         if ((playerShipLayerMask.value & (1 << ship.gameObject.layer)) != 0)
         {
             shipPlayer.Add(ship);
-            playerCurrentPV += ship.pv;
         }
         else if ((invaderLayerMask.value & (1 << ship.gameObject.layer)) != 0)
         {
             shipInvaders.Add(ship);
-            invaderCurrentPV += ship.pv;
         }
     }
 
@@ -149,12 +179,10 @@ public class ManagerStatistiques : MonoBehaviour
         if ((playerShipLayerMask.value & (1 << ship.gameObject.layer)) != 0)
         {
             invaderDamageInstances.Add(new DamageInstance(damage));
-            playerCurrentPV -= damage;
         }
         else if ((invaderLayerMask.value & (1 << ship.gameObject.layer)) != 0)
         {
             playerDamageInstances.Add(new DamageInstance(damage));
-            invaderCurrentPV -= damage;
         }
     }
 
@@ -165,17 +193,6 @@ public class ManagerStatistiques : MonoBehaviour
         allships.Remove(ship);
         shipPlayer.Remove(ship);
         shipInvaders.Remove(ship);
-
-        // Retirer ses PV restants
-        // (utile si le Ship est détruit alors qu'il lui reste des PV)
-        if ((playerShipLayerMask.value & (1 << ship.gameObject.layer)) != 0)
-        {
-            playerCurrentPV -= ship.pv;
-        }
-        else if ((invaderLayerMask.value & (1 << ship.gameObject.layer)) != 0)
-        {
-            invaderCurrentPV -= ship.pv;
-        }
     }
 
 

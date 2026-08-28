@@ -10,6 +10,7 @@ public class UnitTier : ScriptableObject
 {
     [Tooltip("Nom libre pour s'y retrouver dans l'Inspector, ex: 'Tier 1 - Basique'")]
     public string tierName = "Nouveau tier";
+    public Sprite uiSprite;
 
     //public List<GameObject> unitsList = new List<GameObject>();
 

@@ -1,14 +1,13 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraInteract : MonoBehaviour
 {
     [Header("Raycast")]
     public Camera mainCamera;
     public float interactDistance = 10f;
-    public LayerMask interactableLayer = ~0; // Tous les layers par défaut
-
+    public LayerMask interactableLayer = ~0;
     private Interectable currentTarget;
-
 
     private void Awake()
     {
@@ -28,21 +27,27 @@ public class CameraInteract : MonoBehaviour
 
     private void HandleHover()
     {
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        // Si la souris est au-dessus d'un élément UI, on ignore complètement le 3D
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            if (currentTarget != null)
+            {
+                currentTarget.OnMouseOff();
+                currentTarget = null;
+            }
+            return;
+        }
 
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactableLayer))
         {
             Interectable hitInteractable = hit.collider.GetComponent<Interectable>();
-
             if (hitInteractable != null)
             {
-                // Nouvel objet survolé
                 if (hitInteractable != currentTarget)
                 {
-                    // On désactive l'ancien
                     if (currentTarget != null)
                         currentTarget.OnMouseOff();
-
                     currentTarget = hitInteractable;
                     currentTarget.OnMouseOn();
                 }
@@ -50,7 +55,6 @@ public class CameraInteract : MonoBehaviour
             }
         }
 
-        // Rien sous la souris (ou objet non interactable) -> on désactive si besoin
         if (currentTarget != null)
         {
             currentTarget.OnMouseOff();

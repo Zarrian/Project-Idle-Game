@@ -1,4 +1,5 @@
 using FunctionUseful;
+using System;
 using System.Collections;
 using UnityEngine;
 public class HangarShip : Hangar
@@ -22,12 +23,14 @@ public class HangarShip : Hangar
     private const float DETECTION_CHECK_INTERVAL = 0f; // Vérifier tous les 100ms
     private float detectionCheckTimer;
 
-
-    public virtual void Start()
+    public virtual void OnEnable()
     {
         //Save and disociate groupGameObject
         transform.GetChild(0).parent = null;
+    }
 
+    public virtual void Start()
+    {
         SetTier();
     }
 
@@ -72,7 +75,7 @@ public class HangarShip : Hangar
         for (int i = 0; i < unit.nbAttack; i++)
         {
             //Choisis un vaisseaux joueurs random
-            GameObject randomShip = unitsList[Random.Range(0, unitsList.Count)];
+            GameObject randomShip = unitsList[UnityEngine.Random.Range(0, unitsList.Count)];
             //CheckEnemyInrange
 
             Transform target = FunctionUsefullManager.FindTarget(randomShip.transform, invaderLayer, targetPriority);
@@ -104,6 +107,7 @@ public class HangarShip : Hangar
         CreateShip();
     }
 
+    public Action OnChangeUnitList;
     public virtual void CreateShip()
     {
         //Faire une pool
@@ -114,6 +118,8 @@ public class HangarShip : Hangar
         unitsList.Add(newShip);
         movements.Add(newShip.GetComponent<MovementPhysic>());
         isCreatingShip = false;
+
+        OnChangeUnitList?.Invoke();
     }
 
     public virtual void RemoveShip(GameObject ship)
@@ -121,5 +127,7 @@ public class HangarShip : Hangar
         unitsList.Remove(ship);
         movements.Remove(ship.GetComponent<MovementPhysic>());
         myPoolShips.ReturnPool(ship);
+
+        OnChangeUnitList?.Invoke();
     }
 }
