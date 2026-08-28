@@ -29,7 +29,7 @@ public static class ShipUpgradeCSVImporter
         if (asset != null)
         {
             EditorUtility.DisplayDialog("Import CSV",
-                $"'{asset.shipName}' importé avec succès ({asset.levels.Count} lignes).", "OK");
+                $"'{asset.shipName}' importé avec succès ({asset.stats.Count} stats).", "OK");
             Selection.activeObject = asset;
             EditorGUIUtility.PingObject(asset);
         }
@@ -93,7 +93,12 @@ public static class ShipUpgradeCSVImporter
             return null;
         }
 
-        List<StatUpgradeLevel> parsedLevels = new List<StatUpgradeLevel>();
+        // On regroupe les lignes par StatName : une Track par catégorie de
+        // stat (HP, Damage, CD Attack, Attack...), chacune avec ses paliers
+        // triés par niveau, au lieu d'une seule liste plate de 20+ lignes.
+        Dictionary<string, StatUpgradeTrack> tracksByName = new Dictionary<string, StatUpgradeTrack>();
+        List<string> statOrder = new List<string>();
+
         for (int i = 1; i < lines.Count; i++)
         {
             string[] cols = SplitCsvLine(lines[i]);
@@ -102,21 +107,38 @@ public static class ShipUpgradeCSVImporter
 
             try
             {
-                StatUpgradeLevel entry = new StatUpgradeLevel
+                string statName = ParseString(cols, idxStatName);
+                if (string.IsNullOrEmpty(statName))
+                    continue;
+
+                if (!tracksByName.TryGetValue(statName, out StatUpgradeTrack track))
+                {
+                    track = new StatUpgradeTrack { statName = statName };
+                    tracksByName[statName] = track;
+                    statOrder.Add(statName);
+                }
+
+                track.steps.Add(new StatUpgradeStep
                 {
                     level = ParseInt(cols, idxLevel),
-                    statName = ParseString(cols, idxStatName),
                     value = ParseFloat(cols, idxValue),
                     costMetal = ParseInt(cols, idxCostMetal),
                     costElectricity = ParseInt(cols, idxCostElectricity),
                     costUranium = ParseInt(cols, idxCostUranium),
-                };
-                parsedLevels.Add(entry);
+                });
             }
             catch (Exception e)
             {
                 Debug.LogWarning($"[ShipUpgradeCSVImporter] '{shipName}' ligne {i + 1} ignorée : {e.Message}");
             }
+        }
+
+        List<StatUpgradeTrack> parsedStats = new List<StatUpgradeTrack>();
+        foreach (string statName in statOrder)
+        {
+            StatUpgradeTrack track = tracksByName[statName];
+            track.steps.Sort((a, b) => a.level.CompareTo(b.level));
+            parsedStats.Add(track);
         }
 
         if (!Directory.Exists(OutputFolder))
@@ -133,7 +155,7 @@ public static class ShipUpgradeCSVImporter
         }
 
         asset.shipName = shipName;
-        asset.levels = parsedLevels;
+        asset.stats = parsedStats;
 
         if (isNew)
         {
@@ -147,7 +169,7 @@ public static class ShipUpgradeCSVImporter
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-        Debug.Log($"[ShipUpgradeCSVImporter] '{shipName}' : {parsedLevels.Count} lignes importées -> {assetPath}");
+        Debug.Log($"[ShipUpgradeCSVImporter] '{shipName}' : {parsedStats.Count} catégories de stats importées -> {assetPath}");
         return asset;
     }
 
