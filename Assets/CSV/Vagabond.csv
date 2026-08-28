@@ -1,0 +1,26 @@
+Level,StatName,Value,Cost_Metal,Cost_Electricity,Cost_Uranium
+1,HP,20,0,0,0
+2,HP,27,40,0,0
+3,HP,34,120,5,0
+4,HP,41,240,10,0
+5,HP,48,400,15,3
+1,Damage,8,0,0,0
+2,Damage,10,40,0,0
+3,Damage,12,120,5,0
+4,Damage,14,240,10,0
+5,Damage,16,400,15,3
+1,CD Attack,12,0,0,0
+2,CD Attack,15,40,0,0
+3,CD Attack,18,120,5,0
+4,CD Attack,21,240,10,0
+5,CD Attack,24,400,15,3
+1,Attack,4,0,0,0
+2,Attack,5,40,0,0
+3,Attack,6,120,5,0
+4,Attack,7,240,10,0
+5,Attack,8,400,15,3
+1,UNITS,10,0,0,0
+2,UNITS,30,40,0,0
+3,UNITS,50,120,5,0
+4,UNITS,100,240,10,0
+5,UNITS,200,400,15,3
