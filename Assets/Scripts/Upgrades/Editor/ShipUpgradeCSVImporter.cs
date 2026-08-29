@@ -11,12 +11,19 @@ using UnityEngine;
 /// pas besoin de plugin) et génère/actualise automatiquement un
 /// ShipUpgradeData (un ScriptableObject par vaisseau/CSV).
 ///
-/// Format CSV attendu (en-tête sur la 1ère ligne, ordre des colonnes libre) :
-/// Level,StatName,Value,Cost_Metal,Cost_Electricity,Cost_Uranium
+/// Format CSV attendu (en-tête sur la 1ère ligne, format "large" : une colonne = une stat) :
+/// Level,&lt;Stat1&gt;,&lt;Stat1&gt;_Metal,&lt;Stat1&gt;_Electricity,&lt;Stat1&gt;_Uranium,&lt;Stat2&gt;,&lt;Stat2&gt;_Metal,...
+///
+/// Chaque stat est un bloc de 4 colonnes cote a cote : le nom de la stat (valeur brute,
+/// sans suffixe) suivi de ses 3 colonnes de cout (_Metal, _Electricity, _Uranium).
+/// L'ordre des blocs dans le fichier n'a pas d'importance, et le nombre de stats/blocs
+/// est libre : ajouter une nouvelle stat = ajouter un nouveau bloc de 4 colonnes, rien
+/// a changer ici.
 /// </summary>
 public static class ShipUpgradeCSVImporter
 {
     private const string OutputFolder = "Assets/Data/ShipUpgrades";
+    private static readonly string[] CostSuffixes = { "_Metal", "_Electricity", "_Uranium" };
 
     [MenuItem("Tools/Upgrades/Importer un CSV...")]
     public static void ImportSingleFile()
@@ -61,6 +68,19 @@ public static class ShipUpgradeCSVImporter
     }
 
     /// <summary>
+    /// Une stat detectee dans l'en-tete : l'index de sa colonne de valeur, et les index
+    /// (optionnels, -1 si absents) de ses 3 colonnes de cout.
+    /// </summary>
+    private class StatColumns
+    {
+        public string statName;
+        public int valueIndex = -1;
+        public int metalIndex = -1;
+        public int electricityIndex = -1;
+        public int uraniumIndex = -1;
+    }
+
+    /// <summary>
     /// Parse un fichier CSV et crée/met à jour le ShipUpgradeData correspondant.
     /// Le nom du vaisseau et de l'asset généré = nom du fichier (sans extension).
     /// </summary>
@@ -77,59 +97,95 @@ public static class ShipUpgradeCSVImporter
             return null;
         }
 
-        // En-tête : on retrouve l'index de chaque colonne par son nom pour
-        // rester robuste si l'ordre des colonnes change dans le sheet.
         string[] header = SplitCsvLine(lines[0]);
         int idxLevel = FindColumn(header, "Level");
-        int idxStatName = FindColumn(header, "StatName");
-        int idxValue = FindColumn(header, "Value");
-        int idxCostMetal = FindColumn(header, "Cost_Metal");
-        int idxCostElectricity = FindColumn(header, "Cost_Electricity");
-        int idxCostUranium = FindColumn(header, "Cost_Uranium");
-
-        if (idxLevel < 0 || idxStatName < 0 || idxValue < 0)
+        if (idxLevel < 0)
         {
-            Debug.LogError($"[ShipUpgradeCSVImporter] '{shipName}' : colonnes obligatoires manquantes (Level, StatName, Value). Import annulé.");
+            Debug.LogError($"[ShipUpgradeCSVImporter] '{shipName}' : colonne 'Level' introuvable. Import annulé.");
             return null;
         }
 
-        // On regroupe les lignes par StatName : une Track par catégorie de
-        // stat (HP, Damage, CD Attack, Attack...), chacune avec ses paliers
-        // triés par niveau, au lieu d'une seule liste plate de 20+ lignes.
-        Dictionary<string, StatUpgradeTrack> tracksByName = new Dictionary<string, StatUpgradeTrack>();
+        // On detecte les blocs de stats a partir des noms de colonnes : une colonne SANS
+        // suffixe _Metal/_Electricity/_Uranium demarre une nouvelle stat (son nom = le nom
+        // de la stat), les colonnes avec suffixe viennent completer le cout de cette stat,
+        // quel que soit leur ordre dans le fichier.
+        Dictionary<string, StatColumns> columnsByStat = new Dictionary<string, StatColumns>();
         List<string> statOrder = new List<string>();
+
+        for (int i = 0; i < header.Length; i++)
+        {
+            if (i == idxLevel) continue;
+
+            string colName = header[i].Trim();
+            if (string.IsNullOrEmpty(colName)) continue;
+
+            string matchedSuffix = CostSuffixes.FirstOrDefault(s => colName.EndsWith(s, StringComparison.OrdinalIgnoreCase));
+            string statName = matchedSuffix != null ? colName.Substring(0, colName.Length - matchedSuffix.Length) : colName;
+
+            if (!columnsByStat.TryGetValue(statName, out StatColumns cols))
+            {
+                cols = new StatColumns { statName = statName };
+                columnsByStat[statName] = cols;
+                statOrder.Add(statName);
+            }
+
+            if (matchedSuffix == null)
+                cols.valueIndex = i;
+            else if (matchedSuffix.Equals("_Metal", StringComparison.OrdinalIgnoreCase))
+                cols.metalIndex = i;
+            else if (matchedSuffix.Equals("_Electricity", StringComparison.OrdinalIgnoreCase))
+                cols.electricityIndex = i;
+            else if (matchedSuffix.Equals("_Uranium", StringComparison.OrdinalIgnoreCase))
+                cols.uraniumIndex = i;
+        }
+
+        // Une stat sans colonne de valeur (que des colonnes de cout, en-tete malformé) n'a pas de sens : on l'ignore.
+        statOrder = statOrder.Where(name => columnsByStat[name].valueIndex >= 0).ToList();
+        if (statOrder.Count == 0)
+        {
+            Debug.LogError($"[ShipUpgradeCSVImporter] '{shipName}' : aucune colonne de stat valide trouvée. Import annulé.");
+            return null;
+        }
+
+        Dictionary<string, StatUpgradeTrack> tracksByName = statOrder.ToDictionary(
+            name => name,
+            name => new StatUpgradeTrack { statName = name });
 
         for (int i = 1; i < lines.Count; i++)
         {
-            string[] cols = SplitCsvLine(lines[i]);
-            if (cols.Length == 0)
+            string[] row = SplitCsvLine(lines[i]);
+            if (row.Length == 0)
                 continue;
 
+            int level;
             try
             {
-                string statName = ParseString(cols, idxStatName);
-                if (string.IsNullOrEmpty(statName))
-                    continue;
-
-                if (!tracksByName.TryGetValue(statName, out StatUpgradeTrack track))
-                {
-                    track = new StatUpgradeTrack { statName = statName };
-                    tracksByName[statName] = track;
-                    statOrder.Add(statName);
-                }
-
-                track.steps.Add(new StatUpgradeStep
-                {
-                    level = ParseInt(cols, idxLevel),
-                    value = ParseFloat(cols, idxValue),
-                    costMetal = ParseInt(cols, idxCostMetal),
-                    costElectricity = ParseInt(cols, idxCostElectricity),
-                    costUranium = ParseInt(cols, idxCostUranium),
-                });
+                level = ParseInt(row, idxLevel);
             }
             catch (Exception e)
             {
-                Debug.LogWarning($"[ShipUpgradeCSVImporter] '{shipName}' ligne {i + 1} ignorée : {e.Message}");
+                Debug.LogWarning($"[ShipUpgradeCSVImporter] '{shipName}' ligne {i + 1} ignorée (Level invalide) : {e.Message}");
+                continue;
+            }
+
+            foreach (string statName in statOrder)
+            {
+                StatColumns cols = columnsByStat[statName];
+                try
+                {
+                    tracksByName[statName].steps.Add(new StatUpgradeStep
+                    {
+                        level = level,
+                        value = ParseFloat(row, cols.valueIndex),
+                        costMetal = ParseInt(row, cols.metalIndex),
+                        costElectricity = ParseInt(row, cols.electricityIndex),
+                        costUranium = ParseInt(row, cols.uraniumIndex),
+                    });
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning($"[ShipUpgradeCSVImporter] '{shipName}' ligne {i + 1}, stat '{statName}' ignorée : {e.Message}");
+                }
             }
         }
 
@@ -169,7 +225,7 @@ public static class ShipUpgradeCSVImporter
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-        Debug.Log($"[ShipUpgradeCSVImporter] '{shipName}' : {parsedStats.Count} catégories de stats importées -> {assetPath}");
+        Debug.Log($"[ShipUpgradeCSVImporter] '{shipName}' : {parsedStats.Count} stats importées ({string.Join(", ", statOrder)}) -> {assetPath}");
         return asset;
     }
 
@@ -181,12 +237,6 @@ public static class ShipUpgradeCSVImporter
                 return i;
         }
         return -1;
-    }
-
-    private static string ParseString(string[] cols, int idx)
-    {
-        if (idx < 0 || idx >= cols.Length) return string.Empty;
-        return cols[idx].Trim();
     }
 
     private static int ParseInt(string[] cols, int idx)

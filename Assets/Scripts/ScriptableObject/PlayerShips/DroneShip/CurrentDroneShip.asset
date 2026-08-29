@@ -15,12 +15,12 @@ MonoBehaviour:
   tierName: Drone
   uiSprite: {fileID: -846245124, guid: a10411b248fc55a45bcf5f576810cfad, type: 3}
   ship: {fileID: 0}
-  maxUnits: 10
-  cdSpawnUnits: 1
-  pv: 5
-  damage: 1
-  cdAttack: 5
-  rangeAttack: 10000
+  maxUnits: 69
+  cdSpawnUnits: 0.1
+  pv: 10
+  damage: 5
+  cdAttack: 8
+  rangeAttack: 10
   nbAttack: 1
   sphereCenter: {fileID: 0}
   orbitRadiusMin: 200

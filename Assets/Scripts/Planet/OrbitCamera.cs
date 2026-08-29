@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Caméra qui orbite autour d'une cible (typiquement le centre d'une sphère).
@@ -64,6 +65,12 @@ public class OrbitCamera : MonoBehaviour
 
     void HandleZoom()
     {
+        // Ignore le zoom si la souris est au-dessus d'un élément d'UI.
+        if (IsPointerOverUI())
+        {
+            return;
+        }
+
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (Mathf.Abs(scroll) > 0.0001f)
         {
@@ -100,5 +107,14 @@ public class OrbitCamera : MonoBehaviour
 
         transform.rotation = rotation;
         transform.position = position;
+    }
+
+    /// <summary>
+    /// Vérifie si le pointeur de la souris est actuellement au-dessus d'un élément d'UI
+    /// (nécessite un EventSystem présent dans la scène).
+    /// </summary>
+    bool IsPointerOverUI()
+    {
+        return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
     }
 }

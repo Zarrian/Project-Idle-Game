@@ -19,12 +19,20 @@ public class UpgradeShip : Upgrades
         TryUpgradeStat(statName);
     }
 
+    /// <summary>Récupère le niveau actuel d'une stat sur l'unité gérée.</summary>
+    public int GetCurrentStatLevel(string statName)
+    {
+        return unit != null ? unit.GetCurrentStatLevel(statName) : 1;
+    }
+
     public override void GeneratePanels()
     {
         base.GeneratePanels();
 
         panelUpgrade = ManagerPanelUpgrade.instance.GeneratePanelUpgrade();
         panelUpgrade.unit = unit;
+        panelUpgrade.shipUpgradeData = shipUpgradeData;
+        panelUpgrade.upgradeShip = this;
 
         profilUIShip = TacticalPanelUI.instance.InstantiateUIPanel(hangar);
         profilUIShip.panelUpgrade = panelUpgrade;
@@ -55,7 +63,6 @@ public class UpgradeShip : Upgrades
             Debug.LogWarning($"Stat '{statName}' est déjà au niveau maximum ({currentLevel})", gameObject);
             return false;
         }
-        print(nextStep);
 
         // Vérifie les ressources disponibles
         if (!CanAffordUpgrade(nextStep))

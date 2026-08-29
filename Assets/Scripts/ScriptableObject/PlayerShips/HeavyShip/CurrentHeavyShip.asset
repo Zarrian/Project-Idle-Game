@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96966e2e7a6f6df4fa6a79a2fc5ac740, type: 3}
   m_Name: CurrentHeavyShip
   m_EditorClassIdentifier: Assembly-CSharp::UnitTier
-  tierName: Charllemagne
+  tierName: Charlemagne
   uiSprite: {fileID: 1299061415, guid: a10411b248fc55a45bcf5f576810cfad, type: 3}
   ship: {fileID: 0}
-  maxUnits: 1
+  maxUnits: 5
   cdSpawnUnits: 8
   pv: 30
   damage: 10
   cdAttack: 15
-  rangeAttack: 10000
-  nbAttack: 5
+  rangeAttack: 20
+  nbAttack: 1
   sphereCenter: {fileID: 0}
   orbitRadiusMin: 500
   orbitRadiusMax: 1000
