@@ -21,10 +21,10 @@ public class UpgradeShip : Upgrades
 
     public override void GeneratePanels()
     {
-        print("generate??");
         base.GeneratePanels();
 
         panelUpgrade = ManagerPanelUpgrade.instance.GeneratePanelUpgrade();
+        panelUpgrade.unit = unit;
 
         profilUIShip = TacticalPanelUI.instance.InstantiateUIPanel(hangar);
         profilUIShip.panelUpgrade = panelUpgrade;
