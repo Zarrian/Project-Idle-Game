@@ -9,7 +9,7 @@ public class Upgrades : Interectable
         panelUpgrade.InteractPanel();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         GeneratePanels();
     }

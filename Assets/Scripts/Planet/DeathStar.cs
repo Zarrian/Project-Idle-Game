@@ -94,14 +94,7 @@ public class DeathStar : MonoBehaviour
     /// Ajoute (ou retire, avec un montant négatif) une quantité à une
     /// ressource, en respectant le plafond et le minimum de 0.
     /// </summary>
-    public void AddRessources(Ressources type, float amount)
-    {
-        float newAmount = Mathf.Clamp(currentAmounts[type] + amount, 0f, maxAmounts[type]);
-        currentAmounts[type] = newAmount;
-        onResourceChanged?.Invoke(type, amount);
-    }
-
-    public void RemoveRessources(Ressources type, float amount)
+    public void ChangeRessources(Ressources type, float amount)
     {
         float newAmount = Mathf.Clamp(currentAmounts[type] + amount, 0f, maxAmounts[type]);
         currentAmounts[type] = newAmount;

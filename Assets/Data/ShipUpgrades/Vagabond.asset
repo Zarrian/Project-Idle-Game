@@ -44,7 +44,7 @@ MonoBehaviour:
   - statName: Damage
     steps:
     - level: 1
-      value: 8
+      value: 5
       costMetal: 0
       costElectricity: 0
       costUranium: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
       costMetal: 400
       costElectricity: 15
       costUranium: 3
-  - statName: UNITS
+  - statName: MaxUnits
     steps:
     - level: 1
       value: 10

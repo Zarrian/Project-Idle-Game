@@ -62,7 +62,7 @@ public class Scrap : MonoBehaviour
 
     public void Collect()
     {
-        DeathStar.instance.AddRessources(myRessource, value);
+        DeathStar.instance.ChangeRessources(myRessource, value);
         ReturnToPool();
     }
 
@@ -71,7 +71,7 @@ public class Scrap : MonoBehaviour
         yield return new WaitForSeconds(lifetime);
 
         int partialValue = Mathf.RoundToInt(value * pourcentage);
-        DeathStar.instance.AddRessources(myRessource, partialValue);
+        DeathStar.instance.ChangeRessources(myRessource, partialValue);
         ReturnToPool();
     }
 

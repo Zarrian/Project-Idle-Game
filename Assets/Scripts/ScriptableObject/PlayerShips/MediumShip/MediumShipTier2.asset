@@ -43,3 +43,4 @@ MonoBehaviour:
     m_Bits: 320
   shipDetectionRadius: 50
   avoidanceForce: 1000
+  upgradeData: {fileID: 11400000, guid: aa36afadba3f832498641f87c7d53391, type: 2}

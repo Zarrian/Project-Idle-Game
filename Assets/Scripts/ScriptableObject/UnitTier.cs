@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 
 /// <summary>
@@ -80,6 +81,13 @@ public class UnitTier : ScriptableObject
     [Tooltip("Intensité de la force d'esquive ajoutée par-dessus la poussée normale")]
     public float avoidanceForce = 60f;
 
+    public ShipUpgradeData upgradeData;
+
+    [Header("Upgrades")]
+    [SerializeField]
+    [Tooltip("Dictionnaire stockant le niveau d'amélioration actuel pour chaque stat")]
+    private Dictionary<string, int> currentUpgradeLevels = new Dictionary<string, int>();
+
 
     /// <summary>
     /// Crée une copie indépendante de ce tier (pour une instance runtime
@@ -136,5 +144,111 @@ public class UnitTier : ScriptableObject
         avoidanceForce = source.avoidanceForce;
     }
 
+    /// <summary>
+    /// Initialise les niveaux d'amélioration à 1 pour toutes les stats
+    /// présentes dans upgradeData qui correspondent à un champ de cette classe.
+    /// </summary>
+    public void Upgrade()
+    {
+        if (upgradeData == null)
+            return;
+
+        // Récupère la liste des noms de stats disponibles
+        foreach (var statName in upgradeData.GetStatNames())
+        {
+            // Récupère le palier niveau 1 pour cette stat
+            var step = upgradeData.GetStep(statName, 1);
+            if (step != null)
+            {
+                // Applique la valeur du niveau 1 au champ correspondant
+                ApplyUpgrade(statName, step.value);
+
+                // Enregistre le niveau d'amélioration actuel
+                if (!currentUpgradeLevels.ContainsKey(statName))
+                    currentUpgradeLevels[statName] = 1;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Applique une valeur d'amélioration à un champ de cette classe basé sur le nom de la stat.
+    /// </summary>
+    public void ApplyUpgrade(string statName, float value)
+    {
+        switch (statName.ToLower())
+        {
+            case "pv":
+            case "hp":
+                pv = value;
+                break;
+            case "damage":
+                damage = value;
+                break;
+            case "cdattack":
+            case "cd attack":
+                cdAttack = value;
+                break;
+            case "rangeattack":
+            case "range attack":
+            case "range":
+                rangeAttack = value;
+                break;
+            case "nbattack":
+            case "nb attack":
+            case "attack":
+                nbAttack = (int)value;
+                break;
+            case "thrust":
+                thrust = value;
+                break;
+            case "maxspeed":
+            case "max speed":
+            case "speed":
+                maxSpeed = value;
+                break;
+            case "maxturnratedegpersec":
+            case "max turn rate":
+                maxTurnRateDegPerSec = value;
+                break;
+            case "maxbankangle":
+            case "max bank angle":
+                maxBankAngle = value;
+                break;
+            case "banklersspeed":
+            case "bank lerp speed":
+                bankLerpSpeed = value;
+                break;
+            case "rotationfollowspeed":
+            case "rotation follow speed":
+                rotationFollowSpeed = value;
+                break;
+            case "maxunits":
+            case "max units":
+                maxUnits = (int)value;
+                break;
+            case "cdspawnunits":
+            case "cd spawn units":
+                cdSpawnUnits = value;
+                break;
+        }
+    }
+
+
+    /// <summary>
+    /// Récupère le niveau actuel d'une stat donnée. Si la stat n'a jamais été
+    /// améliorée, retourne 1 comme niveau par défaut.
+    /// </summary>
+    public int GetCurrentStatLevel(string statName)
+    {
+        return currentUpgradeLevels.TryGetValue(statName, out var level) ? level : 1;
+    }
+
+    /// <summary>
+    /// Modifie le niveau d'amélioration pour une stat donnée.
+    /// </summary>
+    public void SetCurrentUpgradeLevel(string statName, int level)
+    {
+        currentUpgradeLevels[statName] = level;
+    }
 }
 

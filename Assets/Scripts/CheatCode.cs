@@ -48,16 +48,16 @@ public class CheatCode : MonoBehaviour
 
     public void AddMetal()
     {
-        DeathStar.instance.AddRessources(DeathStar.Ressources.Metal, 100f);
+        DeathStar.instance.ChangeRessources(DeathStar.Ressources.Metal, 100f);
     }
 
     public void AddElectricity()
     {
-        DeathStar.instance.AddRessources(DeathStar.Ressources.Electricity, 100f);
+        DeathStar.instance.ChangeRessources(DeathStar.Ressources.Electricity, 100f);
     }
 
     public void AddUranium()
     {
-        DeathStar.instance.AddRessources(DeathStar.Ressources.Uranium, 100f);
+        DeathStar.instance.ChangeRessources(DeathStar.Ressources.Uranium, 100f);
     }
 }

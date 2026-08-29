@@ -14,7 +14,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitTierSet
   tiers:
   - {fileID: 0}
-  - {fileID: 11400000, guid: 5d1de37160d969e4ab71f4de56dd373d, type: 2}
-  - {fileID: 11400000, guid: abc91fe4a03ed954f9ee266fce15de03, type: 2}
-  - {fileID: 11400000, guid: fbc7194395075554082235fca241a5e0, type: 2}
-  - {fileID: 11400000, guid: 6805335f96dd57b4e8043f8e09a1cd5d, type: 2}

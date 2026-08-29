@@ -38,7 +38,11 @@ public class HangarShip : Hangar
     {
         base.SetTier();
         //Copie les valeurs du bon scriptableObject
-        unit.CopyFrom(shipSO.tiers[currentTier]);
+        //unit.CopyFrom(shipSO.tiers[currentTier]);
+        unit.Upgrade();
+        {
+
+        }
 
     }
 
@@ -79,6 +83,11 @@ public class HangarShip : Hangar
             //CheckEnemyInrange
 
             Transform target = FunctionUsefullManager.FindTarget(randomShip.transform, invaderLayer, targetPriority);
+
+            if(target == null)
+            {
+                return;
+            }
 
             Vector3 direction = (target.transform.position - randomShip.transform.position).normalized;
             float distance = Vector3.Distance(randomShip.transform.position, target.transform.position);

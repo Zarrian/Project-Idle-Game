@@ -6,9 +6,24 @@ public class ReturnPoolAfterDelay : MonoBehaviour
     public Pool myPool;
 
     [SerializeField] float delay = 3;
+    private Coroutine returnPoolCoroutine;
+
     void OnEnable()
     {
-        StartCoroutine(ReturnPool());
+        if (returnPoolCoroutine != null)
+        {
+            StopCoroutine(returnPoolCoroutine);
+        }
+        returnPoolCoroutine = StartCoroutine(ReturnPool());
+    }
+
+    void OnDisable()
+    {
+        if (returnPoolCoroutine != null)
+        {
+            StopCoroutine(returnPoolCoroutine);
+            returnPoolCoroutine = null;
+        }
     }
 
     IEnumerator ReturnPool()
@@ -17,5 +32,4 @@ public class ReturnPoolAfterDelay : MonoBehaviour
 
         myPool.ReturnPool(gameObject);
     }
-
 }
