@@ -17,6 +17,15 @@ public class UIPlanet : MonoBehaviour
         myPlanet.OnRegenPV += UpdateUI;
     }
 
+    private void OnDisable()
+    {
+        // Sans ce d�sabonnement, chaque r�activation empile un handler de
+        // plus sur les Action de PlanetStats et cette instance ne peut plus
+        // jamais �tre garbage collect�e (PlanetStats la r�f�rence � vie).
+        myPlanet.OnTakeDamage -= UpdateUI;
+        myPlanet.OnRegenPV -= UpdateUI;
+    }
+
     private void UpdateUI(Vector3 vector, float arg2)
     {
         UpdateUI();

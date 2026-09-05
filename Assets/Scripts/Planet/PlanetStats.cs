@@ -24,7 +24,7 @@ public class PlanetStats : MonoBehaviour, IDamageable
     {
         hp -= damage;
 
-        //FX de shockWave avec un bouclier énergétique
+        //FX de shockWave avec un bouclier ï¿½nergï¿½tique
         OnTakeDamage?.Invoke(pos, damage);
 
         if (hp <= 0)
@@ -44,13 +44,18 @@ public class PlanetStats : MonoBehaviour, IDamageable
     public Action OnRegenPV;
     public IEnumerator RegenPVConstante(float delay, float amountHpRegen)
     {
-        yield return new WaitForSeconds(delay);
+        // while(true) au lieu de se relancer soi-mï¿½me via StartCoroutine :
+        // une seule coroutine vit ici au lieu d'en recrï¿½er une nouvelle ï¿½
+        // chaque tick.
+        while (true)
+        {
+            yield return new WaitForSeconds(delay);
 
-        hp += amountHpRegen;
-        hp = Math.Clamp(hp, 0, hpMax);
+            hp += amountHpRegen;
+            hp = Math.Clamp(hp, 0, hpMax);
 
-        OnRegenPV?.Invoke();
-        StartCoroutine(RegenPVConstante(1, hpRegen));
+            OnRegenPV?.Invoke();
+        }
     }
 
     public void RegenPV(float delay, float amountHpRegen)

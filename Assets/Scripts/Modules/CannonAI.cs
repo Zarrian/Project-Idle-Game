@@ -35,11 +35,11 @@ public class CannonAI : MonoBehaviour
     public UnityEvent OnFire;
 
     // === OPTIMISATION : Caching des valeurs ===
-    private float visionConeHalfAngleCos; // Cosinus du demi-angle du cône
-    private float rangeAttackSqr; // Distance au carré
+    private float visionConeHalfAngleCos; // Cosinus du demi-angle du cï¿½ne
+    private float rangeAttackSqr; // Distance au carrï¿½
     private Vector3 cachedForwardDirection;
     private float detectionCheckTimer = 0f;
-    private const float DETECTION_CHECK_INTERVAL = 0.1f; // Vérifier tous les 100ms
+    private const float DETECTION_CHECK_INTERVAL = 0.1f; // Vï¿½rifier tous les 100ms
 
     [SerializeField] private float laserDelay = 0.15f;
 
@@ -48,7 +48,7 @@ public class CannonAI : MonoBehaviour
         SetStatistique();
         SetupLaser();
 
-        // === OPTIMISATION : Précalculer les valeurs ===
+        // === OPTIMISATION : Prï¿½calculer les valeurs ===
         visionConeHalfAngleCos = Mathf.Cos(visionConeAngle * 0.5f * Mathf.Deg2Rad);
         rangeAttackSqr = rangeAttack * rangeAttack;
     }
@@ -60,7 +60,7 @@ public class CannonAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // === OPTIMISATION : Ne pas vérifier tous les frames ===
+        // === OPTIMISATION : Ne pas vï¿½rifier tous les frames ===
         detectionCheckTimer += Time.fixedDeltaTime;
         if (detectionCheckTimer >= DETECTION_CHECK_INTERVAL)
         {
@@ -89,7 +89,7 @@ public class CannonAI : MonoBehaviour
         rangeAttack = canonSO.tiers[manager.currentTier].rangeAttack;
         nbAttack = canonSO.tiers[manager.currentTier].nbAttack;
 
-        // === OPTIMISATION : Mettre à jour les caches ===
+        // === OPTIMISATION : Mettre ï¿½ jour les caches ===
         rangeAttackSqr = rangeAttack * rangeAttack;
     }
 
@@ -100,7 +100,7 @@ public class CannonAI : MonoBehaviour
         cannonBarrel.rotation = Quaternion.RotateTowards(cannonBarrel.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-    // === OPTIMISATION MAJEURE : DetectTargets ultra-optimisé ===
+    // === OPTIMISATION MAJEURE : DetectTargets ultra-optimisï¿½ ===
     private void DetectTargets()
     {
         cachedForwardDirection = cannonBarrel != null ? cannonBarrel.forward : transform.forward;
@@ -120,18 +120,17 @@ public class CannonAI : MonoBehaviour
         {
             Collider col = colliders[i];
 
-            // === OPTIMISATION : Vérifier IDamageable en premier (early exit) ===
-            IDamageable damageable = col.GetComponent<IDamageable>();
-            if (damageable == null)
-                continue;
-
             Vector3 targetPos = col.transform.position;
 
-            // === OPTIMISATION : Vérifier la distance avant l'angle ===
+            // === OPTIMISATION : distance/angle (calculs Vector3 bon marchï¿½)
+            // vï¿½rifiï¿½s AVANT le GetComponent (bien plus coï¿½teux), pour ne
+            // jamais interroger les composants des cibles hors champ de
+            // vision ===
             Vector3 directionToTarget = targetPos - currentPos;
             float sqrDistance = directionToTarget.sqrMagnitude;
 
-            // Early exit si trop loin
+            // Early exit si trop loin (garde de sï¿½curitï¿½, normalement dï¿½jï¿½
+            // garanti par le rayon de l'OverlapSphere)
             if (sqrDistance > rangeAttackSqr)
                 continue;
 
@@ -142,31 +141,36 @@ public class CannonAI : MonoBehaviour
             float dotProduct = Vector3.Dot(cachedForwardDirection, normalizedDirection);
 
             // === OPTIMISATION : Comparer directement avec le cosinus ===
-            if (dotProduct >= visionConeHalfAngleCos)
-            {
-                if (currenttarget == null)
-                {
-                    // Vérifie la ligne de vue réelle avant de valider la cible
-                    Transform validatedTarget = ValidateLineOfSight(origin, col.transform);
-                    if (validatedTarget == null)
-                        continue;
+            if (dotProduct < visionConeHalfAngleCos)
+                continue;
 
-                    OnTargetDetected(validatedTarget.gameObject);
+            // === OPTIMISATION : GetComponent uniquement pour les candidats
+            // qui ont dï¿½jï¿½ passï¿½ les filtres distance/angle bon marchï¿½ ===
+            if (!col.TryGetComponent(out IDamageable damageable))
+                continue;
+
+            if (currenttarget == null)
+            {
+                // Vï¿½rifie la ligne de vue rï¿½elle avant de valider la cible
+                Transform validatedTarget = ValidateLineOfSight(origin, col.transform);
+                if (validatedTarget == null)
+                    continue;
+
+                OnTargetDetected(validatedTarget.gameObject);
+                targetStillInRange = true;
+                break;
+            }
+            else if (col.gameObject == currenttarget.gameObject)
+            {
+                // Vï¿½rifie que la ligne de vue vers la cible actuelle est toujours dï¿½gagï¿½e
+                Transform validatedTarget = ValidateLineOfSight(origin, col.transform);
+                if (validatedTarget != null)
+                {
+                    currenttarget = validatedTarget;
                     targetStillInRange = true;
                     break;
                 }
-                else if (col.gameObject == currenttarget.gameObject)
-                {
-                    // Vérifie que la ligne de vue vers la cible actuelle est toujours dégagée
-                    Transform validatedTarget = ValidateLineOfSight(origin, col.transform);
-                    if (validatedTarget != null)
-                    {
-                        currenttarget = validatedTarget;
-                        targetStillInRange = true;
-                        break;
-                    }
-                    // Ligne de vue bloquée : on continue à chercher un autre candidat
-                }
+                // Ligne de vue bloquï¿½e : on continue ï¿½ chercher un autre candidat
             }
         }
 
@@ -178,9 +182,9 @@ public class CannonAI : MonoBehaviour
     }
 
     /// <summary>
-    /// Vérifie par raycast qu'on peut effectivement toucher la cible candidate.
-    /// Si un autre vaisseau ennemi (IDamageable sur targetLayer) est touché
-    /// en premier, celui-ci est retourné à la place. Retourne null si aucune
+    /// Vï¿½rifie par raycast qu'on peut effectivement toucher la cible candidate.
+    /// Si un autre vaisseau ennemi (IDamageable sur targetLayer) est touchï¿½
+    /// en premier, celui-ci est retournï¿½ ï¿½ la place. Retourne null si aucune
     /// cible valide n'est en ligne de vue.
     /// </summary>
     private Transform ValidateLineOfSight(Vector3 origin, Transform candidate)
@@ -190,11 +194,11 @@ public class CannonAI : MonoBehaviour
 
         if (Physics.Raycast(origin, direction, out RaycastHit hit, distance, targetLayer))
         {
-            // La cible candidate est bien ce qui est touché en premier
+            // La cible candidate est bien ce qui est touchï¿½ en premier
             if (hit.transform == candidate || hit.transform.IsChildOf(candidate))
                 return candidate;
 
-            // Un autre vaisseau ennemi a été touché avant : on le prend pour cible
+            // Un autre vaisseau ennemi a ï¿½tï¿½ touchï¿½ avant : on le prend pour cible
             IDamageable hitDamageable = hit.transform.GetComponent<IDamageable>();
             if (hitDamageable != null)
                 return hit.transform;
@@ -203,7 +207,7 @@ public class CannonAI : MonoBehaviour
             return null;
         }
 
-        // Rien touché sur targetLayer avant la distance de la cible : pas de ligne de vue
+        // Rien touchï¿½ sur targetLayer avant la distance de la cible : pas de ligne de vue
         return null;
     }
 

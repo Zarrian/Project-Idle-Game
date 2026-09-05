@@ -45,6 +45,19 @@ namespace Project.UI
             ship.OnChangeUnitList += UpdateBar;
         }
 
+        private void OnDestroy()
+        {
+            // Sans �a, chaque panel recr�� (ou d�truit) laisse le HangarShip
+            // r�f�rencer � vie un ProfileUIShip mort via son Action, ce qui
+            // emp�che le GC de le lib�rer et peut lever une exception au
+            // prochain OnChangeUnitList si l'objet a d�j� �t� d�truit.
+            if (ship != null)
+            {
+                ship.OnChangeUnitList -= UpdateInfoUI;
+                ship.OnChangeUnitList -= UpdateBar;
+            }
+        }
+
         public void SetProfile()
         {
             if (profileImage != null)

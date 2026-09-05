@@ -46,7 +46,14 @@ public class ManagerStatistiques : MonoBehaviour
     {
         instance = this;
 
-        // Récupère tous les vaisseaux déjà présents et actifs dans la scène
+        // Repart d'une base propre : si ce composant a dï¿½jï¿½ ï¿½tï¿½ activï¿½ une
+        // fois (rï¿½-activation d'un panel UI par ex.), on ï¿½vite de compter en
+        // double les vaisseaux dï¿½jï¿½ prï¿½sents dans les listes.
+        allships.Clear();
+        shipPlayer.Clear();
+        shipInvaders.Clear();
+
+        // Rï¿½cupï¿½re tous les vaisseaux dï¿½jï¿½ prï¿½sents et actifs dans la scï¿½ne
         // AVANT de s'abonner, pour ne pas les compter deux fois.
         Ship[] existingShips = FindObjectsByType<Ship>(FindObjectsSortMode.None);
         foreach (Ship ship in existingShips)
@@ -70,6 +77,12 @@ public class ManagerStatistiques : MonoBehaviour
         Ship.OnShipCreated -= HandleShipCreated;
         Ship.OnShipTakeDamage -= HandleShipTakeDamage;
         Ship.OnShipDestroyed -= HandleShipDestroyed;
+
+        // Sans ï¿½a, une rï¿½activation ultï¿½rieure relance UpdateDamage/UpdateUI
+        // par-dessus les chaines dï¿½jï¿½ en cours : chaque cycle enable/disable
+        // empilerait deux boucles infinies supplï¿½mentaires qui ne s'arrï¿½tent
+        // jamais (fuite de coroutines).
+        StopAllCoroutines();
     }
 
     [Tooltip("Vitesse de rattrapage du lerp. Plus haut = rattrape plus vite (moins de lissage visible), plus bas = plus lent/fluide.")]
@@ -94,11 +107,11 @@ public class ManagerStatistiques : MonoBehaviour
     }
 
     /// <summary>
-    /// Lerp exponentiel vers targetValue, indépendant du framerate. Contrairement
-    /// à Mathf.Lerp(bar.fillAmount, target, vitesse * Time.fixedDeltaTime) — un
-    /// piège classique — cette formule donne le MÊME résultat visuel peu importe
+    /// Lerp exponentiel vers targetValue, indï¿½pendant du framerate. Contrairement
+    /// ï¿½ Mathf.Lerp(bar.fillAmount, target, vitesse * Time.fixedDeltaTime) ï¿½ un
+    /// piï¿½ge classique ï¿½ cette formule donne le Mï¿½ME rï¿½sultat visuel peu importe
     /// le framerate/le fixedDeltaTime, parce qu'elle compose correctement le
-    /// taux de rattrapage sur plusieurs frames au lieu de l'additionner linéairement.
+    /// taux de rattrapage sur plusieurs frames au lieu de l'additionner linï¿½airement.
     /// </summary>
     void UpdateBarSmooth(Image bar, float targetValue)
     {
@@ -108,40 +121,45 @@ public class ManagerStatistiques : MonoBehaviour
 
     public IEnumerator UpdateUI()
     {
-        //barShips.fillAmount = SafeRatio(shipPlayer.Count, shipInvaders.Count);
-        //barPV.fillAmount = SafeRatio(playerCurrentPV, invaderCurrentPV);
-        //barDPS.fillAmount = SafeRatio(playerDPS, invaderDPS);
-        //barDPTen.fillAmount = SafeRatio(playerDamageLast10Seconds, invaderDamageLast10Seconds);
-
-        playerCurrentPV = 0;
-        invaderCurrentPV = 0;
-
-        foreach (Ship ship in shipPlayer)
+        // while(true) au lieu d'un StartCoroutine(UpdateUI()) rï¿½cursif en fin
+        // de mï¿½thode : une seule coroutine vit pour toute la durï¿½e, au lieu
+        // d'en recrï¿½er une nouvelle toutes les 0.2s.
+        while (true)
         {
-            playerCurrentPV += ship.pv;
-        }
-        foreach (Ship ship in shipInvaders)
-        {
-            invaderCurrentPV += ship.pv;
-        }
+            //barShips.fillAmount = SafeRatio(shipPlayer.Count, shipInvaders.Count);
+            //barPV.fillAmount = SafeRatio(playerCurrentPV, invaderCurrentPV);
+            //barDPS.fillAmount = SafeRatio(playerDPS, invaderDPS);
+            //barDPTen.fillAmount = SafeRatio(playerDamageLast10Seconds, invaderDamageLast10Seconds);
 
-        textPlayerShip.text = shipPlayer.Count.ToString();
-        textInvaderShip.text = shipInvaders.Count.ToString();
-        textPlayerPV.text = playerCurrentPV.ToString("F0");
-        textInvaderPV.text = invaderCurrentPV.ToString("F0");
-        textPlayerDPS.text = playerDPS.ToString("F1");
-        textInvaderDPS.text = invaderDPS.ToString("F1");
-        textPlayerDPTen.text = playerDamageLast10Seconds.ToString("F1");
-        textInvaderDPTen.text = invaderDamageLast10Seconds.ToString("F1");
+            playerCurrentPV = 0;
+            invaderCurrentPV = 0;
 
-        yield return new WaitForSeconds(0.2f);
-        StartCoroutine(UpdateUI());
+            foreach (Ship ship in shipPlayer)
+            {
+                playerCurrentPV += ship.pv;
+            }
+            foreach (Ship ship in shipInvaders)
+            {
+                invaderCurrentPV += ship.pv;
+            }
+
+            textPlayerShip.text = shipPlayer.Count.ToString();
+            textInvaderShip.text = shipInvaders.Count.ToString();
+            textPlayerPV.text = playerCurrentPV.ToString("F0");
+            textInvaderPV.text = invaderCurrentPV.ToString("F0");
+            textPlayerDPS.text = playerDPS.ToString("F1");
+            textInvaderDPS.text = invaderDPS.ToString("F1");
+            textPlayerDPTen.text = playerDamageLast10Seconds.ToString("F1");
+            textInvaderDPTen.text = invaderDamageLast10Seconds.ToString("F1");
+
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     /// <summary>
-    /// Ratio a / (a + b), sécurisé contre la division par zéro. Si les deux
-    /// valeurs sont à 0 (aucun combat encore), retourne 0.5 (barre à
-    /// l'équilibre) plutôt qu'un NaN qui casse le rendu du Canvas.
+    /// Ratio a / (a + b), sï¿½curisï¿½ contre la division par zï¿½ro. Si les deux
+    /// valeurs sont ï¿½ 0 (aucun combat encore), retourne 0.5 (barre ï¿½
+    /// l'ï¿½quilibre) plutï¿½t qu'un NaN qui casse le rendu du Canvas.
     /// </summary>
     float SafeRatio(float a, float b)
     {
@@ -152,11 +170,13 @@ public class ManagerStatistiques : MonoBehaviour
 
     public IEnumerator UpdateDamage()
     {
-        playerDamageLast10Seconds = GetPlayerDamageLast10Seconds();
-        invaderDamageLast10Seconds = GetInvaderDamageLast10Seconds();
-        playerDPS = GetPlayerDPS(); invaderDPS = GetInvaderDPS();
-        yield return new WaitForSeconds(0.2f);
-        StartCoroutine(UpdateDamage());
+        while (true)
+        {
+            playerDamageLast10Seconds = GetPlayerDamageLast10Seconds();
+            invaderDamageLast10Seconds = GetInvaderDamageLast10Seconds();
+            playerDPS = GetPlayerDPS(); invaderDPS = GetInvaderDPS();
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     private void HandleShipCreated(Ship ship)

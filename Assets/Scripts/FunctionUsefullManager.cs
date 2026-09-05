@@ -6,91 +6,70 @@ namespace FunctionUseful
 {
     public static class FunctionUsefullManager
     {
+        // === OPTIMISATION MAJEURE ===
+        // FindTarget() est appelï¿½e trï¿½s souvent (ex: chaque FixedUpdate pour
+        // chaque missile sans cible valide, ou ï¿½ chaque attaque de Hangar).
+        // L'ancienne version faisait un Physics.OverlapSphere(rayon 10000)
+        // qui ALLOUE un nouveau tableau ï¿½ chaque appel, puis une
+        // List<Transform> ï¿½galement allouï¿½e ï¿½ chaque appel : avec beaucoup
+        // de missiles/vaisseaux actifs, ï¿½a gï¿½nï¿½re une quantitï¿½ de garbage
+        // ï¿½norme en continu -> cause majeure des freezes de GC. Buffers
+        // statiques rï¿½utilisï¿½s = plus aucune allocation par appel.
+        private const int MAX_CANDIDATES = 512;
+        private const int MAX_ENEMY_ACTIVE = 100;
+        private static readonly Collider[] candidateBuffer = new Collider[MAX_CANDIDATES];
+        private static readonly List<Transform> enemyActiveBuffer = new List<Transform>(MAX_ENEMY_ACTIVE);
 
         public static Transform FindTarget(Transform originPoint, LayerMask enemyLayer, float targetPriority)
         {
-            Collider[] candidates = Physics.OverlapSphere(originPoint.position, 10000, enemyLayer);
-            if (candidates.Length == 0)
-                return null;
-
-            //Verifie que l'objet a l'interface Idamageable
-            List<Transform> EnemyActif = new List<Transform>();
-            foreach (Collider unit in candidates)
-            {
-                IDamageable damageable = unit.GetComponent<IDamageable>();
-                if (damageable != null)
-                {
-                    EnemyActif.Add(unit.transform);
-                }
-
-                if (EnemyActif.Count > 100)
-                {
-                    break;
-                }
-            }
-
-            if (EnemyActif == null || EnemyActif.Count == 0)
-                return null;
-
-            // Cas extrêmes
-            if (targetPriority <= 0)
-                return EnemyActif[EnemyActif.Count - 1];
-
-            if (targetPriority >= 100)
-                return EnemyActif[0];
-
-            float t = targetPriority / 100f;
-
-            // Plus t est grand, plus on favorise les petits indices.
-            float random = Mathf.Pow(Random.value, Mathf.Lerp(3f, 0.35f, t));
-
-            int index = Mathf.RoundToInt(random * (EnemyActif.Count - 1));
-
-            return EnemyActif[index];
+            return FindTargetInternal(originPoint, enemyLayer, targetPriority);
         }
 
         public static Transform FindTarget(Transform originPoint, LayerMask enemyLayer)
         {
             float targetPriority = Random.Range(0f, 100f); // Random priority between 0 and 100
+            return FindTargetInternal(originPoint, enemyLayer, targetPriority);
+        }
 
-            Collider[] candidates = Physics.OverlapSphere(originPoint.position, 10000, enemyLayer);
-            if (candidates.Length == 0)
+        private static Transform FindTargetInternal(Transform originPoint, LayerMask enemyLayer, float targetPriority)
+        {
+            int candidateCount = Physics.OverlapSphereNonAlloc(originPoint.position, 10000f, candidateBuffer, enemyLayer);
+            if (candidateCount == 0)
                 return null;
 
             //Verifie que l'objet a l'interface Idamageable
-            List<Transform> EnemyActif = new List<Transform>();
-            foreach (Collider unit in candidates)
+            enemyActiveBuffer.Clear();
+            for (int i = 0; i < candidateCount; i++)
             {
-                IDamageable damageable = unit.GetComponent<IDamageable>();
-                if (damageable != null)
+                if (candidateBuffer[i].TryGetComponent(out IDamageable damageable))
                 {
-                    EnemyActif.Add(unit.transform);
-                }
+                    enemyActiveBuffer.Add(candidateBuffer[i].transform);
 
-                if (EnemyActif.Count > 100)
-                {
-                    break;
+                    if (enemyActiveBuffer.Count >= MAX_ENEMY_ACTIVE)
+                    {
+                        break;
+                    }
                 }
             }
 
-            if (EnemyActif == null || EnemyActif.Count == 0)
+            if (enemyActiveBuffer.Count == 0)
                 return null;
 
-            // Cas extrêmes
+            // Cas extrï¿½mes
             if (targetPriority <= 0)
-                return EnemyActif[EnemyActif.Count - 1];
+                return enemyActiveBuffer[enemyActiveBuffer.Count - 1];
 
             if (targetPriority >= 100)
-                return EnemyActif[0];
+                return enemyActiveBuffer[0];
 
             float t = targetPriority / 100f;
 
             // Plus t est grand, plus on favorise les petits indices.
             float random = Mathf.Pow(Random.value, Mathf.Lerp(3f, 0.35f, t));
 
-            int index = Mathf.RoundToInt(random * (EnemyActif.Count - 1));
+            int index = Mathf.RoundToInt(random * (enemyActiveBuffer.Count - 1));
 
-            return EnemyActif[index];
+            return enemyActiveBuffer[index];
         }
     }
 }

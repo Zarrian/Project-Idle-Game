@@ -220,7 +220,18 @@ public class BirdOrbitFlight : MovementPhysic
 
     float ComputeBankAngle(Vector3 velocityDir)
     {
-        float turnAngle = Vector3.SignedAngle(transform.forward, velocityDir, transform.up);
+        // === OPTIMISATION : angle sign� via atan2(cross, dot) ===
+        // Vector3.SignedAngle normalise les deux vecteurs (2 sqrt) puis fait
+        // un Acos + un produit vectoriel s�par� juste pour le signe. Un seul
+        // atan2(dot(cross, up), dot(fwd, vel)) donne le m�me angle sign� en
+        // une passe, sans les deux normalisations ni l'Acos - appel�e une
+        // fois par vaisseau et par FixedUpdate, ce qui compte avec beaucoup
+        // de vaisseaux actifs.
+        Vector3 forward = transform.forward;
+        Vector3 cross = Vector3.Cross(forward, velocityDir);
+        float dot = Vector3.Dot(forward, velocityDir);
+        float turnAngle = Mathf.Atan2(Vector3.Dot(cross, transform.up), dot) * Mathf.Rad2Deg;
+
         float targetBank = Mathf.Clamp(-turnAngle, -maxBankAngle, maxBankAngle);
         currentBank = Mathf.Lerp(currentBank, targetBank, Time.fixedDeltaTime * bankLerpSpeed);
         return currentBank;
