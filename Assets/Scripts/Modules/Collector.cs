@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Collector : HangarShip
@@ -13,22 +14,26 @@ public class Collector : HangarShip
 
     public IEnumerator FindScrap()
     {
-        yield return new WaitForSeconds(1);
-
-        if (unitsList.Count > 0)
+        // while(true) au lieu de se relancer soi-mï¿½me via StartCoroutine :
+        // une seule coroutine vit ici au lieu d'en recrï¿½er une nouvelle
+        // chaque seconde.
+        while (true)
         {
-            foreach (GameObject collectorGO in unitsList)
-            {
-                CollectorShip collector = collectorGO.GetComponent<CollectorShip>();
+            yield return new WaitForSeconds(1);
 
-                if (collector.target == null)
+            if (unitsList.Count > 0)
+            {
+                foreach (GameObject collectorGO in unitsList)
                 {
-                    FindNearestScrap(collector);
+                    CollectorShip collector = collectorGO.GetComponent<CollectorShip>();
+
+                    if (collector.target == null)
+                    {
+                        FindNearestScrap(collector);
+                    }
                 }
             }
         }
-
-        StartCoroutine(FindScrap());
     }
 
     public override void FixedUpdate()
@@ -42,20 +47,26 @@ public class Collector : HangarShip
     public LayerMask scrapLayer;
     public float scrapSearchRadius = 50f;
 
+    // Buffer rï¿½utilisï¿½ pour ï¿½viter d'allouer un nouveau tableau ï¿½ chaque
+    // appel de Physics.OverlapSphere (un par collector sans cible, chaque
+    // seconde) : source de garbage continue si beaucoup de collectors.
+    private readonly Collider[] scrapOverlapBuffer = new Collider[32];
+
     public void FindNearestScrap(CollectorShip collector)
     {
-        Collider[] scraps = Physics.OverlapSphere(collector.transform.position, scrapSearchRadius, scrapLayer);
-        if (scraps.Length == 0) return;
+        int scrapCount = Physics.OverlapSphereNonAlloc(collector.transform.position, scrapSearchRadius, scrapOverlapBuffer, scrapLayer);
+        if (scrapCount == 0) return;
 
-        // Trié du plus proche au plus loin, pour pouvoir passer au suivant si
-        // le plus proche est déjà visé par un autre collector.
-        System.Array.Sort(scraps, (a, b) =>
+        // Triï¿½ du plus proche au plus loin, pour pouvoir passer au suivant si
+        // le plus proche est dï¿½jï¿½ visï¿½ par un autre collector.
+        System.Array.Sort(scrapOverlapBuffer, 0, scrapCount, Comparer<Collider>.Create((a, b) =>
             (a.transform.position - collector.transform.position).sqrMagnitude.CompareTo(
-            (b.transform.position - collector.transform.position).sqrMagnitude));
+            (b.transform.position - collector.transform.position).sqrMagnitude)));
 
         Transform chosenTarget = null;
-        foreach (Collider scrap in scraps)
+        for (int i = 0; i < scrapCount; i++)
         {
+            Collider scrap = scrapOverlapBuffer[i];
             if (!IsAlreadyTargeted(scrap.transform, collector.transform))
             {
                 chosenTarget = scrap.transform;
@@ -63,15 +74,15 @@ public class Collector : HangarShip
             }
         }
 
-        // Tous les scraps à portée sont déjà pris par d'autres collectors :
-        // on n'assigne rien plutôt que de forcer un doublon.
+        // Tous les scraps ï¿½ portï¿½e sont dï¿½jï¿½ pris par d'autres collectors :
+        // on n'assigne rien plutï¿½t que de forcer un doublon.
         if (chosenTarget == null) return;
 
         collector.target = chosenTarget;
 
     }
 
-    /// <summary>Vrai si un AUTRE collector de UnitList vise déjà ce scrap.</summary>
+    /// <summary>Vrai si un AUTRE collector de UnitList vise dï¿½jï¿½ ce scrap.</summary>
     bool IsAlreadyTargeted(Transform scrap, Transform excludingCollector)
     {
         foreach (GameObject unit in unitsList)

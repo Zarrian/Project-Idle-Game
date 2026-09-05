@@ -60,6 +60,12 @@ public class ManagerStatistiques : MonoBehaviour
         Ship.OnShipCreated -= HandleShipCreated;
         Ship.OnShipTakeDamage -= HandleShipTakeDamage;
         Ship.OnShipDestroyed -= HandleShipDestroyed;
+
+        // Sans ï¿½a, une rï¿½activation ultï¿½rieure (OnEnable) relance UpdateDamage/
+        // UpdateUI par-dessus les chaines dï¿½jï¿½ en cours : chaque cycle
+        // enable/disable empile deux boucles infinies supplï¿½mentaires qui ne
+        // s'arrï¿½tent jamais.
+        StopAllCoroutines();
     }
 
     [Tooltip("Vitesse de rattrapage du lerp. Plus haut = rattrape plus vite (moins de lissage visible), plus bas = plus lent/fluide.")]
@@ -74,11 +80,11 @@ public class ManagerStatistiques : MonoBehaviour
     }
 
     /// <summary>
-    /// Lerp exponentiel vers targetValue, indépendant du framerate. Contrairement
-    /// à Mathf.Lerp(bar.fillAmount, target, vitesse * Time.fixedDeltaTime) — un
-    /// piège classique — cette formule donne le MÊME résultat visuel peu importe
+    /// Lerp exponentiel vers targetValue, indï¿½pendant du framerate. Contrairement
+    /// ï¿½ Mathf.Lerp(bar.fillAmount, target, vitesse * Time.fixedDeltaTime) ï¿½ un
+    /// piï¿½ge classique ï¿½ cette formule donne le Mï¿½ME rï¿½sultat visuel peu importe
     /// le framerate/le fixedDeltaTime, parce qu'elle compose correctement le
-    /// taux de rattrapage sur plusieurs frames au lieu de l'additionner linéairement.
+    /// taux de rattrapage sur plusieurs frames au lieu de l'additionner linï¿½airement.
     /// </summary>
     void UpdateBarSmooth(Image bar, float targetValue)
     {
@@ -88,28 +94,34 @@ public class ManagerStatistiques : MonoBehaviour
 
     public IEnumerator UpdateUI()
     {
-        //barShips.fillAmount = SafeRatio(shipPlayer.Count, shipInvaders.Count);
-        //barPV.fillAmount = SafeRatio(playerCurrentPV, invaderCurrentPV);
-        //barDPS.fillAmount = SafeRatio(playerDPS, invaderDPS);
-        //barDPTen.fillAmount = SafeRatio(playerDamageLast10Seconds, invaderDamageLast10Seconds);
+        // while(true) au lieu d'un StartCoroutine(UpdateUI()) rï¿½cursif en fin
+        // de mï¿½thode : une seule coroutine vit pour toute la durï¿½e, au lieu
+        // d'en recrï¿½er une nouvelle toutes les 0.2s (et de risquer d'en
+        // empiler plusieurs si OnEnable est rappelï¿½).
+        while (true)
+        {
+            //barShips.fillAmount = SafeRatio(shipPlayer.Count, shipInvaders.Count);
+            //barPV.fillAmount = SafeRatio(playerCurrentPV, invaderCurrentPV);
+            //barDPS.fillAmount = SafeRatio(playerDPS, invaderDPS);
+            //barDPTen.fillAmount = SafeRatio(playerDamageLast10Seconds, invaderDamageLast10Seconds);
 
-        textPlayerShip.text = shipPlayer.Count.ToString();
-        textInvaderShip.text = shipInvaders.Count.ToString();
-        textPlayerPV.text = playerCurrentPV.ToString("F0");
-        textInvaderPV.text = invaderCurrentPV.ToString("F0");
-        textPlayerDPS.text = playerDPS.ToString("F1");
-        textInvaderDPS.text = invaderDPS.ToString("F1");
-        textPlayerDPTen.text = playerDamageLast10Seconds.ToString("F1");
-        textInvaderDPTen.text = invaderDamageLast10Seconds.ToString("F1");
+            textPlayerShip.text = shipPlayer.Count.ToString();
+            textInvaderShip.text = shipInvaders.Count.ToString();
+            textPlayerPV.text = playerCurrentPV.ToString("F0");
+            textInvaderPV.text = invaderCurrentPV.ToString("F0");
+            textPlayerDPS.text = playerDPS.ToString("F1");
+            textInvaderDPS.text = invaderDPS.ToString("F1");
+            textPlayerDPTen.text = playerDamageLast10Seconds.ToString("F1");
+            textInvaderDPTen.text = invaderDamageLast10Seconds.ToString("F1");
 
-        yield return new WaitForSeconds(0.2f);
-        StartCoroutine(UpdateUI());
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     /// <summary>
-    /// Ratio a / (a + b), sécurisé contre la division par zéro. Si les deux
-    /// valeurs sont à 0 (aucun combat encore), retourne 0.5 (barre à
-    /// l'équilibre) plutôt qu'un NaN qui casse le rendu du Canvas.
+    /// Ratio a / (a + b), sï¿½curisï¿½ contre la division par zï¿½ro. Si les deux
+    /// valeurs sont ï¿½ 0 (aucun combat encore), retourne 0.5 (barre ï¿½
+    /// l'ï¿½quilibre) plutï¿½t qu'un NaN qui casse le rendu du Canvas.
     /// </summary>
     float SafeRatio(float a, float b)
     {
@@ -120,11 +132,13 @@ public class ManagerStatistiques : MonoBehaviour
 
     public IEnumerator UpdateDamage()
     {
-        playerDamageLast10Seconds = GetPlayerDamageLast10Seconds();
-        invaderDamageLast10Seconds = GetInvaderDamageLast10Seconds();
-        playerDPS = GetPlayerDPS(); invaderDPS = GetInvaderDPS();
-        yield return new WaitForSeconds(0.2f);
-        StartCoroutine(UpdateDamage());
+        while (true)
+        {
+            playerDamageLast10Seconds = GetPlayerDamageLast10Seconds();
+            invaderDamageLast10Seconds = GetInvaderDamageLast10Seconds();
+            playerDPS = GetPlayerDPS(); invaderDPS = GetInvaderDPS();
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     private void HandleShipCreated(Ship ship)
@@ -167,7 +181,7 @@ public class ManagerStatistiques : MonoBehaviour
         shipInvaders.Remove(ship);
 
         // Retirer ses PV restants
-        // (utile si le Ship est détruit alors qu'il lui reste des PV)
+        // (utile si le Ship est dï¿½truit alors qu'il lui reste des PV)
         if ((playerShipLayerMask.value & (1 << ship.gameObject.layer)) != 0)
         {
             playerCurrentPV -= ship.pv;
