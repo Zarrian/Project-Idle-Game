@@ -15,9 +15,9 @@ MonoBehaviour:
   tierName: Collector
   uiSprite: {fileID: 186263089, guid: a10411b248fc55a45bcf5f576810cfad, type: 3}
   ship: {fileID: 4429859799202048684, guid: ab5aaf08e1f465948bf4391bf943bab9, type: 3}
-  maxUnits: 3
-  cdSpawnUnits: 1
-  pv: 100
+  maxUnits: 114
+  cdSpawnUnits: 0.1
+  pv: 109
   damage: 0
   cdAttack: 0
   rangeAttack: 0
@@ -43,3 +43,4 @@ MonoBehaviour:
     m_Bits: 192
   shipDetectionRadius: 8
   avoidanceForce: 1000
+  upgradeData: {fileID: 11400000, guid: aed88ff59b333684cb3466de2742b398, type: 2}

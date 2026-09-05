@@ -144,11 +144,12 @@ public class UnitTier : ScriptableObject
         avoidanceForce = source.avoidanceForce;
     }
 
+
     /// <summary>
     /// Initialise les niveaux d'amélioration à 1 pour toutes les stats
     /// présentes dans upgradeData qui correspondent à un champ de cette classe.
     /// </summary>
-    public void Upgrade()
+    public void SetLevel(int level)
     {
         if (upgradeData == null)
             return;
@@ -157,7 +158,7 @@ public class UnitTier : ScriptableObject
         foreach (var statName in upgradeData.GetStatNames())
         {
             // Récupère le palier niveau 1 pour cette stat
-            var step = upgradeData.GetStep(statName, 1);
+            var step = upgradeData.GetStep(statName, level);
             if (step != null)
             {
                 // Applique la valeur du niveau 1 au champ correspondant
@@ -165,7 +166,7 @@ public class UnitTier : ScriptableObject
 
                 // Enregistre le niveau d'amélioration actuel
                 if (!currentUpgradeLevels.ContainsKey(statName))
-                    currentUpgradeLevels[statName] = 1;
+                    currentUpgradeLevels[statName] = level;
             }
         }
     }
@@ -242,6 +243,7 @@ public class UnitTier : ScriptableObject
     {
         return currentUpgradeLevels.TryGetValue(statName, out var level) ? level : 1;
     }
+
 
     /// <summary>
     /// Modifie le niveau d'amélioration pour une stat donnée.

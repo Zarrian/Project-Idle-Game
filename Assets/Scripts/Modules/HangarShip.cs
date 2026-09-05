@@ -6,7 +6,7 @@ public class HangarShip : Hangar
 {
     //Ajouttez fonction pour faire spawn des ships
 
-    public UnitTierSet shipSO;
+    //public UnitTierSet shipSO;
     public UnitTier unit;
     public Weapon myWeapon;
     public LayerMask invaderLayer;
@@ -20,6 +20,8 @@ public class HangarShip : Hangar
     [SerializeField, Range(0, 100)]
     private float targetPriority = 75f;
 
+    public static int maxAttackRetries = 10;
+
     private const float DETECTION_CHECK_INTERVAL = 0f; // Vérifier tous les 100ms
     private float detectionCheckTimer;
 
@@ -29,7 +31,7 @@ public class HangarShip : Hangar
         transform.GetChild(0).parent = null;
     }
 
-    public virtual void Start()
+    public virtual void Awake()
     {
         SetTier();
     }
@@ -37,11 +39,22 @@ public class HangarShip : Hangar
     public override void SetTier()
     {
         base.SetTier();
-        //Copie les valeurs du bon scriptableObject
-        //unit.CopyFrom(shipSO.tiers[currentTier]);
-        unit.Upgrade();
+        switch (currentTier)
         {
-
+            case 1:
+                unit.SetLevel(1);
+                break;
+            case 2:
+                unit.SetLevel(25);
+                break;
+            case 3:
+                unit.SetLevel(50);
+                break;
+            case 4:
+                unit.SetLevel(75);
+                break;
+            default:
+                break;
         }
 
     }
@@ -78,26 +91,50 @@ public class HangarShip : Hangar
     {
         for (int i = 0; i < unit.nbAttack; i++)
         {
-            //Choisis un vaisseaux joueurs random
-            GameObject randomShip = unitsList[UnityEngine.Random.Range(0, unitsList.Count)];
-            //CheckEnemyInrange
+            TryAttack(0);
+        }
+    }
 
-            Transform target = FunctionUsefullManager.FindTarget(randomShip.transform, invaderLayer, targetPriority);
+    private void TryAttack(int retryCount)
+    {
+        if (retryCount >= maxAttackRetries)
+            return;
 
-            if(target == null)
+        //Choisis un vaisseaux joueurs random
+        GameObject randomShip = unitsList[UnityEngine.Random.Range(0, unitsList.Count)];
+        //CheckEnemyInrange
+
+        Transform target = FunctionUsefullManager.FindTarget(randomShip.transform, invaderLayer, targetPriority);
+
+        if (target == null)
+        {
+            return;
+        }
+
+        Vector3 direction = (target.transform.position - randomShip.transform.position).normalized;
+        float distance = Vector3.Distance(randomShip.transform.position, target.transform.position);
+        if (Physics.Raycast(randomShip.transform.position, direction, out RaycastHit hit, distance, InvaderAndPlanetLayer))
+        {
+            // La cible d'origine est bien ce qui est touché en premier : on confirme l'attaque
+            if (hit.transform == target || hit.transform.IsChildOf(target))
             {
+                myWeapon.Attack(randomShip.transform, target.transform, unit.damage);
                 return;
             }
 
-            Vector3 direction = (target.transform.position - randomShip.transform.position).normalized;
-            float distance = Vector3.Distance(randomShip.transform.position, target.transform.position);
-            if (Physics.Raycast(randomShip.transform.position, direction, out RaycastHit hit, distance, InvaderAndPlanetLayer))
+            // Un autre vaisseau adverse a été touché avant la cible d'origine : on l'attaque à la place
+            IDamageable hitDamageable = hit.transform.GetComponent<IDamageable>();
+            if (hitDamageable != null)
             {
-                myWeapon.Attack(randomShip.transform, target.transform, unit.damage);
+                myWeapon.Attack(randomShip.transform, hit.transform, unit.damage);
+                return;
             }
-            else // recommance
-                CheckAttack();
+
+            // Sinon (obstacle, planète...) on recommence avec une autre cible/vaisseau
+            TryAttack(retryCount + 1);
         }
+        else // recommance
+            TryAttack(retryCount + 1);
     }
 
     public virtual void SpawnUnits()

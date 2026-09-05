@@ -14,6 +14,14 @@ public class SpawnerEnemy : HangarShip
     [Tooltip("Distance maximale du centre à laquelle un ennemi peut spawn")]
     public float maxSpawnRadius = 4000f;
 
+    public UnitTierSet shipSO;
+
+
+    public override void SetTier()
+    {
+        base.SetTier();
+        unit.CopyFrom(shipSO.tiers[currentTier]);
+    }
 
     public override void CreateShip()
     {

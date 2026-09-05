@@ -55,6 +55,14 @@ namespace Project.UI
             }
         }
 
+        private void OnEnable()
+        {
+            if (panelRect == null)
+                panelRect = GetComponent<RectTransform>();
+
+            panelRect.SetAsLastSibling();
+        }
+
         public void OnInitializePotentialDrag(PointerEventData eventData)
         {
             // Removes small drag delay. This helps the panel feel stable and responsive.

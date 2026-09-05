@@ -81,7 +81,7 @@ public static class ShipUpgradeCSVImporter
     }
 
     /// <summary>
-    /// Parse un fichier CSV et crée/met à jour le ShipUpgradeData correspondant.
+    /// Parse un fichier CSV local et crée/met à jour le ShipUpgradeData correspondant.
     /// Le nom du vaisseau et de l'asset généré = nom du fichier (sans extension).
     /// </summary>
     private static ShipUpgradeData ImportFile(string absolutePath)
@@ -91,6 +91,34 @@ public static class ShipUpgradeCSVImporter
             .Where(l => !string.IsNullOrWhiteSpace(l))
             .ToList();
 
+        return ImportLines(shipName, lines);
+    }
+
+    /// <summary>
+    /// Parse le contenu CSV brut (ex: téléchargé depuis un Google Sheet publié) et
+    /// crée/met à jour le ShipUpgradeData correspondant au vaisseau donné.
+    /// </summary>
+    public static ShipUpgradeData ImportRawCsv(string shipName, string csvContent)
+    {
+        if (string.IsNullOrEmpty(csvContent))
+        {
+            Debug.LogWarning($"[ShipUpgradeCSVImporter] '{shipName}' : contenu CSV vide, ignoré.");
+            return null;
+        }
+
+        List<string> lines = csvContent
+            .Split(new[] { "\r\n", "\n", "\r" }, StringSplitOptions.None)
+            .Where(l => !string.IsNullOrWhiteSpace(l))
+            .ToList();
+
+        return ImportLines(shipName, lines);
+    }
+
+    /// <summary>
+    /// Coeur du parsing, partagé entre l'import fichier local et l'import URL.
+    /// </summary>
+    private static ShipUpgradeData ImportLines(string shipName, List<string> lines)
+    {
         if (lines.Count < 2)
         {
             Debug.LogWarning($"[ShipUpgradeCSVImporter] '{shipName}' : CSV vide ou sans données, ignoré.");
@@ -171,6 +199,15 @@ public static class ShipUpgradeCSVImporter
             foreach (string statName in statOrder)
             {
                 StatColumns cols = columnsByStat[statName];
+
+                // Cellule de valeur vide = cette stat n'a pas de palier a ce niveau (stat pas
+                // encore commencee, ou deja au maximum au-dela de son vrai plafond). On ne
+                // cree AUCUNE entree pour ce (stat, level) plutot que d'inserer une valeur 0 :
+                // c'est ce qui permet a la stat de s'arreter exactement a son dernier niveau reel
+                // (ex: nbAttack et maxUnits de Charllemagne s'arretent au niveau 20, pas 100).
+                if (!HasValue(row, cols.valueIndex))
+                    continue;
+
                 try
                 {
                     tracksByName[statName].steps.Add(new StatUpgradeStep
@@ -237,6 +274,12 @@ public static class ShipUpgradeCSVImporter
                 return i;
         }
         return -1;
+    }
+
+    private static bool HasValue(string[] cols, int idx)
+    {
+        if (idx < 0 || idx >= cols.Length) return false;
+        return !string.IsNullOrEmpty(cols[idx].Trim());
     }
 
     private static int ParseInt(string[] cols, int idx)

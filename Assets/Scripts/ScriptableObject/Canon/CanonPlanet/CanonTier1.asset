@@ -18,7 +18,7 @@ MonoBehaviour:
   cdSpawnUnits: 0
   pv: 100
   damage: 10
-  cdAttack: 3
+  cdAttack: 6
   rangeAttack: 4000
   nbAttack: 1
   planetLayerMask:

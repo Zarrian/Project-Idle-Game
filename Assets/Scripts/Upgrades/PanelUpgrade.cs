@@ -54,7 +54,6 @@ public class PanelUpgrade : MonoBehaviour
             line.upgradeShip = upgradeShip;
             line.shipUpgradeData = shipUpgradeData;
             line.statId = statName;
-            line.currentLevel = currentLevel;
 
             line.SetLineInfo();
             spawnedLines.Add(line);

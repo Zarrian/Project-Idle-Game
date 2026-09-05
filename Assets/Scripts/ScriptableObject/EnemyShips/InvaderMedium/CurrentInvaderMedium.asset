@@ -15,10 +15,10 @@ MonoBehaviour:
   tierName: InvaderVagabond
   uiSprite: {fileID: 0}
   ship: {fileID: 0}
-  maxUnits: 5
+  maxUnits: 10
   cdSpawnUnits: 3
-  pv: 15
-  damage: 2
+  pv: 25
+  damage: 8
   cdAttack: 5
   rangeAttack: 10000
   nbAttack: 1

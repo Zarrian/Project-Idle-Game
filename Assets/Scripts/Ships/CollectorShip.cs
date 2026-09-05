@@ -81,13 +81,16 @@ public class CollectorShip : MovementPhysic
     void Arrive()
     {
         //hasArrived = true;
-        rb.linearVelocity = Vector3.zero;
+        //rb.linearVelocity = Vector3.zero;
         target.GetComponent<Scrap>().Collect();
 
-        manager.FindNearestScrap(this);
         target = null;
-        onArrival?.Invoke();
+        manager.FindNearestScrap(this);
 
+        if(target == null)
+            rb.linearVelocity = Vector3.zero;
+
+        onArrival?.Invoke();
     }
 
 

@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: InvaderBasicTier3
   m_EditorClassIdentifier: Assembly-CSharp::UnitTier
   tierName: InvaderBasicTier3
+  uiSprite: {fileID: 0}
   ship: {fileID: 0}
   maxUnits: 100
   cdSpawnUnits: 0.1
-  pv: 30
-  damage: 5
+  pv: 100
+  damage: 15
   cdAttack: 3
-  rangeAttack: 1000
+  rangeAttack: 10000
   nbAttack: 1
   sphereCenter: {fileID: 0}
   orbitRadiusMin: 500
@@ -42,3 +43,4 @@ MonoBehaviour:
     m_Bits: 320
   shipDetectionRadius: 50
   avoidanceForce: 1000
+  upgradeData: {fileID: 0}

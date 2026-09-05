@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,11 @@ public class UIPlanet : MonoBehaviour
     {
         myPlanet.OnTakeDamage += UpdateUI;
         myPlanet.OnRegenPV += UpdateUI;
+    }
+
+    private void UpdateUI(Vector3 vector, float arg2)
+    {
+        UpdateUI();
     }
 
     void LateUpdate()

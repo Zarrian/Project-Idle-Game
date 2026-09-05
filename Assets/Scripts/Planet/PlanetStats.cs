@@ -19,13 +19,13 @@ public class PlanetStats : MonoBehaviour, IDamageable
         OnDeath?.Invoke();
     }
 
-    public Action OnTakeDamage;
+    public Action<Vector3, float> OnTakeDamage;
     public void TakeDamage(float damage, Vector3 pos)
     {
         hp -= damage;
 
         //FX de shockWave avec un bouclier énergétique
-        OnTakeDamage?.Invoke();
+        OnTakeDamage?.Invoke(pos, damage);
 
         if (hp <= 0)
             Death();

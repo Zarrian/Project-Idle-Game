@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: InvaderHeavyTier1
   m_EditorClassIdentifier: Assembly-CSharp::UnitTier
   tierName: InvaderHeavyTier1
+  uiSprite: {fileID: 0}
   ship: {fileID: 0}
   maxUnits: 1
-  cdSpawnUnits: 15
-  pv: 30
+  cdSpawnUnits: 10
+  pv: 150
   damage: 3
   cdAttack: 15
   rangeAttack: 1000
@@ -42,3 +43,4 @@ MonoBehaviour:
     m_Bits: 0
   shipDetectionRadius: 0
   avoidanceForce: 1000
+  upgradeData: {fileID: 0}

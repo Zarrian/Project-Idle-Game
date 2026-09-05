@@ -33,9 +33,6 @@ public class LineUpgrade : MonoBehaviour
     [Tooltip("Identifiant de la stat affichée par cette ligne, ex: 'pv', 'damage'")]
     public string statId;
 
-    /// <summary>Doit être assigné par PanelUpgrade avant d'appeler SetLineInfo().</summary>
-    public int currentLevel;
-
     /// <summary>Coûts à afficher, préparés par RefreshCosts() puis appliqués par SetCostText().</summary>
     private readonly List<(TextMeshProUGUI text, int cost, float available)> pendingCosts = new List<(TextMeshProUGUI, int, float)>();
 
@@ -45,6 +42,9 @@ public class LineUpgrade : MonoBehaviour
             DeathStar.instance.onResourceChanged.AddListener(HandleResourceChanged);
 
         button.onClick.AddListener(OnUpgradeButtonClicked);
+
+        SetLineInfo();
+        SetCostText();
     }
 
     private void OnDisable()
@@ -64,7 +64,6 @@ public class LineUpgrade : MonoBehaviour
             {
                 // Relit le niveau réel après l'upgrade, plutôt que de réutiliser
                 // l'ancienne valeur locale (c'était la cause du non-rafraîchissement).
-                currentLevel = upgradeShip.GetCurrentStatLevel(statId);
                 SetLineInfo();
             }
         }
@@ -91,6 +90,8 @@ public class LineUpgrade : MonoBehaviour
         if (shipUpgradeData == null)
             return;
 
+        int currentLevel = upgradeShip.GetCurrentStatLevel(statId);
+        
         var currentStep = shipUpgradeData.GetStep(statId, currentLevel);
         var nextStep = shipUpgradeData.GetStep(statId, currentLevel + 1);
 
@@ -132,7 +133,7 @@ public class LineUpgrade : MonoBehaviour
         if (shipUpgradeData == null)
             return;
 
-        var nextStep = shipUpgradeData.GetStep(statId, currentLevel + 1);
+        var nextStep = shipUpgradeData.GetStep(statId, upgradeShip.GetCurrentStatLevel(statId) + 1);
         if (nextStep == null)
         {
             pendingCosts.Add((costMetal, 0, 0));

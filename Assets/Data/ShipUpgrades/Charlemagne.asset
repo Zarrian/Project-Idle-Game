@@ -16,506 +16,111 @@ MonoBehaviour:
   stats:
   - statName: maxUnits
     steps:
+    - level: 0
+      value: 0
+      costMetal: 0
+      costElectricity: 0
+      costUranium: 0
     - level: 1
-      value: 1
+      value: 0
       costMetal: 0
       costElectricity: 0
       costUranium: 0
     - level: 2
-      value: 1
+      value: 2
       costMetal: 60
       costElectricity: 0
       costUranium: 0
     - level: 3
-      value: 1
+      value: 3
       costMetal: 135
       costElectricity: 0
       costUranium: 0
     - level: 4
-      value: 2
+      value: 4
       costMetal: 240
       costElectricity: 0
       costUranium: 0
     - level: 5
-      value: 2
+      value: 5
       costMetal: 375
       costElectricity: 0
       costUranium: 0
     - level: 6
-      value: 2
+      value: 6
       costMetal: 540
       costElectricity: 0
       costUranium: 0
     - level: 7
-      value: 2
+      value: 7
       costMetal: 735
       costElectricity: 0
       costUranium: 0
     - level: 8
-      value: 2
+      value: 8
       costMetal: 960
-      costElectricity: 0
-      costUranium: 0
-    - level: 9
-      value: 3
-      costMetal: 1215
-      costElectricity: 0
-      costUranium: 0
-    - level: 10
-      value: 3
-      costMetal: 1500
-      costElectricity: 0
-      costUranium: 0
-    - level: 11
-      value: 3
-      costMetal: 1815
-      costElectricity: 0
-      costUranium: 0
-    - level: 12
-      value: 3
-      costMetal: 2160
-      costElectricity: 0
-      costUranium: 0
-    - level: 13
-      value: 3
-      costMetal: 2535
-      costElectricity: 0
-      costUranium: 0
-    - level: 14
-      value: 4
-      costMetal: 2940
-      costElectricity: 0
-      costUranium: 0
-    - level: 15
-      value: 4
-      costMetal: 3375
-      costElectricity: 0
-      costUranium: 0
-    - level: 16
-      value: 4
-      costMetal: 3840
-      costElectricity: 0
-      costUranium: 0
-    - level: 17
-      value: 4
-      costMetal: 4335
-      costElectricity: 0
-      costUranium: 0
-    - level: 18
-      value: 4
-      costMetal: 4860
-      costElectricity: 0
-      costUranium: 0
-    - level: 19
-      value: 5
-      costMetal: 5415
-      costElectricity: 0
-      costUranium: 0
-    - level: 20
-      value: 5
-      costMetal: 6000
-      costElectricity: 0
-      costUranium: 0
-    - level: 21
-      value: 5
-      costMetal: 6615
-      costElectricity: 0
-      costUranium: 0
-    - level: 22
-      value: 5
-      costMetal: 7260
-      costElectricity: 0
-      costUranium: 0
-    - level: 23
-      value: 5
-      costMetal: 7935
-      costElectricity: 0
-      costUranium: 0
-    - level: 24
-      value: 6
-      costMetal: 8640
-      costElectricity: 0
-      costUranium: 0
-    - level: 25
-      value: 6
-      costMetal: 9375
       costElectricity: 6
       costUranium: 0
-    - level: 26
-      value: 6
-      costMetal: 10140
+    - level: 9
+      value: 9
+      costMetal: 1215
       costElectricity: 12
       costUranium: 0
-    - level: 27
-      value: 6
-      costMetal: 10935
+    - level: 10
+      value: 10
+      costMetal: 1500
       costElectricity: 18
       costUranium: 0
-    - level: 28
-      value: 6
-      costMetal: 11760
+    - level: 11
+      value: 11
+      costMetal: 1815
       costElectricity: 24
       costUranium: 0
-    - level: 29
-      value: 7
-      costMetal: 12615
+    - level: 12
+      value: 12
+      costMetal: 2160
       costElectricity: 30
       costUranium: 0
-    - level: 30
-      value: 7
-      costMetal: 13500
+    - level: 13
+      value: 13
+      costMetal: 2535
       costElectricity: 36
       costUranium: 0
-    - level: 31
-      value: 7
-      costMetal: 14415
+    - level: 14
+      value: 14
+      costMetal: 2940
       costElectricity: 42
       costUranium: 0
-    - level: 32
-      value: 7
-      costMetal: 15360
+    - level: 15
+      value: 15
+      costMetal: 3375
       costElectricity: 48
       costUranium: 0
-    - level: 33
-      value: 7
-      costMetal: 16335
+    - level: 16
+      value: 16
+      costMetal: 3840
       costElectricity: 54
-      costUranium: 0
-    - level: 34
-      value: 8
-      costMetal: 17340
-      costElectricity: 60
-      costUranium: 0
-    - level: 35
-      value: 8
-      costMetal: 18375
-      costElectricity: 66
-      costUranium: 0
-    - level: 36
-      value: 8
-      costMetal: 19440
-      costElectricity: 72
-      costUranium: 0
-    - level: 37
-      value: 8
-      costMetal: 20535
-      costElectricity: 78
-      costUranium: 0
-    - level: 38
-      value: 8
-      costMetal: 21660
-      costElectricity: 84
-      costUranium: 0
-    - level: 39
-      value: 9
-      costMetal: 22815
-      costElectricity: 90
-      costUranium: 0
-    - level: 40
-      value: 9
-      costMetal: 24000
-      costElectricity: 96
-      costUranium: 0
-    - level: 41
-      value: 9
-      costMetal: 25215
-      costElectricity: 102
-      costUranium: 0
-    - level: 42
-      value: 9
-      costMetal: 26460
-      costElectricity: 108
-      costUranium: 0
-    - level: 43
-      value: 9
-      costMetal: 27735
-      costElectricity: 114
-      costUranium: 0
-    - level: 44
-      value: 10
-      costMetal: 29040
-      costElectricity: 120
-      costUranium: 0
-    - level: 45
-      value: 10
-      costMetal: 30375
-      costElectricity: 126
-      costUranium: 0
-    - level: 46
-      value: 10
-      costMetal: 31740
-      costElectricity: 132
-      costUranium: 0
-    - level: 47
-      value: 10
-      costMetal: 33135
-      costElectricity: 138
-      costUranium: 0
-    - level: 48
-      value: 10
-      costMetal: 34560
-      costElectricity: 144
-      costUranium: 0
-    - level: 49
-      value: 10
-      costMetal: 36015
-      costElectricity: 150
-      costUranium: 0
-    - level: 50
-      value: 10
-      costMetal: 37500
-      costElectricity: 156
-      costUranium: 0
-    - level: 51
-      value: 10
-      costMetal: 39015
-      costElectricity: 162
-      costUranium: 0
-    - level: 52
-      value: 10
-      costMetal: 40560
-      costElectricity: 168
-      costUranium: 0
-    - level: 53
-      value: 10
-      costMetal: 42135
-      costElectricity: 174
-      costUranium: 0
-    - level: 54
-      value: 11
-      costMetal: 43740
-      costElectricity: 180
-      costUranium: 0
-    - level: 55
-      value: 11
-      costMetal: 45375
-      costElectricity: 186
-      costUranium: 0
-    - level: 56
-      value: 11
-      costMetal: 47040
-      costElectricity: 192
-      costUranium: 0
-    - level: 57
-      value: 11
-      costMetal: 48735
-      costElectricity: 198
-      costUranium: 0
-    - level: 58
-      value: 11
-      costMetal: 50460
-      costElectricity: 204
-      costUranium: 0
-    - level: 59
-      value: 12
-      costMetal: 52215
-      costElectricity: 210
-      costUranium: 0
-    - level: 60
-      value: 12
-      costMetal: 54000
-      costElectricity: 216
-      costUranium: 0
-    - level: 61
-      value: 12
-      costMetal: 55815
-      costElectricity: 222
-      costUranium: 0
-    - level: 62
-      value: 12
-      costMetal: 57660
-      costElectricity: 228
-      costUranium: 0
-    - level: 63
-      value: 12
-      costMetal: 59535
-      costElectricity: 234
-      costUranium: 0
-    - level: 64
-      value: 13
-      costMetal: 61440
-      costElectricity: 240
-      costUranium: 0
-    - level: 65
-      value: 13
-      costMetal: 63375
-      costElectricity: 246
-      costUranium: 0
-    - level: 66
-      value: 13
-      costMetal: 65340
-      costElectricity: 252
-      costUranium: 0
-    - level: 67
-      value: 13
-      costMetal: 67335
-      costElectricity: 258
-      costUranium: 0
-    - level: 68
-      value: 13
-      costMetal: 69360
-      costElectricity: 264
-      costUranium: 0
-    - level: 69
-      value: 14
-      costMetal: 71415
-      costElectricity: 270
-      costUranium: 0
-    - level: 70
-      value: 14
-      costMetal: 73500
-      costElectricity: 276
       costUranium: 3
-    - level: 71
-      value: 14
-      costMetal: 75615
-      costElectricity: 282
+    - level: 17
+      value: 17
+      costMetal: 4335
+      costElectricity: 60
       costUranium: 6
-    - level: 72
-      value: 14
-      costMetal: 77760
-      costElectricity: 288
+    - level: 18
+      value: 18
+      costMetal: 4860
+      costElectricity: 66
       costUranium: 9
-    - level: 73
-      value: 14
-      costMetal: 79935
-      costElectricity: 294
+    - level: 19
+      value: 19
+      costMetal: 5415
+      costElectricity: 72
       costUranium: 12
-    - level: 74
-      value: 14
-      costMetal: 82140
-      costElectricity: 300
+    - level: 20
+      value: 20
+      costMetal: 6000
+      costElectricity: 78
       costUranium: 15
-    - level: 75
-      value: 14
-      costMetal: 84375
-      costElectricity: 306
-      costUranium: 18
-    - level: 76
-      value: 15
-      costMetal: 86640
-      costElectricity: 312
-      costUranium: 21
-    - level: 77
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 78
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 79
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 80
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 81
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 82
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 83
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 84
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 85
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 86
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 87
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 88
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 89
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 90
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 91
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 92
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 93
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 94
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 95
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 96
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 97
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 98
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 99
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 100
-      value: 15
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
   - statName: pv
     steps:
     - level: 1
@@ -1528,1002 +1133,97 @@ MonoBehaviour:
       costElectricity: 0
       costUranium: 0
     - level: 2
-      value: 16
-      costMetal: 20
-      costElectricity: 0
-      costUranium: 0
-    - level: 3
-      value: 17
-      costMetal: 45
-      costElectricity: 0
-      costUranium: 0
-    - level: 4
-      value: 18
-      costMetal: 80
-      costElectricity: 0
-      costUranium: 0
-    - level: 5
-      value: 19
-      costMetal: 125
-      costElectricity: 0
-      costUranium: 0
-    - level: 6
-      value: 20
+      value: 14
       costMetal: 180
       costElectricity: 0
       costUranium: 0
-    - level: 7
-      value: 21
-      costMetal: 245
-      costElectricity: 0
-      costUranium: 0
-    - level: 8
-      value: 22
-      costMetal: 320
-      costElectricity: 0
-      costUranium: 0
-    - level: 9
-      value: 23
-      costMetal: 405
-      costElectricity: 0
-      costUranium: 0
-    - level: 10
-      value: 24
-      costMetal: 500
-      costElectricity: 0
-      costUranium: 0
-    - level: 11
-      value: 25
-      costMetal: 605
-      costElectricity: 0
-      costUranium: 0
-    - level: 12
-      value: 26
-      costMetal: 720
-      costElectricity: 0
-      costUranium: 0
-    - level: 13
-      value: 27
-      costMetal: 845
-      costElectricity: 0
-      costUranium: 0
-    - level: 14
-      value: 28
+    - level: 3
+      value: 13
       costMetal: 980
       costElectricity: 0
       costUranium: 0
-    - level: 15
-      value: 29
-      costMetal: 1125
-      costElectricity: 0
-      costUranium: 0
-    - level: 16
-      value: 30
-      costMetal: 1280
-      costElectricity: 0
-      costUranium: 0
-    - level: 17
-      value: 31
-      costMetal: 1445
-      costElectricity: 0
-      costUranium: 0
-    - level: 18
-      value: 32
-      costMetal: 1620
-      costElectricity: 0
-      costUranium: 0
-    - level: 19
-      value: 33
-      costMetal: 1805
-      costElectricity: 0
-      costUranium: 0
-    - level: 20
-      value: 34
-      costMetal: 2000
-      costElectricity: 0
-      costUranium: 0
-    - level: 21
-      value: 35
-      costMetal: 2205
-      costElectricity: 0
-      costUranium: 0
-    - level: 22
-      value: 36
+    - level: 4
+      value: 12
       costMetal: 2420
       costElectricity: 0
       costUranium: 0
-    - level: 23
-      value: 37
-      costMetal: 2645
-      costElectricity: 0
-      costUranium: 0
-    - level: 24
-      value: 38
-      costMetal: 2880
-      costElectricity: 0
-      costUranium: 0
-    - level: 25
-      value: 39
-      costMetal: 3125
-      costElectricity: 2
-      costUranium: 0
-    - level: 26
-      value: 40
-      costMetal: 3380
-      costElectricity: 4
-      costUranium: 0
-    - level: 27
-      value: 41
-      costMetal: 3645
-      costElectricity: 6
-      costUranium: 0
-    - level: 28
-      value: 42
-      costMetal: 3920
-      costElectricity: 8
-      costUranium: 0
-    - level: 29
-      value: 43
-      costMetal: 4205
-      costElectricity: 10
-      costUranium: 0
-    - level: 30
-      value: 44
+    - level: 5
+      value: 11
       costMetal: 4500
       costElectricity: 12
       costUranium: 0
-    - level: 31
-      value: 45
-      costMetal: 4805
-      costElectricity: 14
-      costUranium: 0
-    - level: 32
-      value: 46
-      costMetal: 5120
-      costElectricity: 16
-      costUranium: 0
-    - level: 33
-      value: 47
-      costMetal: 5445
-      costElectricity: 18
-      costUranium: 0
-    - level: 34
-      value: 48
-      costMetal: 5780
-      costElectricity: 20
-      costUranium: 0
-    - level: 35
-      value: 49
-      costMetal: 6125
-      costElectricity: 22
-      costUranium: 0
-    - level: 36
-      value: 50
-      costMetal: 6480
-      costElectricity: 24
-      costUranium: 0
-    - level: 37
-      value: 51
-      costMetal: 6845
-      costElectricity: 26
-      costUranium: 0
-    - level: 38
-      value: 52
-      costMetal: 7220
-      costElectricity: 28
-      costUranium: 0
-    - level: 39
-      value: 53
+    - level: 6
+      value: 10
       costMetal: 7605
       costElectricity: 30
       costUranium: 0
-    - level: 40
-      value: 54
-      costMetal: 8000
-      costElectricity: 32
-      costUranium: 0
-    - level: 41
-      value: 55
-      costMetal: 8405
-      costElectricity: 34
-      costUranium: 0
-    - level: 42
-      value: 56
-      costMetal: 8820
-      costElectricity: 36
-      costUranium: 0
-    - level: 43
-      value: 57
-      costMetal: 9245
-      costElectricity: 38
-      costUranium: 0
-    - level: 44
-      value: 58
-      costMetal: 9680
-      costElectricity: 40
-      costUranium: 0
-    - level: 45
-      value: 59
-      costMetal: 10125
-      costElectricity: 42
-      costUranium: 0
-    - level: 46
-      value: 60
-      costMetal: 10580
-      costElectricity: 44
-      costUranium: 0
-    - level: 47
-      value: 61
+    - level: 7
+      value: 9
       costMetal: 11045
       costElectricity: 46
       costUranium: 0
-    - level: 48
-      value: 62
-      costMetal: 11520
-      costElectricity: 48
-      costUranium: 0
-    - level: 49
-      value: 63
-      costMetal: 12005
-      costElectricity: 50
-      costUranium: 0
-    - level: 50
-      value: 64
-      costMetal: 12500
-      costElectricity: 52
-      costUranium: 0
-    - level: 51
-      value: 65
-      costMetal: 13005
-      costElectricity: 54
-      costUranium: 0
-    - level: 52
-      value: 66
-      costMetal: 13520
-      costElectricity: 56
-      costUranium: 0
-    - level: 53
-      value: 67
-      costMetal: 14045
-      costElectricity: 58
-      costUranium: 0
-    - level: 54
-      value: 68
-      costMetal: 14580
-      costElectricity: 60
-      costUranium: 0
-    - level: 55
-      value: 69
+    - level: 8
+      value: 8
       costMetal: 15125
       costElectricity: 62
       costUranium: 0
-    - level: 56
-      value: 70
-      costMetal: 15680
-      costElectricity: 64
-      costUranium: 0
-    - level: 57
-      value: 71
-      costMetal: 16245
-      costElectricity: 66
-      costUranium: 0
-    - level: 58
-      value: 72
-      costMetal: 16820
-      costElectricity: 68
-      costUranium: 0
-    - level: 59
-      value: 73
-      costMetal: 17405
-      costElectricity: 70
-      costUranium: 0
-    - level: 60
-      value: 74
-      costMetal: 18000
-      costElectricity: 72
-      costUranium: 0
-    - level: 61
-      value: 75
-      costMetal: 18605
-      costElectricity: 74
-      costUranium: 0
-    - level: 62
-      value: 76
-      costMetal: 19220
-      costElectricity: 76
-      costUranium: 0
-    - level: 63
-      value: 77
+    - level: 9
+      value: 7
       costMetal: 19845
       costElectricity: 78
       costUranium: 0
-    - level: 64
-      value: 78
-      costMetal: 20480
-      costElectricity: 80
-      costUranium: 0
-    - level: 65
-      value: 79
-      costMetal: 21125
-      costElectricity: 82
-      costUranium: 0
-    - level: 66
-      value: 80
-      costMetal: 21780
-      costElectricity: 84
-      costUranium: 0
-    - level: 67
-      value: 81
-      costMetal: 22445
-      costElectricity: 86
-      costUranium: 0
-    - level: 68
-      value: 82
-      costMetal: 23120
-      costElectricity: 88
-      costUranium: 0
-    - level: 69
-      value: 83
-      costMetal: 23805
-      costElectricity: 90
-      costUranium: 0
-    - level: 70
-      value: 84
-      costMetal: 24500
-      costElectricity: 92
-      costUranium: 1
-    - level: 71
-      value: 85
-      costMetal: 25205
-      costElectricity: 94
-      costUranium: 2
-    - level: 72
-      value: 86
+    - level: 10
+      value: 6
       costMetal: 25920
       costElectricity: 96
       costUranium: 3
-    - level: 73
-      value: 87
-      costMetal: 26645
-      costElectricity: 98
-      costUranium: 4
-    - level: 74
-      value: 88
-      costMetal: 27380
-      costElectricity: 100
-      costUranium: 5
-    - level: 75
-      value: 89
-      costMetal: 28125
-      costElectricity: 102
-      costUranium: 6
-    - level: 76
-      value: 90
-      costMetal: 28880
-      costElectricity: 104
-      costUranium: 7
-    - level: 77
-      value: 91
-      costMetal: 29645
-      costElectricity: 106
-      costUranium: 8
-    - level: 78
-      value: 92
-      costMetal: 30420
-      costElectricity: 108
-      costUranium: 9
-    - level: 79
-      value: 93
-      costMetal: 31205
-      costElectricity: 110
-      costUranium: 10
-    - level: 80
-      value: 94
+    - level: 11
+      value: 5
       costMetal: 32000
       costElectricity: 112
       costUranium: 11
-    - level: 81
-      value: 95
-      costMetal: 32805
-      costElectricity: 114
-      costUranium: 12
-    - level: 82
-      value: 96
-      costMetal: 33620
-      costElectricity: 116
-      costUranium: 13
-    - level: 83
-      value: 97
-      costMetal: 34445
-      costElectricity: 118
-      costUranium: 14
-    - level: 84
-      value: 98
-      costMetal: 35280
-      costElectricity: 120
-      costUranium: 15
-    - level: 85
-      value: 99
-      costMetal: 36125
-      costElectricity: 122
-      costUranium: 16
-    - level: 86
-      value: 100
-      costMetal: 36980
-      costElectricity: 124
-      costUranium: 17
-    - level: 87
-      value: 101
-      costMetal: 37845
-      costElectricity: 126
-      costUranium: 18
-    - level: 88
-      value: 102
+    - level: 12
+      value: 4
       costMetal: 38720
       costElectricity: 128
       costUranium: 19
-    - level: 89
-      value: 103
-      costMetal: 39605
-      costElectricity: 130
-      costUranium: 20
-    - level: 90
-      value: 104
-      costMetal: 40500
-      costElectricity: 132
-      costUranium: 21
-    - level: 91
-      value: 105
-      costMetal: 41405
-      costElectricity: 134
-      costUranium: 22
-    - level: 92
-      value: 106
-      costMetal: 42320
-      costElectricity: 136
-      costUranium: 23
-    - level: 93
-      value: 107
-      costMetal: 43245
-      costElectricity: 138
-      costUranium: 24
-    - level: 94
-      value: 108
-      costMetal: 44180
-      costElectricity: 140
-      costUranium: 25
-    - level: 95
-      value: 109
-      costMetal: 45125
-      costElectricity: 142
-      costUranium: 26
-    - level: 96
-      value: 110
+    - level: 13
+      value: 3
       costMetal: 46080
       costElectricity: 144
       costUranium: 27
-    - level: 97
-      value: 111
-      costMetal: 47045
-      costElectricity: 146
-      costUranium: 28
-    - level: 98
-      value: 112
-      costMetal: 48020
-      costElectricity: 148
-      costUranium: 29
-    - level: 99
-      value: 113
-      costMetal: 49005
-      costElectricity: 150
-      costUranium: 30
-    - level: 100
-      value: 114
-      costMetal: 50000
-      costElectricity: 152
-      costUranium: 31
-  - statName: rangeAttack
+  - statName: cdSpawnUnits
     steps:
     - level: 1
-      value: 20
+      value: 5
       costMetal: 0
       costElectricity: 0
       costUranium: 0
     - level: 2
-      value: 21
-      costMetal: 20
-      costElectricity: 0
-      costUranium: 0
-    - level: 3
-      value: 22
-      costMetal: 45
-      costElectricity: 0
-      costUranium: 0
-    - level: 4
-      value: 23
-      costMetal: 80
-      costElectricity: 0
-      costUranium: 0
-    - level: 5
-      value: 24
-      costMetal: 125
-      costElectricity: 0
-      costUranium: 0
-    - level: 6
-      value: 25
-      costMetal: 180
-      costElectricity: 0
-      costUranium: 0
-    - level: 7
-      value: 26
-      costMetal: 245
-      costElectricity: 0
-      costUranium: 0
-    - level: 8
-      value: 27
-      costMetal: 320
-      costElectricity: 0
-      costUranium: 0
-    - level: 9
-      value: 28
-      costMetal: 405
-      costElectricity: 0
-      costUranium: 0
-    - level: 10
-      value: 29
-      costMetal: 500
-      costElectricity: 0
-      costUranium: 0
-    - level: 11
-      value: 30
-      costMetal: 605
-      costElectricity: 0
-      costUranium: 0
-    - level: 12
-      value: 31
-      costMetal: 720
-      costElectricity: 0
-      costUranium: 0
-    - level: 13
-      value: 32
-      costMetal: 845
-      costElectricity: 0
-      costUranium: 0
-    - level: 14
-      value: 33
+      value: 4
       costMetal: 980
       costElectricity: 0
       costUranium: 0
-    - level: 15
-      value: 34
-      costMetal: 1125
-      costElectricity: 0
-      costUranium: 0
-    - level: 16
-      value: 35
-      costMetal: 1280
-      costElectricity: 0
-      costUranium: 0
-    - level: 17
-      value: 36
-      costMetal: 1445
-      costElectricity: 0
-      costUranium: 0
-    - level: 18
-      value: 37
-      costMetal: 1620
-      costElectricity: 0
-      costUranium: 0
-    - level: 19
-      value: 38
-      costMetal: 1805
-      costElectricity: 0
-      costUranium: 0
-    - level: 20
-      value: 39
-      costMetal: 2000
-      costElectricity: 0
-      costUranium: 0
-    - level: 21
-      value: 40
-      costMetal: 2205
-      costElectricity: 0
-      costUranium: 0
-    - level: 22
-      value: 41
-      costMetal: 2420
-      costElectricity: 0
-      costUranium: 0
-    - level: 23
-      value: 42
-      costMetal: 2645
-      costElectricity: 0
-      costUranium: 0
-    - level: 24
-      value: 43
-      costMetal: 2880
-      costElectricity: 0
-      costUranium: 0
-    - level: 25
-      value: 44
-      costMetal: 3125
-      costElectricity: 2
-      costUranium: 0
-    - level: 26
-      value: 45
-      costMetal: 3380
-      costElectricity: 4
-      costUranium: 0
-    - level: 27
-      value: 46
-      costMetal: 3645
-      costElectricity: 6
-      costUranium: 0
-    - level: 28
-      value: 47
-      costMetal: 3920
-      costElectricity: 8
-      costUranium: 0
-    - level: 29
-      value: 48
-      costMetal: 4205
-      costElectricity: 10
-      costUranium: 0
-    - level: 30
-      value: 49
-      costMetal: 4500
-      costElectricity: 12
-      costUranium: 0
-    - level: 31
-      value: 50
-      costMetal: 4805
-      costElectricity: 14
-      costUranium: 0
-    - level: 32
-      value: 51
-      costMetal: 5120
-      costElectricity: 16
-      costUranium: 0
-    - level: 33
-      value: 52
-      costMetal: 5445
-      costElectricity: 18
-      costUranium: 0
-    - level: 34
-      value: 53
-      costMetal: 5780
-      costElectricity: 20
-      costUranium: 0
-    - level: 35
-      value: 54
-      costMetal: 6125
-      costElectricity: 22
-      costUranium: 0
-    - level: 36
-      value: 55
-      costMetal: 6480
-      costElectricity: 24
-      costUranium: 0
-    - level: 37
-      value: 56
-      costMetal: 6845
-      costElectricity: 26
-      costUranium: 0
-    - level: 38
-      value: 57
-      costMetal: 7220
-      costElectricity: 28
-      costUranium: 0
-    - level: 39
-      value: 58
-      costMetal: 7605
-      costElectricity: 30
-      costUranium: 0
-    - level: 40
-      value: 59
-      costMetal: 8000
-      costElectricity: 32
-      costUranium: 0
-    - level: 41
-      value: 60
-      costMetal: 8405
-      costElectricity: 34
-      costUranium: 0
-    - level: 42
-      value: 61
-      costMetal: 8820
-      costElectricity: 36
-      costUranium: 0
-    - level: 43
-      value: 62
-      costMetal: 9245
-      costElectricity: 38
-      costUranium: 0
-    - level: 44
-      value: 63
-      costMetal: 9680
-      costElectricity: 40
-      costUranium: 0
-    - level: 45
-      value: 64
-      costMetal: 10125
-      costElectricity: 42
-      costUranium: 0
-    - level: 46
-      value: 65
-      costMetal: 10580
-      costElectricity: 44
-      costUranium: 0
-    - level: 47
-      value: 66
-      costMetal: 11045
-      costElectricity: 46
-      costUranium: 0
-    - level: 48
-      value: 67
-      costMetal: 11520
-      costElectricity: 48
-      costUranium: 0
-    - level: 49
-      value: 68
-      costMetal: 12005
-      costElectricity: 50
-      costUranium: 0
-    - level: 50
-      value: 69
-      costMetal: 12500
-      costElectricity: 52
-      costUranium: 0
-    - level: 51
-      value: 70
-      costMetal: 13005
-      costElectricity: 54
-      costUranium: 0
-    - level: 52
-      value: 71
-      costMetal: 13520
-      costElectricity: 56
-      costUranium: 0
-    - level: 53
-      value: 72
-      costMetal: 14045
-      costElectricity: 58
-      costUranium: 0
-    - level: 54
-      value: 73
-      costMetal: 14580
-      costElectricity: 60
-      costUranium: 0
-    - level: 55
-      value: 74
-      costMetal: 15125
-      costElectricity: 62
-      costUranium: 0
-    - level: 56
-      value: 75
-      costMetal: 15680
-      costElectricity: 64
-      costUranium: 0
-    - level: 57
-      value: 76
-      costMetal: 16245
-      costElectricity: 66
-      costUranium: 0
-    - level: 58
-      value: 77
-      costMetal: 16820
-      costElectricity: 68
-      costUranium: 0
-    - level: 59
-      value: 78
-      costMetal: 17405
-      costElectricity: 70
-      costUranium: 0
-    - level: 60
-      value: 79
-      costMetal: 18000
-      costElectricity: 72
-      costUranium: 0
-    - level: 61
-      value: 80
-      costMetal: 18605
-      costElectricity: 74
-      costUranium: 0
-    - level: 62
-      value: 81
-      costMetal: 19220
-      costElectricity: 76
-      costUranium: 0
-    - level: 63
-      value: 82
+    - level: 3
+      value: 2
       costMetal: 19845
       costElectricity: 78
       costUranium: 0
-    - level: 64
-      value: 83
-      costMetal: 20480
-      costElectricity: 80
-      costUranium: 0
-    - level: 65
-      value: 84
-      costMetal: 21125
-      costElectricity: 82
-      costUranium: 0
-    - level: 66
-      value: 85
-      costMetal: 21780
-      costElectricity: 84
-      costUranium: 0
-    - level: 67
-      value: 86
-      costMetal: 22445
-      costElectricity: 86
-      costUranium: 0
-    - level: 68
-      value: 87
-      costMetal: 23120
-      costElectricity: 88
-      costUranium: 0
-    - level: 69
-      value: 88
-      costMetal: 23805
-      costElectricity: 90
-      costUranium: 0
-    - level: 70
-      value: 89
-      costMetal: 24500
-      costElectricity: 92
-      costUranium: 1
-    - level: 71
-      value: 90
-      costMetal: 25205
-      costElectricity: 94
-      costUranium: 2
-    - level: 72
-      value: 91
-      costMetal: 25920
-      costElectricity: 96
-      costUranium: 3
-    - level: 73
-      value: 92
-      costMetal: 26645
-      costElectricity: 98
-      costUranium: 4
-    - level: 74
-      value: 93
-      costMetal: 27380
-      costElectricity: 100
-      costUranium: 5
-    - level: 75
-      value: 94
-      costMetal: 28125
-      costElectricity: 102
-      costUranium: 6
-    - level: 76
-      value: 95
-      costMetal: 28880
-      costElectricity: 104
-      costUranium: 7
-    - level: 77
-      value: 96
-      costMetal: 29645
-      costElectricity: 106
-      costUranium: 8
-    - level: 78
-      value: 97
-      costMetal: 30420
-      costElectricity: 108
-      costUranium: 9
-    - level: 79
-      value: 98
-      costMetal: 31205
-      costElectricity: 110
-      costUranium: 10
-    - level: 80
-      value: 99
-      costMetal: 32000
-      costElectricity: 112
-      costUranium: 11
-    - level: 81
-      value: 100
-      costMetal: 32805
-      costElectricity: 114
-      costUranium: 12
-    - level: 82
-      value: 101
-      costMetal: 33620
-      costElectricity: 116
-      costUranium: 13
-    - level: 83
-      value: 102
-      costMetal: 34445
-      costElectricity: 118
-      costUranium: 14
-    - level: 84
-      value: 103
-      costMetal: 35280
-      costElectricity: 120
-      costUranium: 15
-    - level: 85
-      value: 104
-      costMetal: 36125
-      costElectricity: 122
-      costUranium: 16
-    - level: 86
-      value: 105
-      costMetal: 36980
-      costElectricity: 124
-      costUranium: 17
-    - level: 87
-      value: 106
-      costMetal: 37845
-      costElectricity: 126
-      costUranium: 18
-    - level: 88
-      value: 107
+    - level: 4
+      value: 1
       costMetal: 38720
       costElectricity: 128
       costUranium: 19
-    - level: 89
-      value: 108
-      costMetal: 39605
-      costElectricity: 130
-      costUranium: 20
-    - level: 90
-      value: 109
-      costMetal: 40500
-      costElectricity: 132
-      costUranium: 21
-    - level: 91
-      value: 110
-      costMetal: 41405
-      costElectricity: 134
-      costUranium: 22
-    - level: 92
-      value: 111
-      costMetal: 42320
-      costElectricity: 136
-      costUranium: 23
-    - level: 93
-      value: 112
-      costMetal: 43245
-      costElectricity: 138
-      costUranium: 24
-    - level: 94
-      value: 113
-      costMetal: 44180
-      costElectricity: 140
-      costUranium: 25
-    - level: 95
-      value: 114
-      costMetal: 45125
-      costElectricity: 142
-      costUranium: 26
-    - level: 96
-      value: 115
-      costMetal: 46080
-      costElectricity: 144
-      costUranium: 27
-    - level: 97
-      value: 116
-      costMetal: 47045
-      costElectricity: 146
-      costUranium: 28
-    - level: 98
-      value: 117
-      costMetal: 48020
-      costElectricity: 148
-      costUranium: 29
-    - level: 99
-      value: 118
-      costMetal: 49005
-      costElectricity: 150
-      costUranium: 30
-    - level: 100
-      value: 119
-      costMetal: 50000
-      costElectricity: 152
-      costUranium: 31
+    - level: 5
+      value: 0.5
+      costMetal: 38720
+      costElectricity: 128
+      costUranium: 19
+    - level: 6
+      value: 0.1
+      costMetal: 38720
+      costElectricity: 128
+      costUranium: 19
   - statName: nbAttack
     steps:
     - level: 1
@@ -2544,485 +1244,85 @@ MonoBehaviour:
     - level: 4
       value: 4
       costMetal: 480
-      costElectricity: 12
+      costElectricity: 0
       costUranium: 0
     - level: 5
       value: 5
       costMetal: 750
-      costElectricity: 24
+      costElectricity: 0
       costUranium: 0
     - level: 6
       value: 6
       costMetal: 1080
-      costElectricity: 36
+      costElectricity: 0
       costUranium: 0
     - level: 7
       value: 7
       costMetal: 1470
-      costElectricity: 48
+      costElectricity: 0
       costUranium: 0
     - level: 8
       value: 8
       costMetal: 1920
-      costElectricity: 60
-      costUranium: 6
+      costElectricity: 12
+      costUranium: 0
     - level: 9
       value: 9
       costMetal: 2430
-      costElectricity: 72
-      costUranium: 12
+      costElectricity: 24
+      costUranium: 0
     - level: 10
       value: 10
       costMetal: 3000
-      costElectricity: 84
-      costUranium: 18
+      costElectricity: 36
+      costUranium: 0
     - level: 11
-      value: 10
-      costMetal: 0
-      costElectricity: 0
+      value: 11
+      costMetal: 3630
+      costElectricity: 48
       costUranium: 0
     - level: 12
-      value: 10
-      costMetal: 0
-      costElectricity: 0
+      value: 12
+      costMetal: 4320
+      costElectricity: 60
       costUranium: 0
     - level: 13
-      value: 10
-      costMetal: 0
-      costElectricity: 0
+      value: 13
+      costMetal: 5070
+      costElectricity: 72
       costUranium: 0
     - level: 14
-      value: 10
-      costMetal: 0
-      costElectricity: 0
+      value: 14
+      costMetal: 5880
+      costElectricity: 84
       costUranium: 0
     - level: 15
-      value: 10
-      costMetal: 0
-      costElectricity: 0
+      value: 15
+      costMetal: 6750
+      costElectricity: 96
       costUranium: 0
     - level: 16
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
+      value: 16
+      costMetal: 7680
+      costElectricity: 108
+      costUranium: 6
     - level: 17
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
+      value: 17
+      costMetal: 8670
+      costElectricity: 120
+      costUranium: 12
     - level: 18
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
+      value: 18
+      costMetal: 9720
+      costElectricity: 132
+      costUranium: 18
     - level: 19
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
+      value: 19
+      costMetal: 10830
+      costElectricity: 144
+      costUranium: 24
     - level: 20
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 21
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 22
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 23
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 24
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 25
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 26
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 27
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 28
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 29
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 30
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 31
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 32
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 33
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 34
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 35
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 36
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 37
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 38
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 39
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 40
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 41
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 42
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 43
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 44
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 45
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 46
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 47
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 48
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 49
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 50
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 51
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 52
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 53
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 54
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 55
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 56
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 57
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 58
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 59
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 60
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 61
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 62
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 63
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 64
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 65
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 66
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 67
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 68
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 69
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 70
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 71
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 72
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 73
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 74
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 75
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 76
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 77
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 78
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 79
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 80
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 81
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 82
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 83
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 84
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 85
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 86
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 87
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 88
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 89
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 90
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 91
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 92
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 93
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 94
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 95
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 96
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 97
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 98
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 99
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
-    - level: 100
-      value: 10
-      costMetal: 0
-      costElectricity: 0
-      costUranium: 0
+      value: 20
+      costMetal: 12000
+      costElectricity: 156
+      costUranium: 30

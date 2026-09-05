@@ -10,7 +10,9 @@ public class UpgradeShip : Upgrades
     protected override void Start()
     {
         base.Start();
-        unit = hangar.unit;
+
+        if (unit == null)
+            unit = hangar.unit;
     }
 
     public void TryUpgradeStats(string statName)

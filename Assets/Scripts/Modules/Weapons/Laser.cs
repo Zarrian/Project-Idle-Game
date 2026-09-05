@@ -142,6 +142,7 @@ public class Laser : MonoBehaviour
 
             if (target != null)
             {
+                FollowShipAndLookAtTarget();
                 UpdateLaserPosition(laserProgress);
                 transform.LookAt(target.position);
             }

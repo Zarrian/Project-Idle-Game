@@ -1,25 +1,17 @@
 using UnityEngine;
 
-public class FeedbackShip : MonoBehaviour
+public class FeedbackDeathStar : MonoBehaviour
 {
-    public Ship ship;
-
+    [SerializeField] PlanetStats star;
     public Pool poolExplosionDamage;
-    public Pool poolExplosionDeath;
-
-    public float scaleExplosionDeath = 50;
-    float ratioExplosion = 1f;
-
-    private void Awake()
+    public float ratioExplosion = 1f;
+    private void Start()
     {
-        if (ship == null)
-            ship = GetComponent<Ship>();
+        offsetDistance = GetComponent<SphereCollider>().radius + 10;
 
-        ship.OnTakeDamage.AddListener(ExplosionDamage);
-        ship.OnDeath.AddListener(ExplosionDeath);
+        star.OnTakeDamage += ExplosionDamage;
     }
-
-    public float offsetDistance = 10;
+    float offsetDistance = 10;
     void ExplosionDamage(Vector3 pos, float damage)
     {
         Vector3 direction = (pos - transform.position).normalized;
@@ -45,16 +37,15 @@ public class FeedbackShip : MonoBehaviour
 
     void ExplosionDeath()
     {
-        GameObject explosion = poolExplosionDeath.GetPoolObject();
-        explosion.transform.position = transform.position;
-        explosion.transform.rotation = transform.rotation;
-
-        //Modifie scale explosion
-        explosion.transform.localScale = Vector3.one * scaleExplosionDeath;
-        for (int i = 0; i < explosion.transform.childCount; i++)
-        {
-            explosion.transform.GetChild(i).localScale = Vector3.one * scaleExplosionDeath;
-        }
+        //GameObject explosion = poolExplosionDeath.GetPoolObject();
+        //explosion.transform.position = transform.position;
+        //explosion.transform.rotation = transform.rotation;
+        //
+        ////Modifie scale explosion
+        //explosion.transform.localScale = Vector3.one * scaleExplosionDeath;
+        //for (int i = 0; i < explosion.transform.childCount; i++)
+        //{
+        //    explosion.transform.GetChild(i).localScale = Vector3.one * scaleExplosionDeath;
+        //}
     }
-
 }

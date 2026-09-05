@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using VolumetricLines;
@@ -32,6 +31,7 @@ public class CannonAI : MonoBehaviour
     [SerializeField] private float rotationSpeed = 180f;
 
     private Coroutine fireEffectCoroutine;
+    private Coroutine hideLaserCoroutine;
     public UnityEvent OnFire;
 
     // === OPTIMISATION : Caching des valeurs ===
@@ -41,11 +41,13 @@ public class CannonAI : MonoBehaviour
     private float detectionCheckTimer = 0f;
     private const float DETECTION_CHECK_INTERVAL = 0.1f; // Vérifier tous les 100ms
 
+    [SerializeField] private float laserDelay = 0.15f;
+
     private void OnEnable()
     {
         SetStatistique();
         SetupLaser();
-        
+
         // === OPTIMISATION : Précalculer les valeurs ===
         visionConeHalfAngleCos = Mathf.Cos(visionConeAngle * 0.5f * Mathf.Deg2Rad);
         rangeAttackSqr = rangeAttack * rangeAttack;
@@ -86,7 +88,7 @@ public class CannonAI : MonoBehaviour
         cdAttack = canonSO.tiers[manager.currentTier].cdAttack;
         rangeAttack = canonSO.tiers[manager.currentTier].rangeAttack;
         nbAttack = canonSO.tiers[manager.currentTier].nbAttack;
-        
+
         // === OPTIMISATION : Mettre à jour les caches ===
         rangeAttackSqr = rangeAttack * rangeAttack;
     }
@@ -102,6 +104,7 @@ public class CannonAI : MonoBehaviour
     private void DetectTargets()
     {
         cachedForwardDirection = cannonBarrel != null ? cannonBarrel.forward : transform.forward;
+        Vector3 origin = cannonBarrel != null ? cannonBarrel.position : transform.position;
 
         targetCount = Physics.OverlapSphereNonAlloc(
             transform.position,
@@ -143,14 +146,26 @@ public class CannonAI : MonoBehaviour
             {
                 if (currenttarget == null)
                 {
-                    OnTargetDetected(col.gameObject);
+                    // Vérifie la ligne de vue réelle avant de valider la cible
+                    Transform validatedTarget = ValidateLineOfSight(origin, col.transform);
+                    if (validatedTarget == null)
+                        continue;
+
+                    OnTargetDetected(validatedTarget.gameObject);
                     targetStillInRange = true;
                     break;
                 }
                 else if (col.gameObject == currenttarget.gameObject)
                 {
-                    targetStillInRange = true;
-                    break;
+                    // Vérifie que la ligne de vue vers la cible actuelle est toujours dégagée
+                    Transform validatedTarget = ValidateLineOfSight(origin, col.transform);
+                    if (validatedTarget != null)
+                    {
+                        currenttarget = validatedTarget;
+                        targetStillInRange = true;
+                        break;
+                    }
+                    // Ligne de vue bloquée : on continue à chercher un autre candidat
                 }
             }
         }
@@ -158,8 +173,38 @@ public class CannonAI : MonoBehaviour
         if (currenttarget != null && !targetStillInRange)
         {
             currenttarget = null;
-            HideLaser();
+            StartHideLaser();
         }
+    }
+
+    /// <summary>
+    /// Vérifie par raycast qu'on peut effectivement toucher la cible candidate.
+    /// Si un autre vaisseau ennemi (IDamageable sur targetLayer) est touché
+    /// en premier, celui-ci est retourné à la place. Retourne null si aucune
+    /// cible valide n'est en ligne de vue.
+    /// </summary>
+    private Transform ValidateLineOfSight(Vector3 origin, Transform candidate)
+    {
+        Vector3 direction = (candidate.position - origin).normalized;
+        float distance = Vector3.Distance(origin, candidate.position);
+
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, distance, targetLayer))
+        {
+            // La cible candidate est bien ce qui est touché en premier
+            if (hit.transform == candidate || hit.transform.IsChildOf(candidate))
+                return candidate;
+
+            // Un autre vaisseau ennemi a été touché avant : on le prend pour cible
+            IDamageable hitDamageable = hit.transform.GetComponent<IDamageable>();
+            if (hitDamageable != null)
+                return hit.transform;
+
+            // Obstacle sans IDamageable : pas de ligne de vue valide
+            return null;
+        }
+
+        // Rien touché sur targetLayer avant la distance de la cible : pas de ligne de vue
+        return null;
     }
 
     private void OnTargetDetected(GameObject target)
@@ -178,6 +223,12 @@ public class CannonAI : MonoBehaviour
         if (fireEffectCoroutine != null)
             StopCoroutine(fireEffectCoroutine);
 
+        if (hideLaserCoroutine != null)
+        {
+            StopCoroutine(hideLaserCoroutine);
+            hideLaserCoroutine = null;
+        }
+
         fireEffectCoroutine = StartCoroutine(LaserFireEffect());
         OnFire?.Invoke();
     }
@@ -190,7 +241,7 @@ public class CannonAI : MonoBehaviour
         float lastTickTime = 0f;
 
         float laserProgress = 0;
-        float timeForLaserToBeComplete = 0.15f;
+        float timeForLaserToBeComplete = laserDelay;
 
         laserLine.gameObject.SetActive(true);
         Ship target = currenttarget.GetComponent<Ship>();
@@ -210,7 +261,7 @@ public class CannonAI : MonoBehaviour
             {
                 if (currenttarget == null)
                 {
-                    HideLaser();
+                    StartHideLaser();
                     yield break;
                 }
 
@@ -232,7 +283,7 @@ public class CannonAI : MonoBehaviour
             yield return null;
         }
 
-        HideLaser();
+        StartHideLaser();
     }
 
     private void UpdateLaserPosition(float progress)
@@ -244,7 +295,37 @@ public class CannonAI : MonoBehaviour
         laserLine.EndPos = Vector3.forward * (distance * progress);
     }
 
-    private void HideLaser()
+    private IEnumerator HideLaser()
+    {
+        float laserProgress = 1;
+        float timeForLaserToDisappear = laserDelay;
+
+        while (laserProgress > 0)
+        {
+            laserProgress -= Time.deltaTime / timeForLaserToDisappear;
+
+            if (currenttarget != null)
+            {
+                UpdateLaserPosition(laserProgress);
+                LookTarget();
+            }
+
+            yield return null;
+        }
+
+        Deactivate();
+        hideLaserCoroutine = null;
+    }
+
+    private void StartHideLaser()
+    {
+        if (hideLaserCoroutine != null)
+            StopCoroutine(hideLaserCoroutine);
+
+        hideLaserCoroutine = StartCoroutine(HideLaser());
+    }
+
+    public void Deactivate()
     {
         if (laserLine != null)
         {
