@@ -6,6 +6,7 @@ public class CheatCode : MonoBehaviour
     public Hangar[] weapons;
 
     public TextMeshProUGUI TierText;
+    public TextMeshProUGUI TimeText;
     public int currentTier = 1;
     public int maxTier;
 
@@ -85,6 +86,20 @@ public class CheatCode : MonoBehaviour
             }
         }
 
+    }
+
+    public void IncreaseTime()
+    {
+        Time.timeScale += 0.2f;
+        Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 10f);
+        TimeText.text = "Current Time: " + Time.timeScale.ToString("F1");
+    }
+
+    public void DecreaseTime()
+    {
+        Time.timeScale -= 0.2f;
+        Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 10f);
+        TimeText.text = "Current Time: " + Time.timeScale.ToString("F1");
     }
 
     public void AddMetal()
