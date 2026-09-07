@@ -92,7 +92,7 @@ public class CheatCode : MonoBehaviour
     {
         Time.timeScale += 0.2f;
         Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 10f);
-        Time.fixedDeltaTime = Time.timeScale * Time.deltaTime;
+        Time.fixedDeltaTime = Mathf.Clamp(Time.timeScale * Time.deltaTime, 0, 1);
         TimeText.text = "Current Time: " + Time.timeScale.ToString("F1");
     }
 
@@ -100,7 +100,7 @@ public class CheatCode : MonoBehaviour
     {
         Time.timeScale -= 0.2f;
         Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 10f);
-        Time.fixedDeltaTime = Time.timeScale * Time.deltaTime;
+        Time.fixedDeltaTime = Mathf.Clamp( Time.timeScale * Time.deltaTime,0, 1);
         TimeText.text = "Current Time: " + Time.timeScale.ToString("F1");
     }
 
