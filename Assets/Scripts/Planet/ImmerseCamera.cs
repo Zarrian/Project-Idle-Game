@@ -8,11 +8,11 @@ public class ImmerseCamera : MonoBehaviour
     public Camera mainCamera;
 
     private Vector3 offset = new Vector3(0, 5, -500);
-    private float followSmoothness = 5f;
-    private float rotationSensitivity = 5f;
-    private float zoomSensitivity = 200f;
-    private float minZoom = -3000f;
-    private float maxZoom = -200f;
+    public float followSmoothness = 5f;
+    public float rotationSensitivity = 5f;
+    public float zoomSensitivity = 200f;
+    public float minZoom = -3000f;
+    public float maxZoom = -200f;
 
     private float cameraRotationX = 0f;
     private float cameraRotationY = 0f;

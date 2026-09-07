@@ -22,7 +22,7 @@ MonoBehaviour:
       costElectricity: 0
       costUranium: 0
     - level: 1
-      value: 0
+      value: 1
       costMetal: 0
       costElectricity: 0
       costUranium: 0
