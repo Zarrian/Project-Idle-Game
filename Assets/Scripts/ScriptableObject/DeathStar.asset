@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: DeathStar
   m_EditorClassIdentifier: Assembly-CSharp::PlanetSO
   PlanetName: DeathStar
-  HP: 50000
-  HpRegen: 500
+  HP: 500000
+  HpRegen: 0
